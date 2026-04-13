@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Progress — Open Letter</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f8f7f4;--surface:#ffffff;--surface2:#f2f1ee;--surface3:#e8e6e1;
+    --border:#e0ddd6;--accent:#2d6a4f;--accent-light:#40916c;--accent-bg:#f0f7f4;
+    --text:#1a1a1a;--muted:#6b6b6b;--muted2:#9a9a9a;
+    --success:#40916c;--warning:#e07b39;--danger:#c0392b;
+    --mono:'DM Mono',monospace;--sans:'DM Sans',sans-serif;--display:'Syne',sans-serif;
+    --shadow:0 2px 12px rgba(0,0,0,0.07);--shadow-lg:0 8px 40px rgba(0,0,0,0.1);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6}
+
+  /* Header */
+  .site-header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+  .site-header-inner{max-width:780px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+  .brand{display:flex;flex-direction:column}
+  .brand-name{font-family:var(--display);font-size:18px;font-weight:800;color:var(--accent);letter-spacing:-.3px}
+  .brand-tagline{font-family:var(--mono);font-size:10px;color:var(--muted2);letter-spacing:1px;text-transform:uppercase}
+  .portal-badge{background:var(--accent-bg);color:var(--accent);border:1px solid rgba(45,106,79,.2);border-radius:20px;padding:4px 12px;font-family:var(--mono);font-size:11px;letter-spacing:.5px}
+
+  /* Main wrapper */
+  .wrapper{max-width:780px;margin:0 auto;padding:40px 24px 80px}
+
+  /* Search section */
+  .search-section{text-align:center;padding:48px 0 40px}
+  .search-title{font-family:var(--display);font-size:32px;font-weight:800;color:var(--text);letter-spacing:-1px;margin-bottom:8px}
+  .search-title span{color:var(--accent)}
+  .search-sub{color:var(--muted);font-size:15px;margin-bottom:32px}
+  .search-box{display:flex;gap:10px;max-width:440px;margin:0 auto;flex-wrap:wrap}
+  .search-input{flex:1;background:var(--surface);border:2px solid var(--border);border-radius:12px;color:var(--text);font-family:var(--sans);font-size:16px;padding:14px 18px;outline:none;transition:border-color .2s,box-shadow .2s;min-width:200px}
+  .search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(45,106,79,.1)}
+  .search-input::placeholder{color:var(--muted2)}
+  .search-btn{background:var(--accent);color:#fff;border:none;border-radius:12px;padding:14px 24px;font-family:var(--display);font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
+  .search-btn:hover{background:var(--accent-light);transform:translateY(-1px)}
+  .search-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+
+  /* Loading */
+  .loading-state{text-align:center;padding:60px 20px;color:var(--muted)}
+  .loading-spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loading-text{font-family:var(--mono);font-size:13px}
+
+  /* Error / not found */
+  .error-state{text-align:center;padding:48px 20px;background:var(--surface);border-radius:16px;border:1px solid var(--border)}
+  .error-icon{font-size:40px;margin-bottom:12px}
+  .error-title{font-family:var(--display);font-size:18px;font-weight:700;margin-bottom:8px}
+  .error-sub{color:var(--muted);font-size:14px}
+
+  /* Student profile card */
+  .student-header{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:20px;box-shadow:var(--shadow)}
+  .student-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+  .student-avatar{width:56px;height:56px;background:var(--accent-bg);border:2px solid rgba(45,106,79,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:22px;font-weight:800;color:var(--accent);flex-shrink:0}
+  .student-info{flex:1}
+  .student-name{font-family:var(--display);font-size:24px;font-weight:800;color:var(--text);letter-spacing:-.5px;margin-bottom:2px}
+  .student-meta{font-family:var(--mono);font-size:12px;color:var(--muted2);letter-spacing:.5px}
+  .last-session-badge{background:var(--accent-bg);color:var(--accent);border:1px solid rgba(45,106,79,.2);border-radius:8px;padding:6px 12px;font-family:var(--mono);font-size:11px;text-align:right}
+  .last-session-label{color:var(--muted2);font-size:10px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px}
+  .last-session-date{font-weight:500}
+
+  /* Stats row */
+  .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .stat-box{background:var(--surface2);border-radius:10px;padding:14px 16px;text-align:center}
+  .stat-box-val{font-family:var(--display);font-size:22px;font-weight:800;color:var(--accent);letter-spacing:-1px;line-height:1}
+  .stat-box-label{font-family:var(--mono);font-size:10px;color:var(--muted2);letter-spacing:.8px;text-transform:uppercase;margin-top:4px}
+
+  /* Progress section */
+  .section-title{font-family:var(--display);font-size:16px;font-weight:700;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .section-title::before{content:'';width:4px;height:18px;background:var(--accent);border-radius:2px;display:inline-block}
+
+  /* Feedback tags */
+  .tag{display:inline-block;background:var(--accent-bg);color:var(--accent);border:1px solid rgba(45,106,79,.2);border-radius:20px;padding:3px 10px;font-size:12px;font-family:var(--mono);margin:2px}
+  .tag.negative{background:#fdf2f0;color:#c0392b;border-color:rgba(192,57,43,.2)}
+
+  /* Session cards */
+  .session-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px;box-shadow:var(--shadow);transition:border-color .15s}
+  .session-card:hover{border-color:var(--accent)}
+  .session-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+  .session-date-block{display:flex;flex-direction:column}
+  .session-date{font-family:var(--display);font-size:15px;font-weight:700;color:var(--text)}
+  .session-time{font-family:var(--mono);font-size:12px;color:var(--muted2);margin-top:2px}
+  .session-duration{background:var(--surface2);border-radius:6px;padding:4px 10px;font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap}
+  .session-topic{font-size:14px;color:var(--text);line-height:1.6;margin-bottom:10px}
+  .session-topic-label{font-family:var(--mono);font-size:10px;color:var(--muted2);letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px}
+  .session-feedback{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+  .session-feedback-label{font-family:var(--mono);font-size:10px;color:var(--muted2);letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px}
+  .session-notes{font-size:13px;color:var(--muted);line-height:1.6;margin-top:8px;font-style:italic}
+
+  /* Overall feedback summary */
+  .feedback-summary{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:var(--shadow)}
+  .feedback-bar-wrap{margin-bottom:10px}
+  .feedback-bar-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+  .feedback-bar-name{font-size:13px;color:var(--text)}
+  .feedback-bar-count{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .feedback-bar{height:6px;background:var(--surface3);border-radius:3px;overflow:hidden}
+  .feedback-bar-fill{height:100%;border-radius:3px;background:var(--accent);transition:width .5s ease}
+
+  /* Footer */
+  .portal-footer{text-align:center;padding:32px 0 0;border-top:1px solid var(--border);margin-top:40px}
+  .footer-brand{font-family:var(--display);font-size:14px;font-weight:700;color:var(--accent);margin-bottom:4px}
+  .footer-sub{font-family:var(--mono);font-size:11px;color:var(--muted2);letter-spacing:.5px}
+
+  /* Hidden */
+  .hidden{display:none}
+
+  @media(max-width:540px){
+    .search-title{font-size:24px}
+    .stats-row{grid-template-columns:repeat(3,1fr)}
+    .stat-box-val{font-size:18px}
+    .wrapper{padding:24px 16px 60px}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <div class="brand">
+      <div class="brand-name">Open Letter</div>
+      <div class="brand-tagline">Tutoring Agency</div>
+    </div>
+    <span class="portal-badge">Parent Portal</span>
+  </div>
+</header>
+
+<div class="wrapper">
+
+  <!-- Search -->
+  <div class="search-section" id="searchSection">
+    <div class="search-title">Your Child's <span>Progress</span></div>
+    <div class="search-sub">Enter your child's name to view their session history and feedback.</div>
+    <div class="search-box">
+      <input type="text" class="search-input" id="searchInput" placeholder="e.g. Juan dela Cruz" onkeydown="if(event.key==='Enter')searchStudent()">
+      <button class="search-btn" id="searchBtn" onclick="searchStudent()">View Progress</button>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading-state hidden" id="loadingState">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Loading student data…</div>
+  </div>
+
+  <!-- Error -->
+  <div class="error-state hidden" id="errorState">
+    <div class="error-icon">🔍</div>
+    <div class="error-title" id="errorTitle">Student not found</div>
+    <div class="error-sub" id="errorSub">Please check the name and try again.</div>
+  </div>
+
+  <!-- Results -->
+  <div class="hidden" id="resultsSection">
+
+    <!-- Student header -->
+    <div class="student-header">
+      <div class="student-top">
+        <div style="display:flex;gap:14px;align-items:center">
+          <div class="student-avatar" id="studentAvatar"></div>
+          <div class="student-info">
+            <div class="student-name" id="studentNameDisplay"></div>
+            <div class="student-meta" id="studentMeta"></div>
+          </div>
+        </div>
+        <div class="last-session-badge">
+          <div class="last-session-label">Last Session</div>
+          <div class="last-session-date" id="lastSessionDate"></div>
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-box-val" id="statSessions"></div>
+          <div class="stat-box-label">Sessions</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-box-val" id="statHours"></div>
+          <div class="stat-box-label">Total Hours</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-box-val" id="statMonth"></div>
+          <div class="stat-box-label">This Month</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feedback summary -->
+    <div class="feedback-summary" id="feedbackSummary">
+      <div class="section-title">Overall Feedback</div>
+      <div id="feedbackBars"></div>
+    </div>
+
+    <!-- Session history -->
+    <div class="section-title" style="margin-bottom:14px">Session History</div>
+    <div id="sessionCards"></div>
+
+  </div>
+
+  <div class="portal-footer">
+    <div class="footer-brand">Open Letter</div>
+    <div class="footer-sub">Personalized tutoring, tracked with care.</div>
+  </div>
+
+</div>
+
+<script>
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxVWGyZLFzZGwAoS-gBgxVf0M77yAAr-20lrwwTM-dQBIGLxVTcGW44_7CwwjpfZEAv/exec';
+
+// ─── TEXT CLEANUP — lightweight grammar polish for display ─────────────────
+function cleanText(text) {
+  if (!text || !text.trim()) return '';
+  let t = text.trim();
+  // Capitalize first letter
+  t = t.charAt(0).toUpperCase() + t.slice(1);
+  // Capitalize after period, question mark, exclamation
+  t = t.replace(/([.!?]\s+)([a-z])/g, (m, p1, p2) => p1 + p2.toUpperCase());
+  // Add period at end if missing punctuation
+  if (!/[.!?]$/.test(t)) t += '.';
+  // Fix multiple spaces
+  t = t.replace(/\s{2,}/g, ' ');
+  return t;
+}
+
+// ─── HELPERS ──────────────────────────────────────────────────────────────────
+function dtStr(s) {
+  return new Date(s + 'T00:00:00').toLocaleDateString('en-PH', {month:'long', day:'numeric', year:'numeric'});
+}
+function dtShort(s) {
+  return new Date(s + 'T00:00:00').toLocaleDateString('en-PH', {month:'short', day:'numeric', year:'numeric'});
+}
+function durStr(h) {
+  if (!h) return '—';
+  const hrs = Math.floor(h), mins = Math.round((h - hrs) * 60);
+  if (!hrs) return `${mins}m`;
+  if (!mins) return `${hrs}h`;
+  return `${hrs}h ${mins}m`;
+}
+function getInitials(name) {
+  return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+}
+
+// Negative feedback tags
+const NEGATIVE_TAGS = ['Distracted', 'Needs Improvement', 'Struggles with Concepts'];
+
+// ─── SEARCH ───────────────────────────────────────────────────────────────────
+async function searchStudent() {
+  const query = document.getElementById('searchInput').value.trim();
+  if (!query) return;
+
+  showState('loading');
+  document.getElementById('searchBtn').disabled = true;
+
+  try {
+    const data = await fetch(APPS_SCRIPT_URL).then(r => r.json());
+    if (data.status !== 'ok') throw new Error(data.message || 'Failed to load data');
+
+    const all = data.sessions || [];
+
+    // Case-insensitive partial match on student name
+    const matches = all.filter(s =>
+      s.student.toLowerCase().includes(query.toLowerCase())
+    );
+
+    if (!matches.length) {
+      showError('Student not found', `No sessions found for "${query}". Please check the spelling and try again.`);
+      return;
+    }
+
+    renderResults(matches, query);
+  } catch(e) {
+    showError('Connection Error', 'Could not load data. Please try again in a moment.');
+  } finally {
+    document.getElementById('searchBtn').disabled = false;
+  }
+}
+
+// ─── RENDER RESULTS ───────────────────────────────────────────────────────────
+function renderResults(sessions, query) {
+  // Sort newest first
+  const sorted = [...sessions].sort((a, b) => b.date.localeCompare(a.date));
+  const student = sorted[0].student;
+  const now = new Date();
+
+  // Stats
+  const totalHours = sessions.reduce((a, s) => a + (s.duration || 0), 0);
+  const thisMonth  = sessions.filter(s => {
+    const d = new Date(s.date);
+    return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+  }).length;
+
+  // Avatar
+  document.getElementById('studentAvatar').textContent = getInitials(student);
+  document.getElementById('studentNameDisplay').textContent = student;
+  document.getElementById('studentMeta').textContent = `${sessions.length} session${sessions.length !== 1 ? 's' : ''} · Open Letter Student`;
+  document.getElementById('lastSessionDate').textContent = dtShort(sorted[0].date);
+  document.getElementById('statSessions').textContent = sessions.length;
+  document.getElementById('statHours').textContent = totalHours.toFixed(1) + 'h';
+  document.getElementById('statMonth').textContent = thisMonth;
+
+  // Feedback summary
+  const ALL_TAGS = ['Attentive', 'Participative', 'Fast Learner', 'Needs Improvement', 'Distracted', 'Struggles with Concepts'];
+  const tagCounts = {};
+  sessions.forEach(s => (s.feedback || []).forEach(f => tagCounts[f] = (tagCounts[f] || 0) + 1));
+  const maxCount = Math.max(...Object.values(tagCounts), 1);
+  const hasFeedback = Object.keys(tagCounts).length > 0;
+
+  if (hasFeedback) {
+    document.getElementById('feedbackSummary').classList.remove('hidden');
+    document.getElementById('feedbackBars').innerHTML = Object.entries(tagCounts)
+      .sort((a, b) => b[1] - a[1])
+      .map(([tag, count]) => `
+        <div class="feedback-bar-wrap">
+          <div class="feedback-bar-label">
+            <span class="feedback-bar-name">${tag}</span>
+            <span class="feedback-bar-count">${count} session${count !== 1 ? 's' : ''}</span>
+          </div>
+          <div class="feedback-bar">
+            <div class="feedback-bar-fill" style="width:${(count/maxCount)*100}%"></div>
+          </div>
+        </div>
+      `).join('');
+  } else {
+    document.getElementById('feedbackSummary').classList.add('hidden');
+  }
+
+  // Session cards
+  document.getElementById('sessionCards').innerHTML = sorted.map(s => {
+    const topic    = cleanText(s.topic);
+    const notes    = cleanText(s.feedbackNotes);
+    const feedback = s.feedback || [];
+    const tagsHTML = feedback.map(f =>
+      `<span class="tag ${NEGATIVE_TAGS.includes(f) ? 'negative' : ''}">${f}</span>`
+    ).join('');
+
+    return `
+      <div class="session-card">
+        <div class="session-card-header">
+          <div class="session-date-block">
+            <div class="session-date">${dtStr(s.date)}</div>
+            <div class="session-time">${s.start} – ${s.end}</div>
+          </div>
+          <div class="session-duration">${durStr(s.duration)}</div>
+        </div>
+        ${topic ? `
+          <div class="session-topic-label">What we covered</div>
+          <div class="session-topic">${topic}</div>
+        ` : ''}
+        ${feedback.length || notes ? `
+          <div class="session-feedback">
+            ${feedback.length ? `
+              <div class="session-feedback-label">Session Feedback</div>
+              <div>${tagsHTML}</div>
+            ` : ''}
+            ${notes ? `<div class="session-notes">${notes}</div>` : ''}
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }).join('');
+
+  showState('results');
+}
+
+// ─── STATE MANAGEMENT ─────────────────────────────────────────────────────────
+function showState(state) {
+  document.getElementById('searchSection').classList.toggle('hidden', state !== 'search' && state !== 'results');
+  document.getElementById('loadingState').classList.toggle('hidden', state !== 'loading');
+  document.getElementById('errorState').classList.toggle('hidden', state !== 'error');
+  document.getElementById('resultsSection').classList.toggle('hidden', state !== 'results');
+  // Always show search bar at top
+  if (state === 'results') {
+    document.getElementById('searchSection').classList.remove('hidden');
+  }
+}
+
+function showError(title, sub) {
+  document.getElementById('errorTitle').textContent = title;
+  document.getElementById('errorSub').textContent   = sub;
+  showState('error');
+}
+</script>
+</body>
+</html>
