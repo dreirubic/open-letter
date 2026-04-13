@@ -3,14 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TutorLog — Session Tracker</title>
+<title>TutorLog — Open Letter</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg:#0d0f14;--surface:#161920;--surface2:#1e2230;--surface3:#252a3a;
     --border:#2a3045;--accent:#6ee7b7;--accent2:#38bdf8;--accent3:#f59e0b;
     --danger:#f87171;--text:#e8eaf0;--muted:#7a839e;--success:#4ade80;--warning:#fbbf24;
-    --ai:#c084fc;--ai-bg:rgba(192,132,252,0.1);--ai-border:rgba(192,132,252,0.3);
     --mono:'DM Mono',monospace;--sans:'DM Sans',sans-serif;--display:'Syne',sans-serif;
   }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -20,6 +19,7 @@
     radial-gradient(ellipse 60% 40% at 80% 80%,rgba(56,189,248,.04) 0%,transparent 60%)}
   .wrapper{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 16px 60px}
 
+  /* Sync bar */
   .sync-bar{display:flex;align-items:center;gap:10px;padding:9px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:16px;font-family:var(--mono);font-size:12px;flex-wrap:wrap}
   .sync-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:background .3s}
   .sync-dot.ok{background:var(--success);box-shadow:0 0 6px var(--success)}
@@ -31,10 +31,15 @@
   .sync-btn{background:var(--surface2);border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:4px 10px;cursor:pointer;font-family:var(--mono);font-size:11px;transition:all .15s}
   .sync-btn:hover{color:var(--text);border-color:var(--muted)}
 
+  /* Header */
   header{display:flex;align-items:center;justify-content:space-between;padding:20px 0 28px;border-bottom:1px solid var(--border);margin-bottom:28px;gap:16px;flex-wrap:wrap}
-  .logo-title{font-family:var(--display);font-size:26px;font-weight:800;letter-spacing:-.5px}
+  .brand{display:flex;flex-direction:column}
+  .brand-top{display:flex;align-items:center;gap:12px}
+  .brand-name{font-family:var(--display);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:2px;text-transform:uppercase}
+  .brand-divider{width:1px;height:20px;background:var(--border)}
+  .logo-title{font-family:var(--display);font-size:26px;font-weight:800;letter-spacing:-.5px;color:var(--text)}
   .logo-title span{color:var(--accent)}
-  .logo-sub{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-top:2px}
+  .logo-sub{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-top:3px}
   .header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
   .month-nav{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:6px 10px}
   .month-nav button{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;padding:2px 6px;border-radius:4px;transition:all .15s}
@@ -65,27 +70,6 @@
   .readonly-field{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:13px;color:var(--muted);min-height:42px;display:flex;align-items:center}
   .rate-display{font-family:var(--mono);font-size:22px;font-weight:500;color:var(--accent);background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px}
   .duration-display{font-family:var(--mono);font-size:16px;color:var(--accent2);background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px}
-
-  /* AI Polish */
-  .ai-field-wrap{display:flex;flex-direction:column;gap:6px}
-  .ai-field-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:2px}
-  .ai-polish-btn{display:inline-flex;align-items:center;gap:6px;background:var(--ai-bg);border:1px solid var(--ai-border);color:var(--ai);border-radius:20px;padding:5px 14px;font-family:var(--mono);font-size:11px;cursor:pointer;transition:all .2s;white-space:nowrap}
-  .ai-polish-btn:hover{background:rgba(192,132,252,.2);border-color:var(--ai)}
-  .ai-polish-btn:disabled{opacity:.5;cursor:not-allowed}
-  .ai-hint{font-family:var(--mono);font-size:10px;color:var(--muted)}
-  .spinner{width:10px;height:10px;border:2px solid rgba(192,132,252,.3);border-top-color:var(--ai);border-radius:50%;animation:spin .6s linear infinite;display:none}
-  .ai-polish-btn.loading .spinner{display:inline-block}
-  .ai-polish-btn.loading .btn-label{display:none}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  .ai-preview{background:var(--ai-bg);border:1px solid var(--ai-border);border-radius:8px;padding:14px;margin-top:4px;display:none}
-  .ai-preview.visible{display:block}
-  .ai-preview-label{font-family:var(--mono);font-size:10px;color:var(--ai);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
-  .ai-preview-text{font-size:13px;color:var(--text);line-height:1.7;white-space:pre-wrap}
-  .ai-preview-actions{display:flex;gap:8px;margin-top:10px}
-  .ai-accept-btn{background:var(--ai);color:var(--bg);border:none;border-radius:6px;padding:6px 16px;font-family:var(--display);font-size:12px;font-weight:700;cursor:pointer;transition:all .15s}
-  .ai-accept-btn:hover{opacity:.85}
-  .ai-discard-btn{background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-family:var(--mono);font-size:11px;cursor:pointer;transition:all .15s}
-  .ai-discard-btn:hover{color:var(--text);border-color:var(--muted)}
 
   .checkbox-group{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
   .checkbox-pill{display:flex;align-items:center;gap:6px;background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:6px 12px;cursor:pointer;transition:all .15s;user-select:none;font-size:13px;color:var(--muted)}
@@ -223,9 +207,13 @@
   </div>
 
   <header>
-    <div>
-      <div class="logo-title">Tutor<span>Log</span></div>
-      <div class="logo-sub">Session Tracker &amp; Earnings Dashboard</div>
+    <div class="brand">
+      <div class="brand-top">
+        <span class="brand-name">Open Letter</span>
+        <div class="brand-divider"></div>
+        <div class="logo-title">Tutor<span>Log</span></div>
+      </div>
+      <div class="logo-sub">Internal Session Tracker &amp; Earnings Dashboard</div>
     </div>
     <div class="header-right">
       <button class="today-btn" onclick="goToToday()">Today</button>
@@ -312,30 +300,10 @@
           <label>Transport Bonus</label>
           <div class="rate-display" id="transportDisplay" style="color:var(--accent3)">₱0.00</div>
         </div>
-
-        <!-- Topic with AI -->
         <div class="form-group full">
           <label>Topic / Notes</label>
-          <div class="ai-field-wrap">
-            <textarea id="topic" placeholder="What did you cover? Taglish or shorthand is fine — AI will clean it up."></textarea>
-            <div class="ai-field-actions">
-              <button class="ai-polish-btn" id="topic-btn" onclick="polishField('topic','topic-preview','topic-btn')">
-                <div class="spinner"></div>
-                <span class="btn-label">✨ Polish with AI</span>
-              </button>
-              <span class="ai-hint">Rewrites into professional English via Apps Script</span>
-            </div>
-            <div class="ai-preview" id="topic-preview">
-              <div class="ai-preview-label">✨ AI Suggestion</div>
-              <div class="ai-preview-text" id="topic-preview-text"></div>
-              <div class="ai-preview-actions">
-                <button class="ai-accept-btn" onclick="acceptPolish('topic','topic-preview')">Accept</button>
-                <button class="ai-discard-btn" onclick="discardPolish('topic-preview')">Discard</button>
-              </div>
-            </div>
-          </div>
+          <textarea id="topic" placeholder="What did you cover this session?"></textarea>
         </div>
-
         <div class="form-group full">
           <label>Student Feedback</label>
           <div class="checkbox-group" id="feedbackGroup">
@@ -347,30 +315,10 @@
             <label class="checkbox-pill"><input type="checkbox" value="Struggles with Concepts"> Struggles with Concepts</label>
           </div>
         </div>
-
-        <!-- Feedback Notes with AI -->
         <div class="form-group full">
           <label>Feedback Notes</label>
-          <div class="ai-field-wrap">
-            <textarea id="feedbackNotes" placeholder="Raw observations about the student — anything goes, AI will make it parent-ready."></textarea>
-            <div class="ai-field-actions">
-              <button class="ai-polish-btn" id="feedback-btn" onclick="polishField('feedbackNotes','feedback-preview','feedback-btn')">
-                <div class="spinner"></div>
-                <span class="btn-label">✨ Polish with AI</span>
-              </button>
-              <span class="ai-hint">Turns observations into a parent-ready message</span>
-            </div>
-            <div class="ai-preview" id="feedback-preview">
-              <div class="ai-preview-label">✨ AI Suggestion</div>
-              <div class="ai-preview-text" id="feedback-preview-text"></div>
-              <div class="ai-preview-actions">
-                <button class="ai-accept-btn" onclick="acceptPolish('feedbackNotes','feedback-preview')">Accept</button>
-                <button class="ai-discard-btn" onclick="discardPolish('feedback-preview')">Discard</button>
-              </div>
-            </div>
-          </div>
+          <textarea id="feedbackNotes" placeholder="Additional observations about the student..."></textarea>
         </div>
-
       </div>
       <div class="btn-row">
         <button class="btn btn-primary" id="addBtn" onclick="addSession()">＋ Add Session</button>
@@ -485,101 +433,18 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// ─── ONLY CONFIG NEEDED — no API keys here, all handled by Apps Script ────────
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxVWGyZLFzZGwAoS-gBgxVf0M77yAAr-20lrwwTM-dQBIGLxVTcGW44_7CwwjpfZEAv/exec';
-
-// ─── CLIENT PROFILES ──────────────────────────────────────────────────────────
-const CLIENTS = {
-  Manuel:   {address:'BF Homes',        rateType:'regular', transport:100},
-  Nica:     {address:'Mapayapa Village', rateType:'regular', transport:75},
-  Lea:      {address:'Novaliches',       rateType:'guitar',  transport:0},
-  Melody:   {address:'Pleasant Hills',   rateType:'regular', transport:0},
-  Princess: {address:'Ramax',            rateType:'regular', transport:140},
-  Gylian:   {address:'Online',           rateType:'gylian',  transport:0},
-};
-
-// ─── STATE ────────────────────────────────────────────────────────────────────
-let cache = [];
-const _n = new Date();
-let viewYear = _n.getFullYear(), viewMonth = _n.getMonth();
-let weekAnchor = mondayOf(_n);
-let editingId = null, dupSession = null;
-
+const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbxVWGyZLFzZGwAoS-gBgxVf0M77yAAr-20lrwwTM-dQBIGLxVTcGW44_7CwwjpfZEAv/exec';
+const CLIENTS={Manuel:{address:'BF Homes',rateType:'regular',transport:100},Nica:{address:'Mapayapa Village',rateType:'regular',transport:75},Lea:{address:'Novaliches',rateType:'guitar',transport:0},Melody:{address:'Pleasant Hills',rateType:'regular',transport:0},Princess:{address:'Ramax',rateType:'regular',transport:140},Gylian:{address:'Online',rateType:'gylian',transport:0}};
+let cache=[],editingId=null,dupSession=null;
+const _n=new Date();let viewYear=_n.getFullYear(),viewMonth=_n.getMonth(),weekAnchor=mondayOf(_n);
 function mondayOf(d){const x=new Date(d),dow=x.getDay();x.setDate(x.getDate()+(dow===0?-6:1-dow));x.setHours(0,0,0,0);return x}
-
-// ─── AI POLISH — routed through Apps Script, zero keys in browser ─────────────
-async function polishField(fieldId, previewId, btnId) {
-  const raw = document.getElementById(fieldId).value.trim();
-  if (!raw) return showToast('✏️ Type something first before polishing');
-
-  const btn = document.getElementById(btnId);
-  btn.disabled = true;
-  btn.classList.add('loading');
-
-  const student = document.getElementById('studentName').value.trim() || 'the student';
-  const type    = fieldId === 'topic' ? 'topic' : 'feedback';
-
-  try {
-    const data = await apiPost({ action: 'polish', text: raw, type, student });
-    if (!data.polished) throw new Error('No result returned');
-    document.getElementById(previewId + '-text').textContent = data.polished;
-    document.getElementById(previewId).classList.add('visible');
-    showToast('✨ AI suggestion ready!');
-  } catch(e) {
-    showToast('❌ AI polish failed — ' + e.message);
-  } finally {
-    btn.disabled = false;
-    btn.classList.remove('loading');
-  }
-}
-
-function acceptPolish(fieldId, previewId) {
-  document.getElementById(fieldId).value = document.getElementById(previewId + '-text').textContent;
-  discardPolish(previewId);
-  showToast('✅ Applied!');
-}
-function discardPolish(previewId) {
-  document.getElementById(previewId).classList.remove('visible');
-}
-
-// ─── SYNC UI ──────────────────────────────────────────────────────────────────
-function setSync(state,msg){
-  document.getElementById('syncDot').className='sync-dot '+state;
-  document.getElementById('syncText').textContent=msg;
-}
-function stampSync(){
-  document.getElementById('syncTime').textContent='Last sync: '+new Date().toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit'});
-}
-
-// ─── API ──────────────────────────────────────────────────────────────────────
-async function loadData(){
-  setSync('busy','Syncing with Google Sheets…');
-  try{
-    const data=await fetch(APPS_SCRIPT_URL).then(r=>r.json());
-    if(data.status==='ok'){
-      cache=data.sessions||[];
-      localStorage.setItem('tl_cache',JSON.stringify(cache));
-      setSync('ok',`Synced — ${cache.length} session${cache.length!==1?'s':''} loaded`);
-      stampSync();renderAll();
-    } else throw new Error(data.message||'Unknown error');
-  } catch(e){
-    const local=localStorage.getItem('tl_cache');
-    if(local){cache=JSON.parse(local);setSync('err',`Offline — showing cached data (${cache.length} sessions)`);renderAll();}
-    else setSync('err','Could not connect. No local cache found.');
-  }
-}
-
-async function apiPost(payload){
-  const res=await fetch(APPS_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)});
-  const data=await res.json();
-  if(data.status!=='ok')throw new Error(data.message||'Server error');
-  return data;
-}
-
-// ─── CALCULATIONS ─────────────────────────────────────────────────────────────
+function setSync(s,m){document.getElementById('syncDot').className='sync-dot '+s;document.getElementById('syncText').textContent=m}
+function stampSync(){document.getElementById('syncTime').textContent='Last sync: '+new Date().toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit'})}
+async function loadData(){setSync('busy','Syncing…');try{const d=await fetch(APPS_SCRIPT_URL).then(r=>r.json());if(d.status==='ok'){cache=d.sessions||[];localStorage.setItem('tl_cache',JSON.stringify(cache));setSync('ok',`Synced — ${cache.length} session${cache.length!==1?'s':''} loaded`);stampSync();renderAll();}else throw new Error(d.message);}catch(e){const l=localStorage.getItem('tl_cache');if(l){cache=JSON.parse(l);setSync('err',`Offline — cached data (${cache.length} sessions)`);renderAll();}else setSync('err','Could not connect.');}}
+async function apiPost(p){const r=await fetch(APPS_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(p)});const d=await r.json();if(d.status!=='ok')throw new Error(d.message||'Error');return d;}
 function calcDur(s,e){if(!s||!e)return null;const[sh,sm]=s.split(':').map(Number),[eh,em]=e.split(':').map(Number),d=(eh*60+em)-(sh*60+sm);return d>0?d/60:null}
 function calcEarn(rt,dur){if(rt==='guitar')return 600;if(rt==='gylian')return 450;return dur?Math.round(dur*225*100)/100:0}
-function calcTrans(name){if(!name)return 0;const p=CLIENTS[name];if(p)return p.transport;const l=name.toLowerCase();if(l.includes('manuel'))return 100;if(l.includes('princess'))return 140;if(l.includes('nica'))return 75;return 0}
+function calcTrans(n){if(!n)return 0;const p=CLIENTS[n];if(p)return p.transport;const l=n.toLowerCase();if(l.includes('manuel'))return 100;if(l.includes('princess'))return 140;if(l.includes('nica'))return 75;return 0}
 function clientName(){const v=document.getElementById('clientSelect').value;return v==='custom'?document.getElementById('customClientName').value.trim():v}
 function clientAddr(){const v=document.getElementById('clientSelect').value;if(v==='custom')return document.getElementById('customAddress').value.trim();return CLIENTS[v]?.address||'—'}
 function cutoff(ds){return new Date(ds).getDate()<=15?1:2}
@@ -592,346 +457,35 @@ function peso(n){return'₱'+n.toLocaleString('en-PH',{minimumFractionDigits:2,m
 function durStr(h){if(!h)return'—';const hrs=Math.floor(h),mins=Math.round((h-hrs)*60);if(!hrs)return`${mins}m`;if(!mins)return`${hrs}h`;return`${hrs}h ${mins}m`}
 function dtStr(s){return new Date(s+'T00:00:00').toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'})}
 function iso(d){return d.toISOString().split('T')[0]}
-
-// ─── FORM ─────────────────────────────────────────────────────────────────────
-function handleClientSelect(){
-  const v=document.getElementById('clientSelect').value,isC=v==='custom';
-  document.getElementById('customClientGroup').style.display=isC?'flex':'none';
-  document.getElementById('customAddressGroup').style.display=isC?'flex':'none';
-  document.getElementById('addressDisplayGroup').style.display=isC?'none':'flex';
-  if(!isC&&v){const p=CLIENTS[v];document.getElementById('addressDisplay').textContent=p?.address||'—';document.getElementById('rateType').value=p?.rateType||'regular';}
-  else if(!v)document.getElementById('addressDisplay').textContent='—';
-  updateCalc();
-}
-function updateCalc(){
-  const start=document.getElementById('startTime').value,end=document.getElementById('endTime').value;
-  const rt=document.getElementById('rateType').value,dur=calcDur(start,end);
-  document.getElementById('durationDisplay').textContent=dur?durStr(dur):'—';
-  document.getElementById('earningsDisplay').textContent=peso(calcEarn(rt,dur));
-  document.getElementById('transportDisplay').textContent=peso(calcTrans(clientName()));
-}
+function handleClientSelect(){const v=document.getElementById('clientSelect').value,isC=v==='custom';document.getElementById('customClientGroup').style.display=isC?'flex':'none';document.getElementById('customAddressGroup').style.display=isC?'flex':'none';document.getElementById('addressDisplayGroup').style.display=isC?'none':'flex';if(!isC&&v){const p=CLIENTS[v];document.getElementById('addressDisplay').textContent=p?.address||'—';document.getElementById('rateType').value=p?.rateType||'regular';}else if(!v)document.getElementById('addressDisplay').textContent='—';updateCalc();}
+function updateCalc(){const start=document.getElementById('startTime').value,end=document.getElementById('endTime').value,rt=document.getElementById('rateType').value,dur=calcDur(start,end);document.getElementById('durationDisplay').textContent=dur?durStr(dur):'—';document.getElementById('earningsDisplay').textContent=peso(calcEarn(rt,dur));document.getElementById('transportDisplay').textContent=peso(calcTrans(clientName()));}
 function initPills(root){(root||document).querySelectorAll('.checkbox-pill').forEach(p=>{const cb=p.querySelector('input[type=checkbox]');if(cb)cb.addEventListener('change',()=>p.classList.toggle('checked',cb.checked))})}
 function getChecked(root){return Array.from((root||document).querySelectorAll('.checkbox-pill input:checked')).map(c=>c.value)}
-function clearForm(){
-  document.getElementById('clientSelect').value='';
-  ['customClientName','customAddress','studentName','startTime','endTime','topic','feedbackNotes'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('customClientGroup').style.display='none';
-  document.getElementById('customAddressGroup').style.display='none';
-  document.getElementById('addressDisplayGroup').style.display='flex';
-  document.getElementById('addressDisplay').textContent='—';
-  document.getElementById('rateType').value='regular';
-  document.getElementById('sessionDate').value=iso(new Date());
-  document.querySelectorAll('#feedbackGroup input[type=checkbox]').forEach(c=>{c.checked=false;c.closest('.checkbox-pill').classList.remove('checked')});
-  document.getElementById('durationDisplay').textContent='—';
-  document.getElementById('earningsDisplay').textContent='₱0.00';
-  document.getElementById('transportDisplay').textContent='₱0.00';
-  discardPolish('topic-preview');discardPolish('feedback-preview');
-}
-
-// ─── ADD ──────────────────────────────────────────────────────────────────────
-async function addSession(){
-  const client=clientName(),address=clientAddr();
-  const student=document.getElementById('studentName').value.trim();
-  const date=document.getElementById('sessionDate').value;
-  const start=document.getElementById('startTime').value,end=document.getElementById('endTime').value;
-  const rt=document.getElementById('rateType').value;
-  const topic=document.getElementById('topic').value.trim();
-  const fNotes=document.getElementById('feedbackNotes').value.trim();
-  const fb=getChecked();
-  if(!client)return showToast('❌ Select or enter a client');
-  if(!student)return showToast('❌ Enter student name');
-  if(!date)return showToast('❌ Select a date');
-  if(!start||!end)return showToast('❌ Enter start and end times');
-  const dur=calcDur(start,end);
-  if(!dur)return showToast('❌ End time must be after start time');
-  const session={id:Date.now().toString(),client,address,student,date,start,end,duration:dur,rateType:rt,topic,feedback:fb,feedbackNotes:fNotes,earnings:calcEarn(rt,dur),transport:calcTrans(client)};
-  const btn=document.getElementById('addBtn');
-  btn.disabled=true;btn.textContent='Saving…';
-  setSync('busy','Saving to Google Sheets…');
-  try{
-    await apiPost({action:'add',session});
-    clearForm();showToast('✅ Session saved!');await loadData();
-  } catch(e){
-    cache.push(session);localStorage.setItem('tl_cache',JSON.stringify(cache));
-    setSync('err','Saved locally — Sheets unreachable.');showToast('⚠️ Saved locally');renderAll();
-  } finally{btn.disabled=false;btn.textContent='＋ Add Session';}
-}
-
-// ─── DELETE / CLEAR ───────────────────────────────────────────────────────────
-async function deleteSession(id){
-  if(!confirm('Delete this session?'))return;
-  setSync('busy','Deleting…');
-  try{await apiPost({action:'delete',id});showToast('🗑 Session deleted');await loadData();}
-  catch(e){cache=cache.filter(s=>s.id!==id);localStorage.setItem('tl_cache',JSON.stringify(cache));setSync('err','Deleted locally.');showToast('🗑 Deleted locally');renderAll();}
-}
-async function clearAll(){
-  if(!confirm('Clear ALL sessions? This cannot be undone.'))return;
-  setSync('busy','Clearing…');
-  try{await apiPost({action:'clearAll'});showToast('🗑 All sessions cleared');await loadData();}
-  catch(e){setSync('err',`Clear failed: ${e.message}`);showToast('❌ Clear failed');}
-}
-
-// ─── EDIT ─────────────────────────────────────────────────────────────────────
-function openEdit(id){
-  const s=cache.find(x=>x.id===id);if(!s)return;editingId=id;
-  const LABELS=['Attentive','Participative','Distracted','Needs Improvement','Fast Learner','Struggles with Concepts'];
-  const fbHTML=LABELS.map(f=>`<label class="checkbox-pill${s.feedback.includes(f)?' checked':''}"><input type="checkbox" value="${f}" ${s.feedback.includes(f)?'checked':''}> ${f}</label>`).join('');
-  document.getElementById('editFormContent').innerHTML=`
-    <div class="form-group"><label>Client</label><input type="text" id="e_client" value="${s.client}"></div>
-    <div class="form-group"><label>Address</label><input type="text" id="e_address" value="${s.address||''}"></div>
-    <div class="form-group"><label>Student</label><input type="text" id="e_student" value="${s.student}"></div>
-    <div class="form-group"><label>Date</label><input type="date" id="e_date" value="${s.date}"></div>
-    <div class="form-group"><label>Start</label><input type="time" id="e_start" value="${s.start}"></div>
-    <div class="form-group"><label>End</label><input type="time" id="e_end" value="${s.end}"></div>
-    <div class="form-group"><label>Rate Type</label><select id="e_rate">
-      <option value="regular" ${s.rateType==='regular'?'selected':''}>Regular (₱225/hr)</option>
-      <option value="guitar" ${s.rateType==='guitar'?'selected':''}>Lea — Guitar (₱600)</option>
-      <option value="gylian" ${s.rateType==='gylian'?'selected':''}>Gylian (₱450/session)</option>
-    </select></div>
-    <div class="form-group full"><label>Topic</label><textarea id="e_topic">${s.topic||''}</textarea></div>
-    <div class="form-group full"><label>Feedback</label><div class="checkbox-group" id="editFeedback">${fbHTML}</div></div>
-    <div class="form-group full"><label>Feedback Notes</label><textarea id="e_notes">${s.feedbackNotes||''}</textarea></div>
-  `;
-  initPills(document.getElementById('editFormContent'));
-  document.getElementById('editModal').classList.add('open');
-}
+function clearForm(){document.getElementById('clientSelect').value='';['customClientName','customAddress','studentName','startTime','endTime','topic','feedbackNotes'].forEach(id=>document.getElementById(id).value='');document.getElementById('customClientGroup').style.display='none';document.getElementById('customAddressGroup').style.display='none';document.getElementById('addressDisplayGroup').style.display='flex';document.getElementById('addressDisplay').textContent='—';document.getElementById('rateType').value='regular';document.getElementById('sessionDate').value=iso(new Date());document.querySelectorAll('#feedbackGroup input[type=checkbox]').forEach(c=>{c.checked=false;c.closest('.checkbox-pill').classList.remove('checked')});document.getElementById('durationDisplay').textContent='—';document.getElementById('earningsDisplay').textContent='₱0.00';document.getElementById('transportDisplay').textContent='₱0.00';}
+async function addSession(){const client=clientName(),address=clientAddr(),student=document.getElementById('studentName').value.trim(),date=document.getElementById('sessionDate').value,start=document.getElementById('startTime').value,end=document.getElementById('endTime').value,rt=document.getElementById('rateType').value,topic=document.getElementById('topic').value.trim(),fNotes=document.getElementById('feedbackNotes').value.trim(),fb=getChecked();if(!client)return showToast('❌ Select or enter a client');if(!student)return showToast('❌ Enter student name');if(!date)return showToast('❌ Select a date');if(!start||!end)return showToast('❌ Enter start and end times');const dur=calcDur(start,end);if(!dur)return showToast('❌ End time must be after start time');const session={id:Date.now().toString(),client,address,student,date,start,end,duration:dur,rateType:rt,topic,feedback:fb,feedbackNotes:fNotes,earnings:calcEarn(rt,dur),transport:calcTrans(client)};const btn=document.getElementById('addBtn');btn.disabled=true;btn.textContent='Saving…';setSync('busy','Saving…');try{await apiPost({action:'add',session});clearForm();showToast('✅ Session saved!');await loadData();}catch(e){cache.push(session);localStorage.setItem('tl_cache',JSON.stringify(cache));setSync('err','Saved locally.');showToast('⚠️ Saved locally');renderAll();}finally{btn.disabled=false;btn.textContent='＋ Add Session';}}
+async function deleteSession(id){if(!confirm('Delete this session?'))return;setSync('busy','Deleting…');try{await apiPost({action:'delete',id});showToast('🗑 Deleted');await loadData();}catch(e){cache=cache.filter(s=>s.id!==id);localStorage.setItem('tl_cache',JSON.stringify(cache));setSync('err','Deleted locally.');showToast('🗑 Deleted locally');renderAll();}}
+async function clearAll(){if(!confirm('Clear ALL sessions? This cannot be undone.'))return;setSync('busy','Clearing…');try{await apiPost({action:'clearAll'});showToast('🗑 All cleared');await loadData();}catch(e){setSync('err','Clear failed.');showToast('❌ Clear failed');}}
+function openEdit(id){const s=cache.find(x=>x.id===id);if(!s)return;editingId=id;const LABELS=['Attentive','Participative','Distracted','Needs Improvement','Fast Learner','Struggles with Concepts'];const fbHTML=LABELS.map(f=>`<label class="checkbox-pill${s.feedback.includes(f)?' checked':''}"><input type="checkbox" value="${f}" ${s.feedback.includes(f)?'checked':''}> ${f}</label>`).join('');document.getElementById('editFormContent').innerHTML=`<div class="form-group"><label>Client</label><input type="text" id="e_client" value="${s.client}"></div><div class="form-group"><label>Address</label><input type="text" id="e_address" value="${s.address||''}"></div><div class="form-group"><label>Student</label><input type="text" id="e_student" value="${s.student}"></div><div class="form-group"><label>Date</label><input type="date" id="e_date" value="${s.date}"></div><div class="form-group"><label>Start</label><input type="time" id="e_start" value="${s.start}"></div><div class="form-group"><label>End</label><input type="time" id="e_end" value="${s.end}"></div><div class="form-group"><label>Rate Type</label><select id="e_rate"><option value="regular" ${s.rateType==='regular'?'selected':''}>Regular (₱225/hr)</option><option value="guitar" ${s.rateType==='guitar'?'selected':''}>Lea — Guitar (₱600)</option><option value="gylian" ${s.rateType==='gylian'?'selected':''}>Gylian (₱450/session)</option></select></div><div class="form-group full"><label>Topic</label><textarea id="e_topic">${s.topic||''}</textarea></div><div class="form-group full"><label>Feedback</label><div class="checkbox-group" id="editFeedback">${fbHTML}</div></div><div class="form-group full"><label>Feedback Notes</label><textarea id="e_notes">${s.feedbackNotes||''}</textarea></div>`;initPills(document.getElementById('editFormContent'));document.getElementById('editModal').classList.add('open');}
 function closeModal(){document.getElementById('editModal').classList.remove('open');editingId=null}
-async function saveEdit(){
-  const s=cache.find(x=>x.id===editingId);if(!s)return;
-  const client=document.getElementById('e_client').value.trim();
-  const address=document.getElementById('e_address').value.trim();
-  const student=document.getElementById('e_student').value.trim();
-  const date=document.getElementById('e_date').value;
-  const start=document.getElementById('e_start').value,end=document.getElementById('e_end').value;
-  const rt=document.getElementById('e_rate').value;
-  const topic=document.getElementById('e_topic').value.trim();
-  const fNotes=document.getElementById('e_notes').value.trim();
-  const fb=getChecked(document.getElementById('editFormContent'));
-  const dur=calcDur(start,end);
-  const updated={...s,client,address,student,date,start,end,duration:dur,rateType:rt,topic,feedbackNotes:fNotes,feedback:fb,earnings:calcEarn(rt,dur),transport:calcTrans(client)};
-  const btn=document.getElementById('saveEditBtn');
-  btn.disabled=true;btn.textContent='Saving…';setSync('busy','Updating…');
-  try{
-    await apiPost({action:'update',session:updated});
-    closeModal();showToast('✏️ Session updated!');await loadData();
-  } catch(e){
-    const idx=cache.findIndex(x=>x.id===editingId);if(idx>-1)cache[idx]=updated;
-    localStorage.setItem('tl_cache',JSON.stringify(cache));
-    setSync('err','Updated locally.');showToast('⚠️ Updated locally');closeModal();renderAll();
-  } finally{btn.disabled=false;btn.textContent='Save Changes';}
-}
-
-// ─── DUPLICATE ────────────────────────────────────────────────────────────────
+async function saveEdit(){const s=cache.find(x=>x.id===editingId);if(!s)return;const client=document.getElementById('e_client').value.trim(),address=document.getElementById('e_address').value.trim(),student=document.getElementById('e_student').value.trim(),date=document.getElementById('e_date').value,start=document.getElementById('e_start').value,end=document.getElementById('e_end').value,rt=document.getElementById('e_rate').value,topic=document.getElementById('e_topic').value.trim(),fNotes=document.getElementById('e_notes').value.trim(),fb=getChecked(document.getElementById('editFormContent')),dur=calcDur(start,end),updated={...s,client,address,student,date,start,end,duration:dur,rateType:rt,topic,feedbackNotes:fNotes,feedback:fb,earnings:calcEarn(rt,dur),transport:calcTrans(client)};const btn=document.getElementById('saveEditBtn');btn.disabled=true;btn.textContent='Saving…';setSync('busy','Updating…');try{await apiPost({action:'update',session:updated});closeModal();showToast('✏️ Updated!');await loadData();}catch(e){const idx=cache.findIndex(x=>x.id===editingId);if(idx>-1)cache[idx]=updated;localStorage.setItem('tl_cache',JSON.stringify(cache));setSync('err','Updated locally.');showToast('⚠️ Updated locally');closeModal();renderAll();}finally{btn.disabled=false;btn.textContent='Save Changes';}}
 function openDuplicate(id){dupSession=cache.find(s=>s.id===id);if(dupSession)document.getElementById('dupModal').classList.add('open')}
 function closeDupModal(){document.getElementById('dupModal').classList.remove('open');dupSession=null}
-function confirmDuplicate(){
-  if(!dupSession)return;const s=dupSession,sel=document.getElementById('clientSelect');
-  const known=Array.from(sel.options).find(o=>o.value===s.client);
-  if(known){
-    sel.value=s.client;
-    document.getElementById('customClientGroup').style.display='none';
-    document.getElementById('customAddressGroup').style.display='none';
-    document.getElementById('addressDisplayGroup').style.display='flex';
-    document.getElementById('addressDisplay').textContent=CLIENTS[s.client]?.address||s.address||'—';
-  } else {
-    sel.value='custom';
-    document.getElementById('customClientGroup').style.display='flex';
-    document.getElementById('customAddressGroup').style.display='flex';
-    document.getElementById('addressDisplayGroup').style.display='none';
-    document.getElementById('customClientName').value=s.client;
-    document.getElementById('customAddress').value=s.address||'';
-  }
-  document.getElementById('studentName').value=s.student;
-  document.getElementById('sessionDate').value=iso(new Date());
-  document.getElementById('startTime').value=s.start;
-  document.getElementById('endTime').value=s.end;
-  document.getElementById('rateType').value=s.rateType;
-  document.getElementById('topic').value=s.topic||'';
-  document.getElementById('feedbackNotes').value=s.feedbackNotes||'';
-  document.querySelectorAll('#feedbackGroup input[type=checkbox]').forEach(c=>{c.checked=s.feedback.includes(c.value);c.closest('.checkbox-pill').classList.toggle('checked',c.checked)});
-  updateCalc();closeDupModal();
-  switchTab('log',document.querySelectorAll('.tab')[0]);
-  showToast('📋 Copied to form — adjust and submit!');
-}
-
-// ─── EXPORT ───────────────────────────────────────────────────────────────────
-function exportCSV(){
-  const arr=cache.filter(s=>{const d=new Date(s.date);return d.getFullYear()===viewYear&&d.getMonth()===viewMonth});
-  if(!arr.length)return showToast('No sessions to export this month');
-  const hdr=['ID','Client','Address','Student','Date','Start','End','Duration(hrs)','Rate Type','Earnings','Transport','Topic','Feedback','Notes'];
-  const rows=arr.map(s=>[s.id,s.client,s.address||'',s.student,s.date,s.start,s.end,s.duration?.toFixed(2)||'',s.rateType,s.earnings,s.transport,`"${(s.topic||'').replace(/"/g,'""')}"`,`"${(s.feedback||[]).join('; ')}"`,`"${(s.feedbackNotes||'').replace(/"/g,'""')}"`]);
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([[hdr,...rows].map(r=>r.join(',')).join('\n')],{type:'text/csv'}));
-  a.download=`TutorLog_${new Date(viewYear,viewMonth).toLocaleString('en-PH',{month:'long',year:'numeric'}).replace(' ','_')}.csv`;
-  a.click();showToast('⬇ CSV exported!');
-}
-
-// ─── RENDER ───────────────────────────────────────────────────────────────────
-function renderSessions(){
-  const mn=new Date(viewYear,viewMonth).toLocaleString('en-PH',{month:'long',year:'numeric'});
-  document.getElementById('sessionsMonthTitle').textContent=mn;
-  const arr=cache.filter(s=>{const d=new Date(s.date);return d.getFullYear()===viewYear&&d.getMonth()===viewMonth}).sort((a,b)=>b.date.localeCompare(a.date)||b.id.localeCompare(a.id));
-  const body=document.getElementById('sessionsBody');
-  if(!arr.length){body.innerHTML=`<tr><td colspan="12"><div class="empty-state"><div class="icon">📋</div><p>No sessions for ${mn}.</p></div></td></tr>`;return}
-  const RP={regular:'pill-blue',guitar:'pill-amber',gylian:'pill-purple'};
-  const RL={regular:'Regular',guitar:'Guitar',gylian:'Gylian'};
-  body.innerHTML=arr.map(s=>`<tr>
-    <td><b>${s.client}</b></td>
-    <td style="font-size:12px;color:var(--muted)">${s.address||'—'}</td>
-    <td>${s.student}</td><td>${dtStr(s.date)}</td>
-    <td style="font-family:var(--mono);font-size:12px;white-space:nowrap">${s.start}–${s.end}</td>
-    <td style="font-family:var(--mono)">${durStr(s.duration)}</td>
-    <td style="max-width:140px;font-size:12px">${s.topic||'—'}</td>
-    <td style="max-width:180px">${(s.feedback||[]).map(f=>`<span class="tag">${f}</span>`).join('')||'—'}${s.feedbackNotes?`<div style="font-size:11px;color:var(--muted);margin-top:3px">${s.feedbackNotes}</div>`:''}</td>
-    <td><span class="pill ${RP[s.rateType]||'pill-blue'}">${RL[s.rateType]||s.rateType}</span></td>
-    <td class="earnings-cell">${peso(s.earnings)}</td>
-    <td class="transport-cell">${s.transport>0?peso(s.transport):'—'}</td>
-    <td style="white-space:nowrap">
-      <button class="btn btn-ghost btn-sm" onclick="openEdit('${s.id}')" title="Edit">✏️</button>
-      <button class="btn btn-ghost btn-sm" onclick="openDuplicate('${s.id}')" title="Duplicate">📋</button>
-      <button class="btn btn-danger btn-sm" onclick="deleteSession('${s.id}')" title="Delete">🗑</button>
-    </td>
-  </tr>`).join('');
-}
-
-function renderDashboard(){
-  const {c1,c2}=groupCutoff(cache,viewMonth,viewYear);
-  const s1=sumGrp(c1),s2=sumGrp(c2);
-  const today=new Date(),isNow=today.getFullYear()===viewYear&&today.getMonth()===viewMonth;
-  const day=isNow?today.getDate():16,cur=day<=15?s1:s2,lbl=day<=15?'Cutoff 1 (Day 1–15)':'Cutoff 2 (Day 16–End)';
-  document.getElementById('dashCutoffLabel').textContent=lbl;
-  document.getElementById('currentCutoffStats').innerHTML=`
-    <div class="stat-card"><div class="stat-label">Sessions</div><div class="stat-value accent">${cur.sessions}</div><div class="stat-sub">${lbl}</div></div>
-    <div class="stat-card"><div class="stat-label">Earnings</div><div class="stat-value" style="font-size:20px">${peso(cur.earnings)}</div><div class="stat-sub">Tutoring</div></div>
-    <div class="stat-card"><div class="stat-label">Transport Bonus</div><div class="stat-value amber" style="font-size:20px">${peso(cur.transport)}</div><div class="stat-sub">Accumulated</div></div>
-    <div class="stat-card"><div class="stat-label">Combined Total</div><div class="stat-value blue" style="font-size:20px">${peso(cur.earnings+cur.transport)}</div><div class="stat-sub">All-in</div></div>
-  `;
-  const pct=Math.min((cur.sessions/20)*100,100);
-  document.getElementById('progressWrap').innerHTML=`
-    <div class="progress-header"><span class="progress-label">Attendance Goal (20 sessions)</span><span class="progress-count">${cur.sessions} / 20</span></div>
-    <div class="progress-bar"><div class="progress-fill ${cur.sessions>20?'exceeded':''}" style="width:${pct}%"></div></div>
-  `;
-  const ch=s=>`
-    <div class="cutoff-row"><span class="cutoff-row-label">Sessions</span><span class="cutoff-row-val">${s.sessions}</span></div>
-    <div class="cutoff-row"><span class="cutoff-row-label">Earnings</span><span class="cutoff-row-val" style="color:var(--accent)">${peso(s.earnings)}</span></div>
-    <div class="cutoff-row"><span class="cutoff-row-label">Transport</span><span class="cutoff-row-val" style="color:var(--accent3)">${peso(s.transport)}</span></div>
-    <div class="cutoff-total"><span class="cutoff-total-label">Combined</span><span class="cutoff-total-val">${peso(s.earnings+s.transport)}</span></div>
-  `;
-  document.getElementById('cutoff1Details').innerHTML=ch(s1);
-  document.getElementById('cutoff2Details').innerHTML=ch(s2);
-  const tot=s1.earnings+s1.transport+s2.earnings+s2.transport;
-  document.getElementById('monthlySummary').innerHTML=`
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
-      <div class="stat-card"><div class="stat-label">Cutoff 1</div><div class="stat-value" style="font-size:18px">${peso(s1.earnings+s1.transport)}</div><div class="stat-sub">${s1.sessions} sessions</div></div>
-      <div class="stat-card"><div class="stat-label">Cutoff 2</div><div class="stat-value" style="font-size:18px">${peso(s2.earnings+s2.transport)}</div><div class="stat-sub">${s2.sessions} sessions</div></div>
-    </div>
-    <div class="monthly-total"><div class="monthly-total-label">Monthly Total</div><div class="monthly-total-val">${peso(tot)}</div></div>
-  `;
-}
-
-function renderPerformance(){
-  const {c1,c2}=groupCutoff(cache,viewMonth,viewYear);
-  const perf=(title,s)=>{
-    const T=20,TE=9000,st=status(s.sessions),diff=s.earnings-TE,extra=s.sessions-T,exc=s.sessions>T;
-    const pct=Math.min((s.sessions/T)*100,100);
-    const over=exc?`<div class="over-card"><div><div class="over-text">🏆 Overachieved by ${peso(Math.max(0,diff))}</div><div class="over-sub">+${extra} extra session${extra!==1?'s':''} beyond goal</div></div><span class="exceeded-badge">Exceeded Goal</span></div>`:'';
-    return `
-      <div class="card-title"><span class="dot ${st==='below'?'red':st==='ontrack'?'blue':''}"></span>${title}</div>
-      <div class="stats-grid">
-        <div class="stat-card"><div class="stat-label">Target</div><div class="stat-value">${T}</div><div class="stat-sub">sessions</div></div>
-        <div class="stat-card"><div class="stat-label">Actual</div><div class="stat-value ${exc?'accent':''}">${s.sessions}</div><div class="stat-sub">${exc?'🔥 Exceeded':''}</div></div>
-        <div class="stat-card"><div class="stat-label">Target Earnings</div><div class="stat-value" style="font-size:16px">${peso(TE)}</div><div class="stat-sub">20 × ₱450</div></div>
-        <div class="stat-card"><div class="stat-label">Actual Earnings</div><div class="stat-value" style="font-size:16px">${peso(s.earnings)}</div><div class="stat-sub">Logged</div></div>
-      </div>
-      <div class="progress-wrap" style="margin-bottom:16px">
-        <div class="progress-header"><span class="progress-label">Session Progress</span><span class="progress-count">${s.sessions} / ${T}</span></div>
-        <div class="progress-bar"><div class="progress-fill ${exc?'exceeded':''}" style="width:${pct}%"></div></div>
-      </div>
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px">
-        <div class="perf-row"><span class="perf-row-label">STATUS</span><span class="status-badge ${SC[st]}">${SL[st]}</span></div>
-        <div class="perf-row"><span class="perf-row-label">EARNINGS vs TARGET</span><span class="perf-row-val ${diff>=0?'diff-positive':'diff-negative'}">${diff>=0?'+':''}${peso(diff)}</span></div>
-        <div class="perf-row"><span class="perf-row-label">TRANSPORT BONUS</span><span class="perf-row-val" style="color:var(--accent3)">${peso(s.transport)}</span></div>
-        <div class="perf-row"><span class="perf-row-label">COMBINED TOTAL</span><span class="perf-row-val" style="color:var(--accent)">${peso(s.earnings+s.transport)}</span></div>
-      </div>${over}`;
-  };
-  document.getElementById('perfCutoff1').innerHTML=perf('Cutoff 1 — Day 1–15',sumGrp(c1));
-  document.getElementById('perfCutoff2').innerHTML=perf('Cutoff 2 — Day 16–End',sumGrp(c2));
-}
-
-function renderWeekly(){
-  const DAYS=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],today=iso(new Date());
-  const wk=Array.from({length:7},(_,i)=>{const d=new Date(weekAnchor);d.setDate(d.getDate()+i);return d});
-  const ws=iso(wk[0]),we=iso(wk[6]);
-  const opts={month:'short',day:'numeric'};
-  document.getElementById('weekLabel').textContent=`${wk[0].toLocaleDateString('en-PH',opts)} – ${wk[6].toLocaleDateString('en-PH',{...opts,year:'numeric'})}`;
-  const wkArr=cache.filter(s=>s.date>=ws&&s.date<=we);
-  document.getElementById('weekGrid').innerHTML=wk.map((d,i)=>{
-    const ds=iso(d),ds2=wkArr.filter(s=>s.date===ds),earn=ds2.reduce((a,s)=>a+s.earnings+s.transport,0);
-    return `<div class="week-day ${ds2.length?'has-session':''} ${ds===today?'today':''}">
-      <div class="week-day-name">${DAYS[i]}</div><div class="week-day-num">${d.getDate()}</div>
-      ${ds2.length?`<div class="week-day-count">${ds2.length}×</div><div class="week-day-earn">${peso(earn)}</div>`:`<div class="week-day-count" style="color:var(--border)">—</div>`}
-    </div>`;
-  }).join('');
-  const wb=document.getElementById('weekSessionsBody');
-  if(!wkArr.length){wb.innerHTML=`<tr><td colspan="7"><div class="empty-state"><div class="icon">📅</div><p>No sessions this week.</p></div></td></tr>`;return}
-  wb.innerHTML=wkArr.sort((a,b)=>a.date.localeCompare(b.date)||a.start.localeCompare(b.start)).map(s=>`<tr>
-    <td><b>${s.client}</b></td><td>${s.student}</td><td>${dtStr(s.date)}</td>
-    <td style="font-family:var(--mono);font-size:12px">${s.start}–${s.end}</td>
-    <td style="font-family:var(--mono)">${durStr(s.duration)}</td>
-    <td class="earnings-cell">${peso(s.earnings)}</td>
-    <td class="transport-cell">${s.transport>0?peso(s.transport):'—'}</td>
-  </tr>`).join('');
-}
-
-function renderClients(){
-  document.getElementById('clientGrid').innerHTML=Object.entries(CLIENTS).map(([name,p])=>{
-    const cs=cache.filter(s=>s.client===name);
-    const te=cs.reduce((a,s)=>a+s.earnings,0),tt=cs.reduce((a,s)=>a+s.transport,0);
-    const last=cs.length?[...cs].sort((a,b)=>b.date.localeCompare(a.date))[0].date:null;
-    const rl=p.rateType==='guitar'?'₱600/session':p.rateType==='gylian'?'₱300/hr · ₱450/session':'₱225/hr';
-    return `<div class="client-card">
-      <div class="client-name">${name}</div>
-      <div class="client-detail"><span class="client-detail-label">Address</span><span class="client-detail-val">${p.address}</span></div>
-      <div class="client-detail"><span class="client-detail-label">Rate</span><span class="client-detail-val">${rl}</span></div>
-      <div class="client-detail"><span class="client-detail-label">Transport</span><span class="client-detail-val" style="color:var(--accent3)">${p.transport>0?peso(p.transport):'None'}</span></div>
-      <div class="client-detail"><span class="client-detail-label">Total Sessions</span><span class="client-detail-val" style="color:var(--accent)">${cs.length}</span></div>
-      <div class="client-detail"><span class="client-detail-label">Total Earned</span><span class="client-detail-val">${peso(te)}</span></div>
-      <div class="client-detail"><span class="client-detail-label">Total Transport</span><span class="client-detail-val">${peso(tt)}</span></div>
-      <div class="client-detail"><span class="client-detail-label">Last Session</span><span class="client-detail-val">${last?dtStr(last):'—'}</span></div>
-    </div>`;
-  }).join('');
-}
-
-function renderAll(){
-  document.getElementById('monthLabel').textContent=new Date(viewYear,viewMonth).toLocaleString('en-PH',{month:'long',year:'numeric'});
-  renderSessions();renderDashboard();renderPerformance();renderWeekly();renderClients();
-}
-
-// ─── NAV ──────────────────────────────────────────────────────────────────────
+function confirmDuplicate(){if(!dupSession)return;const s=dupSession,sel=document.getElementById('clientSelect'),known=Array.from(sel.options).find(o=>o.value===s.client);if(known){sel.value=s.client;document.getElementById('customClientGroup').style.display='none';document.getElementById('customAddressGroup').style.display='none';document.getElementById('addressDisplayGroup').style.display='flex';document.getElementById('addressDisplay').textContent=CLIENTS[s.client]?.address||s.address||'—';}else{sel.value='custom';document.getElementById('customClientGroup').style.display='flex';document.getElementById('customAddressGroup').style.display='flex';document.getElementById('addressDisplayGroup').style.display='none';document.getElementById('customClientName').value=s.client;document.getElementById('customAddress').value=s.address||'';}document.getElementById('studentName').value=s.student;document.getElementById('sessionDate').value=iso(new Date());document.getElementById('startTime').value=s.start;document.getElementById('endTime').value=s.end;document.getElementById('rateType').value=s.rateType;document.getElementById('topic').value=s.topic||'';document.getElementById('feedbackNotes').value=s.feedbackNotes||'';document.querySelectorAll('#feedbackGroup input[type=checkbox]').forEach(c=>{c.checked=s.feedback.includes(c.value);c.closest('.checkbox-pill').classList.toggle('checked',c.checked)});updateCalc();closeDupModal();switchTab('log',document.querySelectorAll('.tab')[0]);showToast('📋 Copied to form!');}
+function exportCSV(){const arr=cache.filter(s=>{const d=new Date(s.date);return d.getFullYear()===viewYear&&d.getMonth()===viewMonth});if(!arr.length)return showToast('No sessions to export');const hdr=['ID','Client','Address','Student','Date','Start','End','Duration(hrs)','Rate Type','Earnings','Transport','Topic','Feedback','Notes'];const rows=arr.map(s=>[s.id,s.client,s.address||'',s.student,s.date,s.start,s.end,s.duration?.toFixed(2)||'',s.rateType,s.earnings,s.transport,`"${(s.topic||'').replace(/"/g,'""')}"`,`"${(s.feedback||[]).join('; ')}"`,`"${(s.feedbackNotes||'').replace(/"/g,'""')}"`]);const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([[hdr,...rows].map(r=>r.join(',')).join('\n')],{type:'text/csv'}));a.download=`TutorLog_${new Date(viewYear,viewMonth).toLocaleString('en-PH',{month:'long',year:'numeric'}).replace(' ','_')}.csv`;a.click();showToast('⬇ CSV exported!');}
+function renderSessions(){const mn=new Date(viewYear,viewMonth).toLocaleString('en-PH',{month:'long',year:'numeric'});document.getElementById('sessionsMonthTitle').textContent=mn;const arr=cache.filter(s=>{const d=new Date(s.date);return d.getFullYear()===viewYear&&d.getMonth()===viewMonth}).sort((a,b)=>b.date.localeCompare(a.date)||b.id.localeCompare(a.id));const body=document.getElementById('sessionsBody');if(!arr.length){body.innerHTML=`<tr><td colspan="12"><div class="empty-state"><div class="icon">📋</div><p>No sessions for ${mn}.</p></div></td></tr>`;return}const RP={regular:'pill-blue',guitar:'pill-amber',gylian:'pill-purple'},RL={regular:'Regular',guitar:'Guitar',gylian:'Gylian'};body.innerHTML=arr.map(s=>`<tr><td><b>${s.client}</b></td><td style="font-size:12px;color:var(--muted)">${s.address||'—'}</td><td>${s.student}</td><td>${dtStr(s.date)}</td><td style="font-family:var(--mono);font-size:12px;white-space:nowrap">${s.start}–${s.end}</td><td style="font-family:var(--mono)">${durStr(s.duration)}</td><td style="max-width:140px;font-size:12px">${s.topic||'—'}</td><td style="max-width:180px">${(s.feedback||[]).map(f=>`<span class="tag">${f}</span>`).join('')||'—'}${s.feedbackNotes?`<div style="font-size:11px;color:var(--muted);margin-top:3px">${s.feedbackNotes}</div>`:''}</td><td><span class="pill ${RP[s.rateType]||'pill-blue'}">${RL[s.rateType]||s.rateType}</span></td><td class="earnings-cell">${peso(s.earnings)}</td><td class="transport-cell">${s.transport>0?peso(s.transport):'—'}</td><td style="white-space:nowrap"><button class="btn btn-ghost btn-sm" onclick="openEdit('${s.id}')">✏️</button> <button class="btn btn-ghost btn-sm" onclick="openDuplicate('${s.id}')">📋</button> <button class="btn btn-danger btn-sm" onclick="deleteSession('${s.id}')">🗑</button></td></tr>`).join('');}
+function renderDashboard(){const{c1,c2}=groupCutoff(cache,viewMonth,viewYear),s1=sumGrp(c1),s2=sumGrp(c2),today=new Date(),isNow=today.getFullYear()===viewYear&&today.getMonth()===viewMonth,day=isNow?today.getDate():16,cur=day<=15?s1:s2,lbl=day<=15?'Cutoff 1 (Day 1–15)':'Cutoff 2 (Day 16–End)';document.getElementById('dashCutoffLabel').textContent=lbl;document.getElementById('currentCutoffStats').innerHTML=`<div class="stat-card"><div class="stat-label">Sessions</div><div class="stat-value accent">${cur.sessions}</div><div class="stat-sub">${lbl}</div></div><div class="stat-card"><div class="stat-label">Earnings</div><div class="stat-value" style="font-size:20px">${peso(cur.earnings)}</div><div class="stat-sub">Tutoring</div></div><div class="stat-card"><div class="stat-label">Transport Bonus</div><div class="stat-value amber" style="font-size:20px">${peso(cur.transport)}</div><div class="stat-sub">Accumulated</div></div><div class="stat-card"><div class="stat-label">Combined Total</div><div class="stat-value blue" style="font-size:20px">${peso(cur.earnings+cur.transport)}</div><div class="stat-sub">All-in</div></div>`;const pct=Math.min((cur.sessions/20)*100,100);document.getElementById('progressWrap').innerHTML=`<div class="progress-header"><span class="progress-label">Attendance Goal (20 sessions)</span><span class="progress-count">${cur.sessions} / 20</span></div><div class="progress-bar"><div class="progress-fill ${cur.sessions>20?'exceeded':''}" style="width:${pct}%"></div></div>`;const ch=s=>`<div class="cutoff-row"><span class="cutoff-row-label">Sessions</span><span class="cutoff-row-val">${s.sessions}</span></div><div class="cutoff-row"><span class="cutoff-row-label">Earnings</span><span class="cutoff-row-val" style="color:var(--accent)">${peso(s.earnings)}</span></div><div class="cutoff-row"><span class="cutoff-row-label">Transport</span><span class="cutoff-row-val" style="color:var(--accent3)">${peso(s.transport)}</span></div><div class="cutoff-total"><span class="cutoff-total-label">Combined</span><span class="cutoff-total-val">${peso(s.earnings+s.transport)}</span></div>`;document.getElementById('cutoff1Details').innerHTML=ch(s1);document.getElementById('cutoff2Details').innerHTML=ch(s2);const tot=s1.earnings+s1.transport+s2.earnings+s2.transport;document.getElementById('monthlySummary').innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px"><div class="stat-card"><div class="stat-label">Cutoff 1</div><div class="stat-value" style="font-size:18px">${peso(s1.earnings+s1.transport)}</div><div class="stat-sub">${s1.sessions} sessions</div></div><div class="stat-card"><div class="stat-label">Cutoff 2</div><div class="stat-value" style="font-size:18px">${peso(s2.earnings+s2.transport)}</div><div class="stat-sub">${s2.sessions} sessions</div></div></div><div class="monthly-total"><div class="monthly-total-label">Monthly Total</div><div class="monthly-total-val">${peso(tot)}</div></div>`;}
+function renderPerformance(){const{c1,c2}=groupCutoff(cache,viewMonth,viewYear),perf=(title,s)=>{const T=20,TE=9000,st=status(s.sessions),diff=s.earnings-TE,extra=s.sessions-T,exc=s.sessions>T,pct=Math.min((s.sessions/T)*100,100),over=exc?`<div class="over-card"><div><div class="over-text">🏆 Overachieved by ${peso(Math.max(0,diff))}</div><div class="over-sub">+${extra} extra session${extra!==1?'s':''} beyond goal</div></div><span class="exceeded-badge">Exceeded Goal</span></div>`:'';return`<div class="card-title"><span class="dot ${st==='below'?'red':st==='ontrack'?'blue':''}"></span>${title}</div><div class="stats-grid"><div class="stat-card"><div class="stat-label">Target</div><div class="stat-value">${T}</div><div class="stat-sub">sessions</div></div><div class="stat-card"><div class="stat-label">Actual</div><div class="stat-value ${exc?'accent':''}">${s.sessions}</div><div class="stat-sub">${exc?'🔥 Exceeded':''}</div></div><div class="stat-card"><div class="stat-label">Target Earnings</div><div class="stat-value" style="font-size:16px">${peso(TE)}</div><div class="stat-sub">20 × ₱450</div></div><div class="stat-card"><div class="stat-label">Actual Earnings</div><div class="stat-value" style="font-size:16px">${peso(s.earnings)}</div><div class="stat-sub">Logged</div></div></div><div class="progress-wrap" style="margin-bottom:16px"><div class="progress-header"><span class="progress-label">Session Progress</span><span class="progress-count">${s.sessions} / ${T}</span></div><div class="progress-bar"><div class="progress-fill ${exc?'exceeded':''}" style="width:${pct}%"></div></div></div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px"><div class="perf-row"><span class="perf-row-label">STATUS</span><span class="status-badge ${SC[st]}">${SL[st]}</span></div><div class="perf-row"><span class="perf-row-label">EARNINGS vs TARGET</span><span class="perf-row-val ${diff>=0?'diff-positive':'diff-negative'}">${diff>=0?'+':''}${peso(diff)}</span></div><div class="perf-row"><span class="perf-row-label">TRANSPORT BONUS</span><span class="perf-row-val" style="color:var(--accent3)">${peso(s.transport)}</span></div><div class="perf-row"><span class="perf-row-label">COMBINED TOTAL</span><span class="perf-row-val" style="color:var(--accent)">${peso(s.earnings+s.transport)}</span></div></div>${over}`;};document.getElementById('perfCutoff1').innerHTML=perf('Cutoff 1 — Day 1–15',sumGrp(c1));document.getElementById('perfCutoff2').innerHTML=perf('Cutoff 2 — Day 16–End',sumGrp(c2));}
+function renderWeekly(){const DAYS=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],today=iso(new Date()),wk=Array.from({length:7},(_,i)=>{const d=new Date(weekAnchor);d.setDate(d.getDate()+i);return d}),ws=iso(wk[0]),we=iso(wk[6]),opts={month:'short',day:'numeric'};document.getElementById('weekLabel').textContent=`${wk[0].toLocaleDateString('en-PH',opts)} – ${wk[6].toLocaleDateString('en-PH',{...opts,year:'numeric'})}`;const wkArr=cache.filter(s=>s.date>=ws&&s.date<=we);document.getElementById('weekGrid').innerHTML=wk.map((d,i)=>{const ds=iso(d),ds2=wkArr.filter(s=>s.date===ds),earn=ds2.reduce((a,s)=>a+s.earnings+s.transport,0);return`<div class="week-day ${ds2.length?'has-session':''} ${ds===today?'today':''}"><div class="week-day-name">${DAYS[i]}</div><div class="week-day-num">${d.getDate()}</div>${ds2.length?`<div class="week-day-count">${ds2.length}×</div><div class="week-day-earn">${peso(earn)}</div>`:`<div class="week-day-count" style="color:var(--border)">—</div>`}</div>`}).join('');const wb=document.getElementById('weekSessionsBody');if(!wkArr.length){wb.innerHTML=`<tr><td colspan="7"><div class="empty-state"><div class="icon">📅</div><p>No sessions this week.</p></div></td></tr>`;return}wb.innerHTML=wkArr.sort((a,b)=>a.date.localeCompare(b.date)||a.start.localeCompare(b.start)).map(s=>`<tr><td><b>${s.client}</b></td><td>${s.student}</td><td>${dtStr(s.date)}</td><td style="font-family:var(--mono);font-size:12px">${s.start}–${s.end}</td><td style="font-family:var(--mono)">${durStr(s.duration)}</td><td class="earnings-cell">${peso(s.earnings)}</td><td class="transport-cell">${s.transport>0?peso(s.transport):'—'}</td></tr>`).join('');}
+function renderClients(){document.getElementById('clientGrid').innerHTML=Object.entries(CLIENTS).map(([name,p])=>{const cs=cache.filter(s=>s.client===name),te=cs.reduce((a,s)=>a+s.earnings,0),tt=cs.reduce((a,s)=>a+s.transport,0),last=cs.length?[...cs].sort((a,b)=>b.date.localeCompare(a.date))[0].date:null,rl=p.rateType==='guitar'?'₱600/session':p.rateType==='gylian'?'₱300/hr · ₱450/session':'₱225/hr';return`<div class="client-card"><div class="client-name">${name}</div><div class="client-detail"><span class="client-detail-label">Address</span><span class="client-detail-val">${p.address}</span></div><div class="client-detail"><span class="client-detail-label">Rate</span><span class="client-detail-val">${rl}</span></div><div class="client-detail"><span class="client-detail-label">Transport</span><span class="client-detail-val" style="color:var(--accent3)">${p.transport>0?peso(p.transport):'None'}</span></div><div class="client-detail"><span class="client-detail-label">Total Sessions</span><span class="client-detail-val" style="color:var(--accent)">${cs.length}</span></div><div class="client-detail"><span class="client-detail-label">Total Earned</span><span class="client-detail-val">${peso(te)}</span></div><div class="client-detail"><span class="client-detail-label">Total Transport</span><span class="client-detail-val">${peso(tt)}</span></div><div class="client-detail"><span class="client-detail-label">Last Session</span><span class="client-detail-val">${last?dtStr(last):'—'}</span></div></div>`}).join('');}
+function renderAll(){document.getElementById('monthLabel').textContent=new Date(viewYear,viewMonth).toLocaleString('en-PH',{month:'long',year:'numeric'});renderSessions();renderDashboard();renderPerformance();renderWeekly();renderClients();}
 function changeMonth(dir){viewMonth+=dir;if(viewMonth>11){viewMonth=0;viewYear++}if(viewMonth<0){viewMonth=11;viewYear--}renderAll()}
 function goToToday(){const n=new Date();viewYear=n.getFullYear();viewMonth=n.getMonth();weekAnchor=mondayOf(n);renderAll()}
 function changeWeek(dir){weekAnchor.setDate(weekAnchor.getDate()+dir*7);renderWeekly()}
 function goToThisWeek(){weekAnchor=mondayOf(new Date());renderWeekly()}
-function switchTab(name,el){
-  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('tab-'+name).classList.add('active');
-  if(el)el.classList.add('active');
-}
-
+function switchTab(name,el){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+name).classList.add('active');if(el)el.classList.add('active');}
 let toastTimer;
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),3000);
-}
-
-// ─── INIT ─────────────────────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded',()=>{
-  document.getElementById('sessionDate').value=iso(new Date());
-  initPills();loadData();
-  setInterval(loadData,5*60*1000);
-});
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),3000);}
+document.addEventListener('DOMContentLoaded',()=>{document.getElementById('sessionDate').value=iso(new Date());initPills();loadData();setInterval(loadData,5*60*1000);});
 </script>
 </body>
 </html>
