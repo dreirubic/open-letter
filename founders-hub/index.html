@@ -566,9 +566,10 @@ async function rejectLog(logId, studentName) {
 
 /* ── LEADS ── */
 async function loadLeads() {
-  if (currentRole==='academics') { document.getElementById('leads-table').innerHTML='<tr><td colspan="7"><div class="access-denied"><i class="ti ti-lock"></i><h3>Access Restricted</h3><p>Enrollment leads are managed by MD and Ops.</p></div></td></tr>'; return; }
   const tbody=document.getElementById('leads-table');
-  const { data } = await db.from('enrollment_leads').select('*').order('submission_timestamp',{ascending:false});
+  // RLS is the enforcer — no client-side role check here
+  const { data, error } = await db.from('enrollment_leads').select('*').order('submission_timestamp',{ascending:false});
+  if (error) { tbody.innerHTML='<tr><td colspan="7"><div class="access-denied"><i class="ti ti-lock"></i><h3>Access Restricted</h3><p>Enrollment leads are managed by MD and Ops.</p></div></td></tr>'; return; }
   if (!data?.length) { tbody.innerHTML='<tr><td colspan="7"><div class="empty-state"><i class="ti ti-inbox"></i><p>No leads yet.</p></div></td></tr>'; return; }
   tbody.innerHTML=data.map(l=>`<tr><td><strong>${l.student_name}</strong><div style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;">${l.grade_level||'—'}</div></td><td>${l.parent_name}</td><td style="font-size:12px;color:var(--text-muted);">${l.email}</td><td>${tierBadge(l.preferred_tier)}</td><td style="font-size:12px;">${l.subject_focus_areas||'—'}</td><td>${pill(l.lead_status)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;">${l.handled_by||'—'}</td></tr>`).join('');
 }
@@ -589,8 +590,9 @@ async function loadAcademics() {
 
 /* ── LEDGER ── */
 async function loadLedger() {
-  if (currentRole==='academics') { document.getElementById('ledger-wrap').innerHTML='<div class="access-denied"><i class="ti ti-lock"></i><h3>Access Restricted</h3><p>Revenue data is restricted to MD and Ops.</p></div>'; return; }
-  const { data:tutors } = await db.from('tutor_profiles').select('*').order('tutor_id');
+  // RLS is the enforcer — no client-side role check here
+  const { data:tutors, error:tutorError } = await db.from('tutor_profiles').select('*').order('tutor_id');
+  if (tutorError) { document.getElementById('ledger-wrap').innerHTML='<div class="access-denied"><i class="ti ti-lock"></i><h3>Access Restricted</h3><p>Revenue data is restricted to MD and Ops.</p></div>'; return; }
   const { data:students } = await db.from('student_profiles').select('tier').eq('status','Active');
   if (!tutors?.length) { document.getElementById('ledger-wrap').innerHTML='<div class="empty-state"><i class="ti ti-inbox"></i><p>No tutors found.</p></div>'; return; }
   const totalPayout=tutors.reduce((s,t)=>s+parseFloat(t.payout_due_this_cycle||0),0);
