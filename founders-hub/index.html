@@ -364,6 +364,11 @@ async function handleLogin() {
   const btn = document.getElementById('login-btn');
   errEl.textContent = '';
   if (!email || !password) { errEl.textContent = 'Please enter your email and password.'; return; }
+
+  // Check if already authenticated (e.g. session restored mid-load)
+  const { data: { session: existing } } = await db.auth.getSession();
+  if (existing?.user) { await bootApp(existing.user); return; }
+
   btn.disabled = true; btn.textContent = 'Signing in...';
   const { data, error } = await db.auth.signInWithPassword({ email, password });
   if (error) {
@@ -375,6 +380,10 @@ async function handleLogin() {
 }
 
 async function bootApp(user) {
+  // Always reset login UI state first — handles refresh/restore case
+  const loginBtn = document.getElementById('login-btn');
+  if (loginBtn) { loginBtn.disabled = false; loginBtn.textContent = 'Sign In'; }
+  document.getElementById('login-error').textContent = '';
   currentUser = user;
   const { data: roleData } = await db.from('founder_roles').select('role, name').eq('email', user.email).single();
   if (!roleData) {
@@ -396,6 +405,9 @@ async function bootApp(user) {
 }
 
 function applyRoleRestrictions() {
+  // Reset all restrictions first (handles session restore case)
+  document.getElementById('nav-leads').classList.remove('hidden');
+  document.getElementById('nav-ledger').classList.remove('hidden');
   // Noreen: no leads, no ledger
   if (currentRole === 'academics') {
     document.getElementById('nav-leads').classList.add('hidden');
@@ -406,6 +418,9 @@ function applyRoleRestrictions() {
 async function handleLogout() {
   await db.auth.signOut();
   currentUser = null; currentRole = null;
+  // Reset nav restrictions on logout so next user gets clean state
+  document.getElementById('nav-leads').classList.remove('hidden');
+  document.getElementById('nav-ledger').classList.remove('hidden');
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('app').style.display = 'none';
   document.getElementById('login-email').value = '';
@@ -417,8 +432,32 @@ async function handleLogout() {
 
 // Restore session on page load
 db.auth.onAuthStateChange(async (event, session) => {
-  if (session?.user && !currentUser) await bootApp(session.user);
+  if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session?.user && !currentUser) {
+    await bootApp(session.user);
+  } else if (event === 'SIGNED_OUT') {
+    currentUser = null;
+    currentRole = null;
+  }
 });
+
+// On page load, check for existing session immediately
+(async () => {
+  const { data: { session } } = await db.auth.getSession();
+  if (session?.user && !currentUser) {
+    await bootApp(session.user);
+  }
+})();
+
+/* ── SANITIZE ── */
+function sanitize(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 
 /* ── HELPERS ── */
 function switchPanel(name, el) {
@@ -462,13 +501,19 @@ async function loadOverview() {
   const tableEl = document.getElementById('overview-table');
   statsEl.innerHTML = '<div class="loading-state" style="grid-column:1/-1"><div class="spinner"></div></div>';
 
-  const [students, pending, logs, approved, payouts] = await Promise.all([
-    db.from('student_profiles').select('*',{count:'exact',head:true}).eq('status','Active'),
-    db.from('raw_tutor_logs').select('*',{count:'exact',head:true}).eq('review_status','Pending Review'),
-    db.from('raw_tutor_logs').select('*',{count:'exact',head:true}),
-    db.from('approved_parent_logs').select('*',{count:'exact',head:true}),
-    db.from('tutor_profiles').select('payout_due_this_cycle')
-  ]);
+  let students, pending, logs, approved, payouts;
+  try {
+    [students, pending, logs, approved, payouts] = await Promise.all([
+      db.from('student_profiles').select('*',{count:'exact',head:true}).eq('status','Active'),
+      db.from('raw_tutor_logs').select('*',{count:'exact',head:true}).eq('review_status','Pending Review'),
+      db.from('raw_tutor_logs').select('*',{count:'exact',head:true}),
+      db.from('approved_parent_logs').select('*',{count:'exact',head:true}),
+      db.from('tutor_profiles').select('payout_due_this_cycle')
+    ]);
+  } catch(e) {
+    statsEl.innerHTML = '<div class="loading-state" style="grid-column:1/-1;color:var(--red)"><i class="ti ti-alert-circle"></i> Failed to load dashboard data. Please refresh.</div>';
+    return;
+  }
 
   const totalPayout = (payouts.data||[]).reduce((s,t)=>s+parseFloat(t.payout_due_this_cycle||0),0);
   const pendingCount = pending.count||0;
@@ -482,7 +527,7 @@ async function loadOverview() {
 
   const { data: recent } = await db.from('raw_tutor_logs').select('log_id,student_name,tutor_name,session_date,focus_area,review_status,reviewed_by').order('form_submission_timestamp',{ascending:false}).limit(8);
   if (!recent?.length) { tableEl.innerHTML='<tr><td colspan="5"><div class="empty-state"><i class="ti ti-inbox"></i><p>No session logs yet.</p></div></td></tr>'; return; }
-  tableEl.innerHTML = recent.map(r=>`<tr><td><strong>${r.student_name}</strong></td><td>${r.tutor_name}</td><td style="font-family:'DM Mono',monospace;font-size:11px;">${fmtDate(r.session_date)} · ${r.focus_area||'—'}</td><td>${pill(r.review_status)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;">${r.reviewed_by||'—'}</td></tr>`).join('');
+  tableEl.innerHTML = recent.map(r=>`<tr><td><strong>${sanitize(r.student_name)}</strong></td><td>${sanitize(r.tutor_name)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;">${fmtDate(r.session_date)} · ${sanitize(r.focus_area)||'—'}</td><td>${pill(r.review_status)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;">${sanitize(r.reviewed_by)||'—'}</td></tr>`).join('');
 }
 
 /* ── REVIEW CONSOLE ── */
@@ -501,14 +546,14 @@ async function loadReview() {
     const draft=`${r.student_name} had a session focused on ${r.focus_area||'the assigned topic'}. ${r.topics_covered||''} ${r.flags_for_next_session?'Note for next session: '+r.flags_for_next_session:''}`.trim();
     return `<div class="log-card" id="card-${r.log_id}">
       <div class="log-header" onclick="toggleLog('body-${r.log_id}')">
-        <div><div class="log-student">${r.student_name}</div><div class="log-meta">${r.tutor_name} · ${fmtDate(r.session_date)} · ${r.focus_area||'—'}</div></div>
+        <div><div class="log-student">${sanitize(r.student_name)}</div><div class="log-meta">${sanitize(r.tutor_name)} · ${fmtDate(r.session_date)} · ${sanitize(r.focus_area)||'—'}</div></div>
         <span class="pill pill-pending" style="margin-left:auto;margin-right:10px;">Pending</span>
         <span class="tier-badge ${tierCls}">${tier}</span>
       </div>
       <div class="log-body" id="body-${r.log_id}">
         <div class="log-field"><div class="field-label">Performance</div><div class="field-value">${stars(r.student_performance)} (${r.student_performance}/5)</div></div>
-        <div class="log-field"><div class="field-label">Topics covered (raw)</div><div class="field-value">${r.topics_covered||'—'}</div></div>
-        <div class="log-field"><div class="field-label">Flags for next session</div><div class="field-value">${r.flags_for_next_session||'None'}</div></div>
+        <div class="log-field"><div class="field-label">Topics covered (raw)</div><div class="field-value">${sanitize(r.topics_covered)||'—'}</div></div>
+        <div class="log-field"><div class="field-label">Flags for next session</div><div class="field-value">${sanitize(r.flags_for_next_session)||'None'}</div></div>
         <div class="log-field"><div class="field-label">Polished summary — edit before approving</div><textarea class="field-textarea" id="summary-${r.log_id}">${draft}</textarea></div>
         <div class="log-actions">
           <button class="btn btn-approve" onclick="approveLog('${r.log_id}','${r.student_name}','${r.student_id}','${tier}')"><i class="ti ti-check"></i> Approve &amp; Send</button>
@@ -526,12 +571,13 @@ async function approveLog(logId, studentName, studentId, tier) {
   if (!summary) { showToast('Add a polished summary before approving.','error'); return; }
   const { data: logData } = await db.from('raw_tutor_logs').select('*').eq('log_id',logId).single();
   const { data: student } = await db.from('student_profiles').select('parent_email,parent_name').eq('student_id',studentId).single();
-  const emailType = tier==='Premium'?'portal_link':'recap_in_body';
-  const actor = document.getElementById('user-name').textContent;
+  const safeTier = (tier && tier !== '—') ? tier : 'Starter';
+  const emailType = safeTier==='Premium'?'portal_link':'recap_in_body';
+  const actor = sanitize(currentUser?.user_metadata?.name || document.getElementById('user-name').textContent || 'Unknown');
 
   const { error } = await db.from('approved_parent_logs').insert({
     source_log_id:logId, student_id:studentId, student_name:studentName,
-    student_tier:tier, session_date:logData.session_date, focus_area:logData.focus_area,
+    student_tier:safeTier, session_date:logData.session_date, focus_area:logData.focus_area,
     polished_summary:summary, student_performance:logData.student_performance,
     flags_for_next_session:logData.flags_for_next_session,
     approved_by:actor, approved_at:new Date().toISOString(),
@@ -554,7 +600,7 @@ async function approveLog(logId, studentName, studentId, tier) {
 async function rejectLog(logId, studentName) {
   const reason = prompt('Rejection reason (optional):') ?? null;
   if (reason === null) return;
-  const actor = document.getElementById('user-name').textContent;
+  const actor = sanitize(currentUser?.user_metadata?.name || document.getElementById('user-name').textContent || 'Unknown');
   await db.from('raw_tutor_logs').update({ review_status:'Rejected', reviewed_by:actor, reviewed_at:new Date().toISOString() }).eq('log_id',logId);
   await db.from('audit_log').insert({ actor, action_type:'Rejected', target_record_id:logId, target_table:'raw_tutor_logs', notes:reason||'No reason given' });
   document.getElementById('card-'+logId)?.remove();
@@ -571,20 +617,21 @@ async function loadLeads() {
   const { data, error } = await db.from('enrollment_leads').select('*').order('submission_timestamp',{ascending:false});
   if (error) { tbody.innerHTML='<tr><td colspan="7"><div class="access-denied"><i class="ti ti-lock"></i><h3>Access Restricted</h3><p>Enrollment leads are managed by MD and Ops.</p></div></td></tr>'; return; }
   if (!data?.length) { tbody.innerHTML='<tr><td colspan="7"><div class="empty-state"><i class="ti ti-inbox"></i><p>No leads yet.</p></div></td></tr>'; return; }
-  tbody.innerHTML=data.map(l=>`<tr><td><strong>${l.student_name}</strong><div style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;">${l.grade_level||'—'}</div></td><td>${l.parent_name}</td><td style="font-size:12px;color:var(--text-muted);">${l.email}</td><td>${tierBadge(l.preferred_tier)}</td><td style="font-size:12px;">${l.subject_focus_areas||'—'}</td><td>${pill(l.lead_status)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;">${l.handled_by||'—'}</td></tr>`).join('');
+  tbody.innerHTML=data.map(l=>`<tr><td><strong>${sanitize(l.student_name)}</strong><div style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;">${sanitize(l.grade_level)||'—'}</div></td><td>${sanitize(l.parent_name)}</td><td style="font-size:12px;color:var(--text-muted);">${sanitize(l.email)}</td><td>${tierBadge(l.preferred_tier)}</td><td style="font-size:12px;">${sanitize(l.subject_focus_areas)||'—'}</td><td>${pill(l.lead_status)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;">${sanitize(l.handled_by)||'—'}</td></tr>`).join('');
 }
 
 /* ── ACADEMICS ── */
 async function loadAcademics() {
   const grid=document.getElementById('academics-grid');
-  const { data } = await db.from('student_profiles').select('*, tutor_profiles(tutor_name)').eq('status','Active').order('student_id');
+  const { data, error } = await db.from('student_profiles').select('*, tutor_profiles(tutor_name)').eq('status','Active').order('student_id');
+  if (error) { grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><i class="ti ti-alert-circle"></i><p>Failed to load students. Please refresh.</p></div>'; return; }
   if (!data?.length) { grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><i class="ti ti-inbox"></i><p>No active students.</p></div>'; return; }
   grid.innerHTML=data.map(s=>`<div class="student-card">
-    <div class="student-card-header"><div class="student-name-big">${s.student_name}</div>${tierBadge(s.tier)}</div>
-    <div style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;margin-bottom:8px;">${s.tutor_profiles?.tutor_name||'Unassigned'} · ${s.grade_level||'—'}</div>
-    <div class="plan-block"><div class="plan-label">Current plan</div><div class="plan-text">${s.current_lesson_plan||'Not set'}</div></div>
-    <div class="plan-block upcoming"><div class="plan-label">Upcoming</div><div class="plan-text">${s.upcoming_lesson_plan||'Not set'}</div></div>
-    ${s.specific_goals?`<div class="goal-tag">🎯 ${s.specific_goals}</div>`:''}
+    <div class="student-card-header"><div class="student-name-big">${sanitize(s.student_name)}</div>${tierBadge(s.tier)}</div>
+    <div style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;margin-bottom:8px;">${sanitize(s.tutor_profiles?.tutor_name)||'Unassigned'} · ${sanitize(s.grade_level)||'—'}</div>
+    <div class="plan-block"><div class="plan-label">Current plan</div><div class="plan-text">${sanitize(s.current_lesson_plan)||'Not set'}</div></div>
+    <div class="plan-block upcoming"><div class="plan-label">Upcoming</div><div class="plan-text">${sanitize(s.upcoming_lesson_plan)||'Not set'}</div></div>
+    ${s.specific_goals?`<div class="goal-tag">🎯 ${sanitize(s.specific_goals)}</div>`:''}
   </div>`).join('');
 }
 
@@ -607,23 +654,32 @@ async function loadLedger() {
 /* ── TUTORS ── */
 async function loadTutors() {
   const tbody=document.getElementById('tutors-table');
-  const [{ data:tutors },{ data:students }] = await Promise.all([
-    db.from('tutor_profiles').select('*').order('tutor_id'),
-    db.from('student_profiles').select('student_name,assigned_tutor_id')
-  ]);
+  let tutors, students;
+  try {
+    const [t, s] = await Promise.all([
+      db.from('tutor_profiles').select('*').order('tutor_id'),
+      db.from('student_profiles').select('student_name,assigned_tutor_id')
+    ]);
+    if (t.error) throw t.error;
+    tutors = t.data; students = s.data;
+  } catch(e) {
+    tbody.innerHTML='<tr><td colspan="7"><div class="empty-state"><i class="ti ti-alert-circle"></i><p>Failed to load tutors. Please refresh.</p></div></td></tr>';
+    return;
+  }
   if (!tutors?.length) { tbody.innerHTML='<tr><td colspan="7"><div class="empty-state"><i class="ti ti-inbox"></i><p>No tutors yet.</p></div></td></tr>'; return; }
   tbody.innerHTML=tutors.map((t,i)=>{
     const assigned=(students||[]).filter(s=>s.assigned_tutor_id===t.tutor_id).map(s=>s.student_name).join(', ')||'<span style="color:var(--text-muted)">Unassigned</span>';
-    return `<tr><td><div style="display:flex;align-items:center;gap:8px;">${tutorDot(t.tutor_name,i)}<div><div style="font-weight:600;">${t.tutor_name}</div><div style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;">${t.tutor_id}</div></div></div></td><td style="font-size:12px;color:var(--text-muted);">${t.email}</td><td style="font-size:12px;">${assigned}</td><td style="font-family:'DM Mono',monospace;font-size:12px;">${peso(t.rate_per_session)}</td><td style="font-family:'DM Mono',monospace;font-size:13px;font-weight:600;">${t.sessions_logged_this_cycle||0}</td><td style="font-family:'Playfair Display',serif;font-size:18px;">${peso(t.payout_due_this_cycle)}</td><td>${pill(t.status)}</td></tr>`;
+    return `<tr><td><div style="display:flex;align-items:center;gap:8px;">${tutorDot(t.tutor_name,i)}<div><div style="font-weight:600;">${sanitize(t.tutor_name)}</div><div style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;">${sanitize(t.tutor_id)}</div></div></div></td><td style="font-size:12px;color:var(--text-muted);">${sanitize(t.email)}</td><td style="font-size:12px;">${assigned}</td><td style="font-family:'DM Mono',monospace;font-size:12px;">${peso(t.rate_per_session)}</td><td style="font-family:'DM Mono',monospace;font-size:13px;font-weight:600;">${t.sessions_logged_this_cycle||0}</td><td style="font-family:'Playfair Display',serif;font-size:18px;">${peso(t.payout_due_this_cycle)}</td><td>${pill(t.status)}</td></tr>`;
   }).join('');
 }
 
 /* ── AUDIT ── */
 async function loadAudit() {
   const tbody=document.getElementById('audit-table');
-  const { data } = await db.from('audit_log').select('*').order('timestamp',{ascending:false}).limit(50);
+  const { data, error } = await db.from('audit_log').select('*').order('timestamp',{ascending:false}).limit(50);
+  if (error) { tbody.innerHTML='<tr><td colspan="6"><div class="empty-state"><i class="ti ti-alert-circle"></i><p>Failed to load audit log. Please refresh.</p></div></td></tr>'; return; }
   if (!data?.length) { tbody.innerHTML='<tr><td colspan="6"><div class="empty-state"><i class="ti ti-inbox"></i><p>No audit entries yet.</p></div></td></tr>'; return; }
-  tbody.innerHTML=data.map(a=>`<tr><td style="font-family:'DM Mono',monospace;font-size:11px;white-space:nowrap;">${fmtDT(a.timestamp)}</td><td style="font-weight:600;">${a.actor}</td><td>${pill(a.action_type)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;">${a.target_record_id||'—'}</td><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);">${a.target_table||'—'}</td><td style="font-size:12px;color:var(--text-muted);">${a.notes||'—'}</td></tr>`).join('');
+  tbody.innerHTML=data.map(a=>`<tr><td style="font-family:'DM Mono',monospace;font-size:11px;white-space:nowrap;">${fmtDT(a.timestamp)}</td><td style="font-weight:600;">${sanitize(a.actor)}</td><td>${pill(a.action_type)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;">${sanitize(a.target_record_id)||'—'}</td><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);">${sanitize(a.target_table)||'—'}</td><td style="font-size:12px;color:var(--text-muted);">${sanitize(a.notes)||'—'}</td></tr>`).join('');
 }
 </script>
 </body>
