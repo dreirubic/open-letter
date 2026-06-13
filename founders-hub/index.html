@@ -19,7 +19,7 @@
 html, body { height: 100%; overflow: hidden; }
 body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); color: var(--text-main); }
 
-/* ── LOGIN SCREEN ── */
+/* LOGIN SCREEN */
 #login-screen {
   position: fixed; inset: 0; background: var(--ink);
   display: flex; align-items: center; justify-content: center; z-index: 1000;
@@ -48,7 +48,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); c
 .login-error { font-size: 12px; color: var(--red); margin-top: 10px; min-height: 18px; }
 .login-note { font-size: 11px; color: var(--text-muted); margin-top: 16px; font-family: 'DM Mono', monospace; }
 
-/* ── APP (hidden until auth) ── */
+/* APP */
 #app { display: none; height: 100vh; overflow: hidden; }
 .app-inner { display: flex; height: 100%; }
 
@@ -90,18 +90,15 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); c
 .btn-sm { padding: 5px 10px; font-size: 11px; }
 .content { flex: 1; overflow-y: auto; padding: 26px 28px; }
 
-/* LOADING / EMPTY */
 .loading-state { display: flex; align-items: center; justify-content: center; padding: 60px 0; color: var(--text-muted); gap: 10px; font-family: 'DM Mono', monospace; font-size: 13px; }
 .spinner { width: 18px; height: 18px; border: 2px solid var(--border); border-top-color: var(--ink); border-radius: 50%; animation: spin 0.7s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .empty-state { text-align: center; padding: 60px 0; color: var(--text-muted); }
 .empty-state i { font-size: 36px; margin-bottom: 12px; display: block; opacity: 0.4; }
 
-/* PANELS */
 .panel { display: none; }
 .panel.active { display: block; }
 
-/* STAT GRID */
 .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
 .stat-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
 .stat-card.dark { background: var(--ink); }
@@ -113,10 +110,8 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); c
 .stat-sub { font-size: 11px; color: var(--text-muted); margin-top: 5px; }
 .stat-card.dark .stat-sub { color: rgba(255,255,255,0.35); }
 
-/* SECTION LABEL */
 .section-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; }
 
-/* TABLE */
 .table-wrap { background: var(--white); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 24px; }
 .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .data-table th { background: var(--cream); font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
@@ -124,7 +119,6 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); c
 .data-table tr:last-child td { border-bottom: none; }
 .data-table tbody tr:hover td { background: var(--cream); }
 
-/* PILLS */
 .pill { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 10px; border-radius: 20px; white-space: nowrap; display: inline-block; }
 .pill-pending { background: #fff3cd; color: #856404; }
 .pill-approved { background: var(--green-soft); color: var(--green); }
@@ -140,7 +134,6 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); c
 .tier-essential { background: #e8f0ff; color: #2a4499; }
 .tier-premium { background: var(--pink-soft); color: #8b1a55; }
 
-/* REVIEW CONSOLE */
 .log-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
 .log-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; transition: background 0.1s; }
 .log-header:hover { background: var(--cream); }
@@ -156,7 +149,6 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); c
 .log-actions { display: flex; gap: 8px; margin-top: 14px; }
 .star-rating { color: var(--mustard); font-size: 14px; }
 
-/* ACADEMIC BOARD */
 .student-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .student-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
 .student-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
@@ -167,7 +159,6 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); c
 .plan-text { font-size: 12px; line-height: 1.55; }
 .goal-tag { display: inline-block; background: var(--mustard-soft); border: 1px solid rgba(252,217,123,0.5); color: var(--ink); font-size: 11px; padding: 4px 10px; border-radius: 4px; margin-top: 10px; font-family: 'DM Mono', monospace; }
 
-/* LEDGER */
 .ledger-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
 .cycle-badge { font-family: 'DM Mono', monospace; font-size: 11px; background: var(--mustard); color: var(--ink); padding: 4px 14px; border-radius: 20px; font-weight: 500; }
 .payout-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-bottom: 1px solid var(--border); }
@@ -181,13 +172,11 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); c
 .ledger-total-amount { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--mustard); }
 .tutor-dot { width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 9px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; flex-shrink: 0; }
 
-/* TOAST */
 .toast { position: fixed; bottom: 24px; right: 24px; background: var(--ink); color: #fff; padding: 12px 18px; border-radius: 8px; font-size: 13px; font-weight: 500; display: none; align-items: center; gap: 8px; z-index: 9999; box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
 .toast.show { display: flex; }
 .toast.success { background: var(--green); }
 .toast.error { background: var(--red); }
 
-/* ACCESS DENIED */
 .access-denied { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px; text-align: center; color: var(--text-muted); }
 .access-denied i { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
 .access-denied h3 { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--text-main); margin-bottom: 8px; }
@@ -203,7 +192,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); c
     <div class="login-sub">Sign in with your founder email to continue.</div>
     <input class="login-input" type="email" id="login-email" placeholder="your@email.com" autocomplete="email">
     <input class="login-input" type="password" id="login-password" placeholder="Password" autocomplete="current-password">
-    <button class="login-btn" id="login-btn" onclick="handleLogin()">Sign In</button>
+    <button class="login-btn" id="login-btn">Sign In</button>
     <div class="login-error" id="login-error"></div>
     <div class="login-note">Access restricted to Open Letter founders only.</div>
   </div>
@@ -219,29 +208,29 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); c
       </div>
       <nav class="sidebar-nav">
         <div class="nav-section">Overview</div>
-        <div class="nav-item active" id="nav-overview" onclick="switchPanel('overview',this)">
+        <div class="nav-item active" id="nav-overview">
           <i class="ti ti-layout-dashboard"></i> Dashboard
         </div>
         <div class="nav-section">Operations</div>
-        <div class="nav-item" id="nav-review" onclick="switchPanel('review',this)">
+        <div class="nav-item" id="nav-review">
           <i class="ti ti-clipboard-check"></i> Review Console
           <span class="nav-badge" id="pending-badge">0</span>
         </div>
-        <div class="nav-item" id="nav-leads" onclick="switchPanel('leads',this)">
+        <div class="nav-item" id="nav-leads">
           <i class="ti ti-user-plus"></i> Enrollment Leads
         </div>
-        <div class="nav-item" id="nav-academics" onclick="switchPanel('academics',this)">
+        <div class="nav-item" id="nav-academics">
           <i class="ti ti-book"></i> Academic Board
         </div>
         <div class="nav-section" id="finance-section">Finance</div>
-        <div class="nav-item" id="nav-ledger" onclick="switchPanel('ledger',this)">
+        <div class="nav-item" id="nav-ledger">
           <i class="ti ti-receipt"></i> Revenue Ledger
         </div>
-        <div class="nav-item" id="nav-tutors" onclick="switchPanel('tutors',this)">
+        <div class="nav-item" id="nav-tutors">
           <i class="ti ti-users"></i> Tutor Registry
         </div>
         <div class="nav-section">Records</div>
-        <div class="nav-item" id="nav-audit" onclick="switchPanel('audit',this)">
+        <div class="nav-item" id="nav-audit">
           <i class="ti ti-history"></i> Audit Log
         </div>
       </nav>
@@ -253,7 +242,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); c
             <div class="founder-role-label" id="user-role">—</div>
           </div>
         </div>
-        <button class="logout-btn" onclick="handleLogout()"><i class="ti ti-logout"></i> Sign out</button>
+        <button class="logout-btn" id="logout-btn"><i class="ti ti-logout"></i> Sign out</button>
       </div>
     </div>
 
@@ -261,7 +250,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); c
       <div class="topbar">
         <div class="page-title" id="page-title">Dashboard</div>
         <div class="topbar-right">
-          <button class="btn btn-outline btn-sm" onclick="refreshAll()"><i class="ti ti-refresh"></i> Refresh</button>
+          <button class="btn btn-outline btn-sm" id="refresh-btn"><i class="ti ti-refresh"></i> Refresh</button>
         </div>
       </div>
       <div class="content">
@@ -356,99 +345,7 @@ let currentUser = null;
 let currentRole = null;
 let currentPanel = 'overview';
 
-/* ── AUTH ── */
-async function handleLogin() {
-  const email = document.getElementById('login-email').value.trim();
-  const password = document.getElementById('login-password').value;
-  const errEl = document.getElementById('login-error');
-  const btn = document.getElementById('login-btn');
-  errEl.textContent = '';
-  if (!email || !password) { errEl.textContent = 'Please enter your email and password.'; return; }
-
-  // Check if already authenticated (e.g. session restored mid-load)
-  const { data: { session: existing } } = await db.auth.getSession();
-  if (existing?.user) { await bootApp(existing.user); return; }
-
-  btn.disabled = true; btn.textContent = 'Signing in...';
-  const { data, error } = await db.auth.signInWithPassword({ email, password });
-  if (error) {
-    errEl.textContent = error.message || 'Sign in failed. Check your credentials.';
-    btn.disabled = false; btn.textContent = 'Sign In';
-    return;
-  }
-  await bootApp(data.user);
-}
-
-async function bootApp(user) {
-  // Always reset login UI state first — handles refresh/restore case
-  const loginBtn = document.getElementById('login-btn');
-  if (loginBtn) { loginBtn.disabled = false; loginBtn.textContent = 'Sign In'; }
-  document.getElementById('login-error').textContent = '';
-  currentUser = user;
-  const { data: roleData } = await db.from('founder_roles').select('role, name').eq('email', user.email).single();
-  if (!roleData) {
-    await db.auth.signOut();
-    document.getElementById('login-error').textContent = 'Access denied. This email is not registered as a founder.';
-    document.getElementById('login-btn').disabled = false;
-    document.getElementById('login-btn').textContent = 'Sign In';
-    return;
-  }
-  currentRole = roleData.role;
-  const name = roleData.name;
-  document.getElementById('user-name').textContent = name;
-  document.getElementById('user-role').textContent = ROLE_LABELS[currentRole] || currentRole;
-  document.getElementById('user-avatar').textContent = name.substring(0,2).toUpperCase();
-  applyRoleRestrictions();
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
-  loadOverview();
-}
-
-function applyRoleRestrictions() {
-  // Reset all restrictions first (handles session restore case)
-  document.getElementById('nav-leads').classList.remove('hidden');
-  document.getElementById('nav-ledger').classList.remove('hidden');
-  // Noreen: no leads, no ledger
-  if (currentRole === 'academics') {
-    document.getElementById('nav-leads').classList.add('hidden');
-    document.getElementById('nav-ledger').classList.add('hidden');
-  }
-}
-
-async function handleLogout() {
-  await db.auth.signOut();
-  currentUser = null; currentRole = null;
-  // Reset nav restrictions on logout so next user gets clean state
-  document.getElementById('nav-leads').classList.remove('hidden');
-  document.getElementById('nav-ledger').classList.remove('hidden');
-  document.getElementById('login-screen').style.display = 'flex';
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('login-email').value = '';
-  document.getElementById('login-password').value = '';
-  document.getElementById('login-error').textContent = '';
-  document.getElementById('login-btn').disabled = false;
-  document.getElementById('login-btn').textContent = 'Sign In';
-}
-
-// Restore session on page load
-db.auth.onAuthStateChange(async (event, session) => {
-  if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session?.user && !currentUser) {
-    await bootApp(session.user);
-  } else if (event === 'SIGNED_OUT') {
-    currentUser = null;
-    currentRole = null;
-  }
-});
-
-// On page load, check for existing session immediately
-(async () => {
-  const { data: { session } } = await db.auth.getSession();
-  if (session?.user && !currentUser) {
-    await bootApp(session.user);
-  }
-})();
-
-/* ── SANITIZE ── */
+/* ── HELPER FUNCTIONS ── */
 function sanitize(str) {
   if (str === null || str === undefined) return '';
   return String(str)
@@ -459,34 +356,24 @@ function sanitize(str) {
     .replace(/'/g, '&#39;');
 }
 
-/* ── HELPERS ── */
-function switchPanel(name, el) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('panel-' + name).classList.add('active');
-  el.classList.add('active');
-  document.getElementById('page-title').textContent = PANEL_TITLES[name];
-  currentPanel = name;
-  loadPanel(name);
-}
-function loadPanel(name) {
-  const map = { overview:loadOverview, review:loadReview, leads:loadLeads, academics:loadAcademics, ledger:loadLedger, tutors:loadTutors, audit:loadAudit };
-  if (map[name]) map[name]();
-}
-function refreshAll() { loadPanel(currentPanel); showToast('Refreshed', 'success'); }
 function showToast(msg, type='') {
   const t = document.getElementById('toast');
-  t.textContent = msg; t.className = 'toast show' + (type ? ' ' + type : '');
+  if (!t) return;
+  t.textContent = msg; 
+  t.className = 'toast show' + (type ? ' ' + type : '');
   setTimeout(() => t.className = 'toast', 2800);
 }
+
 function tierBadge(tier) {
   const cls = { Starter:'tier-starter', Essential:'tier-essential', Premium:'tier-premium' };
-  return tier ? `<span class="tier-badge ${cls[tier]||''}">${tier}</span>` : '—';
+  return tier ? `<span class="tier-badge ${cls[tier]||''}">${sanitize(tier)}</span>` : '—';
 }
+
 function pill(status) {
   const map = { 'Pending Review':'pill-pending','Approved':'pill-approved','Rejected':'pill-rejected','New':'pill-new','Contacted':'pill-contacted','Enrolled':'pill-enrolled','Declined':'pill-declined','Active':'pill-active','Inactive':'pill-inactive','On leave':'pill-inactive','On hold':'pill-inactive' };
-  return status ? `<span class="pill ${map[status]||'pill-new'}">${status}</span>` : '—';
+  return status ? `<span class="pill ${map[status]||'pill-new'}">${sanitize(status)}</span>` : '—';
 }
+
 function stars(n) { const x=parseInt(n)||0; return `<span class="star-rating">${'★'.repeat(x)}<span style="opacity:.2">${'★'.repeat(5-x)}</span></span>`; }
 function fmtDate(d) { return d ? new Date(d).toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'}) : '—'; }
 function fmtDT(d) { return d ? new Date(d).toLocaleString('en-PH',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '—'; }
@@ -495,192 +382,449 @@ function inits(name) { return (name||'').split(' ').map(w=>w[0]).join('').substr
 const dotColors = ['var(--ink)','#c06b2d','#2a4499','#1a6640','#8b1a55'];
 function tutorDot(name,i) { return `<div class="tutor-dot" style="background:${dotColors[i%dotColors.length]}">${inits(name)}</div>`; }
 
-/* ── OVERVIEW ── */
+/* ── AUTH FIXED ── */
+async function bootApp(user) {
+  console.log('bootApp called for:', user.email);
+  
+  // Reset login button state FIRST
+  const loginBtn = document.getElementById('login-btn');
+  if (loginBtn) {
+    loginBtn.disabled = false;
+    loginBtn.textContent = 'Sign In';
+  }
+  
+  currentUser = user;
+  
+  const { data: roleData, error: roleError } = await db
+    .from('founder_roles')
+    .select('role, name')
+    .eq('email', user.email)
+    .maybeSingle();
+  
+  if (roleError || !roleData) {
+    console.error('Role check failed:', roleError);
+    await db.auth.signOut();
+    document.getElementById('login-error').textContent = 'Access denied. Not a registered founder.';
+    return;
+  }
+  
+  currentRole = roleData.role;
+  const name = roleData.name;
+  
+  document.getElementById('user-name').textContent = name;
+  document.getElementById('user-role').textContent = ROLE_LABELS[currentRole] || currentRole;
+  document.getElementById('user-avatar').textContent = name.substring(0,2).toUpperCase();
+  
+  // Apply role restrictions
+  const leadsNav = document.getElementById('nav-leads');
+  const ledgerNav = document.getElementById('nav-ledger');
+  if (leadsNav && ledgerNav) {
+    leadsNav.classList.remove('hidden');
+    ledgerNav.classList.remove('hidden');
+    if (currentRole === 'academics') {
+      leadsNav.classList.add('hidden');
+      ledgerNav.classList.add('hidden');
+    }
+  }
+  
+  // Show app, hide login
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  
+  // Load data
+  loadOverview();
+}
+
+async function handleLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  const errEl = document.getElementById('login-error');
+  const btn = document.getElementById('login-btn');
+  
+  errEl.textContent = '';
+  
+  // CRITICAL: Check if already logged in FIRST
+  const { data: { session } } = await db.auth.getSession();
+  if (session?.user) {
+    console.log('Already logged in, restoring session...');
+    await bootApp(session.user);
+    return;
+  }
+  
+  if (!email || !password) { 
+    errEl.textContent = 'Please enter your email and password.'; 
+    return; 
+  }
+
+  btn.disabled = true; 
+  btn.textContent = 'Signing in...';
+  
+  const { data, error } = await db.auth.signInWithPassword({ email, password });
+  
+  if (error) {
+    errEl.textContent = error.message || 'Sign in failed.';
+    btn.disabled = false; 
+    btn.textContent = 'Sign In';
+    return;
+  }
+  
+  await bootApp(data.user);
+}
+
+async function handleLogout() {
+  await db.auth.signOut();
+  currentUser = null;
+  currentRole = null;
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-email').value = '';
+  document.getElementById('login-password').value = '';
+  document.getElementById('login-error').textContent = '';
+  
+  // Reset login button
+  const loginBtn = document.getElementById('login-btn');
+  if (loginBtn) {
+    loginBtn.disabled = false;
+    loginBtn.textContent = 'Sign In';
+  }
+}
+
+// Session restore on page refresh - RUNS IMMEDIATELY
+async function checkAndRestoreSession() {
+  console.log('Checking for existing session...');
+  
+  const { data: { session }, error } = await db.auth.getSession();
+  
+  if (error) {
+    console.error('Session check error:', error);
+    return;
+  }
+  
+  if (session?.user) {
+    console.log('Found existing session for:', session.user.email);
+    await bootApp(session.user);
+  } else {
+    console.log('No existing session found');
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('app').style.display = 'none';
+    const loginBtn = document.getElementById('login-btn');
+    if (loginBtn) {
+      loginBtn.disabled = false;
+      loginBtn.textContent = 'Sign In';
+    }
+  }
+}
+
+/* ── NAVIGATION ── */
+function switchPanel(name, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const panel = document.getElementById('panel-' + name);
+  if (panel) panel.classList.add('active');
+  if (el) el.classList.add('active');
+  document.getElementById('page-title').textContent = PANEL_TITLES[name];
+  currentPanel = name;
+  loadPanel(name);
+}
+
+function loadPanel(name) {
+  const map = { overview:loadOverview, review:loadReview, leads:loadLeads, academics:loadAcademics, ledger:loadLedger, tutors:loadTutors, audit:loadAudit };
+  if (map[name]) map[name]();
+}
+
+function refreshAll() { loadPanel(currentPanel); showToast('Refreshed', 'success'); }
+function toggleLog(id) { document.getElementById(id).classList.toggle('open'); }
+
+/* ── DATA LOADING FUNCTIONS ── */
 async function loadOverview() {
   const statsEl = document.getElementById('overview-stats');
   const tableEl = document.getElementById('overview-table');
+  if (!statsEl || !tableEl) return;
+  
   statsEl.innerHTML = '<div class="loading-state" style="grid-column:1/-1"><div class="spinner"></div></div>';
-
-  let students, pending, logs, approved, payouts;
+  
   try {
-    [students, pending, logs, approved, payouts] = await Promise.all([
+    const [students, pending, logs, approved, payouts] = await Promise.all([
       db.from('student_profiles').select('*',{count:'exact',head:true}).eq('status','Active'),
       db.from('raw_tutor_logs').select('*',{count:'exact',head:true}).eq('review_status','Pending Review'),
       db.from('raw_tutor_logs').select('*',{count:'exact',head:true}),
       db.from('approved_parent_logs').select('*',{count:'exact',head:true}),
       db.from('tutor_profiles').select('payout_due_this_cycle')
     ]);
-  } catch(e) {
-    statsEl.innerHTML = '<div class="loading-state" style="grid-column:1/-1;color:var(--red)"><i class="ti ti-alert-circle"></i> Failed to load dashboard data. Please refresh.</div>';
-    return;
+    
+    const totalPayout = (payouts.data||[]).reduce((s,t)=>s+parseFloat(t.payout_due_this_cycle||0),0);
+    const pendingCount = pending.count||0;
+    
+    const badge = document.getElementById('pending-badge');
+    if (badge) badge.textContent = pendingCount;
+    
+    statsEl.innerHTML = `
+      <div class="stat-card"><div class="stat-label">Active Students</div><div class="stat-value"><span class="stat-accent" style="background:var(--mustard)"></span>${students.count||0}</div><div class="stat-sub">Currently enrolled</div></div>
+      <div class="stat-card"><div class="stat-label">Pending Review</div><div class="stat-value"><span class="stat-accent" style="background:var(--pink)"></span>${pendingCount}</div><div class="stat-sub">Awaiting approval</div></div>
+      <div class="stat-card"><div class="stat-label">Sessions This Cycle</div><div class="stat-value"><span class="stat-accent" style="background:#9fd4b8"></span>${logs.count||0}</div><div class="stat-sub">${approved.count||0} approved · ${pendingCount} pending</div></div>
+      <div class="stat-card dark"><div class="stat-label">Payout Due</div><div class="stat-value">${peso(totalPayout)}</div><div class="stat-sub">1st &amp; 16th cycle</div></div>`;
+    
+    const { data: recent } = await db.from('raw_tutor_logs').select('log_id,student_name,tutor_name,session_date,focus_area,review_status,reviewed_by').order('form_submission_timestamp',{ascending:false}).limit(8);
+    if (!recent?.length) { 
+      tableEl.innerHTML='<tr><td colspan="5"><div class="empty-state"><i class="ti ti-inbox"></i><p>No session logs yet.</p></div></tr>'; 
+      return; 
+    }
+    tableEl.innerHTML = recent.map(r=>`<tr><td><strong>${sanitize(r.student_name)}</strong></td><td>${sanitize(r.tutor_name)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;">${fmtDate(r.session_date)} · ${sanitize(r.focus_area)||'—'}</td><td>${pill(r.review_status)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;">${sanitize(r.reviewed_by)||'—'}</td></tr>`).join('');
+  } catch (err) {
+    console.error('Error loading overview:', err);
+    statsEl.innerHTML = '<div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading data</p></div>';
   }
-
-  const totalPayout = (payouts.data||[]).reduce((s,t)=>s+parseFloat(t.payout_due_this_cycle||0),0);
-  const pendingCount = pending.count||0;
-  document.getElementById('pending-badge').textContent = pendingCount;
-
-  statsEl.innerHTML = `
-    <div class="stat-card"><div class="stat-label">Active Students</div><div class="stat-value"><span class="stat-accent" style="background:var(--mustard)"></span>${students.count||0}</div><div class="stat-sub">Currently enrolled</div></div>
-    <div class="stat-card"><div class="stat-label">Pending Review</div><div class="stat-value"><span class="stat-accent" style="background:var(--pink)"></span>${pendingCount}</div><div class="stat-sub">Awaiting approval</div></div>
-    <div class="stat-card"><div class="stat-label">Sessions This Cycle</div><div class="stat-value"><span class="stat-accent" style="background:#9fd4b8"></span>${logs.count||0}</div><div class="stat-sub">${approved.count||0} approved · ${pendingCount} pending</div></div>
-    <div class="stat-card dark"><div class="stat-label">Payout Due</div><div class="stat-value">${peso(totalPayout)}</div><div class="stat-sub">1st &amp; 16th cycle</div></div>`;
-
-  const { data: recent } = await db.from('raw_tutor_logs').select('log_id,student_name,tutor_name,session_date,focus_area,review_status,reviewed_by').order('form_submission_timestamp',{ascending:false}).limit(8);
-  if (!recent?.length) { tableEl.innerHTML='<tr><td colspan="5"><div class="empty-state"><i class="ti ti-inbox"></i><p>No session logs yet.</p></div></td></tr>'; return; }
-  tableEl.innerHTML = recent.map(r=>`<tr><td><strong>${sanitize(r.student_name)}</strong></td><td>${sanitize(r.tutor_name)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;">${fmtDate(r.session_date)} · ${sanitize(r.focus_area)||'—'}</td><td>${pill(r.review_status)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;">${sanitize(r.reviewed_by)||'—'}</td></tr>`).join('');
 }
 
-/* ── REVIEW CONSOLE ── */
 async function loadReview() {
   const listEl = document.getElementById('review-list');
   const labelEl = document.getElementById('review-label');
+  if (!listEl || !labelEl) return;
+  
   listEl.innerHTML = '<div class="loading-state"><div class="spinner"></div> Loading...</div>';
-  const { data, error } = await db.from('raw_tutor_logs').select('*, student_profiles(tier)').eq('review_status','Pending Review').order('form_submission_timestamp',{ascending:true});
-  if (error || !data) { listEl.innerHTML='<div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading logs.</p></div>'; return; }
-  if (!data.length) { labelEl.textContent='Pending review — 0 logs'; listEl.innerHTML='<div class="empty-state"><i class="ti ti-check"></i><p>All caught up — no pending logs.</p></div>'; return; }
-  labelEl.textContent=`Pending review — ${data.length} log${data.length>1?'s':''}`;
-  document.getElementById('pending-badge').textContent=data.length;
-  listEl.innerHTML = data.map(r=>{
-    const tier=r.student_profiles?.tier||'—';
-    const tierCls={Starter:'tier-starter',Essential:'tier-essential',Premium:'tier-premium'}[tier]||'';
-    const draft=`${r.student_name} had a session focused on ${r.focus_area||'the assigned topic'}. ${r.topics_covered||''} ${r.flags_for_next_session?'Note for next session: '+r.flags_for_next_session:''}`.trim();
-    return `<div class="log-card" id="card-${r.log_id}">
-      <div class="log-header" onclick="toggleLog('body-${r.log_id}')">
-        <div><div class="log-student">${sanitize(r.student_name)}</div><div class="log-meta">${sanitize(r.tutor_name)} · ${fmtDate(r.session_date)} · ${sanitize(r.focus_area)||'—'}</div></div>
-        <span class="pill pill-pending" style="margin-left:auto;margin-right:10px;">Pending</span>
-        <span class="tier-badge ${tierCls}">${tier}</span>
-      </div>
-      <div class="log-body" id="body-${r.log_id}">
-        <div class="log-field"><div class="field-label">Performance</div><div class="field-value">${stars(r.student_performance)} (${r.student_performance}/5)</div></div>
-        <div class="log-field"><div class="field-label">Topics covered (raw)</div><div class="field-value">${sanitize(r.topics_covered)||'—'}</div></div>
-        <div class="log-field"><div class="field-label">Flags for next session</div><div class="field-value">${sanitize(r.flags_for_next_session)||'None'}</div></div>
-        <div class="log-field"><div class="field-label">Polished summary — edit before approving</div><textarea class="field-textarea" id="summary-${r.log_id}">${draft}</textarea></div>
-        <div class="log-actions">
-          <button class="btn btn-approve" onclick="approveLog('${r.log_id}','${r.student_name}','${r.student_id}','${tier}')"><i class="ti ti-check"></i> Approve &amp; Send</button>
-          <button class="btn btn-reject" onclick="rejectLog('${r.log_id}','${r.student_name}')"><i class="ti ti-x"></i> Reject</button>
+  
+  try {
+    const { data, error } = await db.from('raw_tutor_logs').select('*, student_profiles(tier)').eq('review_status','Pending Review').order('form_submission_timestamp',{ascending:true});
+    if (error || !data) { listEl.innerHTML='<div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading logs.</p></div>'; return; }
+    if (!data.length) { labelEl.textContent='Pending review — 0 logs'; listEl.innerHTML='<div class="empty-state"><i class="ti ti-check"></i><p>All caught up — no pending logs.</p></div>'; return; }
+    labelEl.textContent=`Pending review — ${data.length} log${data.length>1?'s':''}`;
+    const badge = document.getElementById('pending-badge');
+    if (badge) badge.textContent = data.length;
+    
+    listEl.innerHTML = data.map(r=>{
+      const tier=r.student_profiles?.tier||'—';
+      const tierCls={Starter:'tier-starter',Essential:'tier-essential',Premium:'tier-premium'}[tier]||'';
+      const draft=`${r.student_name} had a session focused on ${r.focus_area||'the assigned topic'}. ${r.topics_covered||''} ${r.flags_for_next_session?'Note for next session: '+r.flags_for_next_session:''}`.trim();
+      return `<div class="log-card" id="card-${r.log_id}">
+        <div class="log-header" onclick="toggleLog('body-${r.log_id}')">
+          <div><div class="log-student">${sanitize(r.student_name)}</div><div class="log-meta">${sanitize(r.tutor_name)} · ${fmtDate(r.session_date)} · ${sanitize(r.focus_area)||'—'}</div></div>
+          <span class="pill pill-pending" style="margin-left:auto;margin-right:10px;">Pending</span>
+          <span class="tier-badge ${tierCls}">${sanitize(tier)}</span>
         </div>
-      </div>
-    </div>`;
-  }).join('');
+        <div class="log-body" id="body-${r.log_id}">
+          <div class="log-field"><div class="field-label">Performance</div><div class="field-value">${stars(r.student_performance)} (${r.student_performance}/5)</div></div>
+          <div class="log-field"><div class="field-label">Topics covered (raw)</div><div class="field-value">${sanitize(r.topics_covered)||'—'}</div></div>
+          <div class="log-field"><div class="field-label">Flags for next session</div><div class="field-value">${sanitize(r.flags_for_next_session)||'None'}</div></div>
+          <div class="log-field"><div class="field-label">Polished summary — edit before approving</div><textarea class="field-textarea" id="summary-${r.log_id}">${draft}</textarea></div>
+          <div class="log-actions">
+            <button class="btn btn-approve" onclick="approveLog('${r.log_id}','${r.student_name}','${r.student_id}','${tier}')"><i class="ti ti-check"></i> Approve &amp; Send</button>
+            <button class="btn btn-reject" onclick="rejectLog('${r.log_id}','${r.student_name}')"><i class="ti ti-x"></i> Reject</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch (err) {
+    console.error('Error loading review:', err);
+    listEl.innerHTML = '<div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading data</p></div>';
+  }
 }
 
-function toggleLog(id) { document.getElementById(id).classList.toggle('open'); }
-
 async function approveLog(logId, studentName, studentId, tier) {
-  const summary = document.getElementById('summary-'+logId).value.trim();
-  if (!summary) { showToast('Add a polished summary before approving.','error'); return; }
-  const { data: logData } = await db.from('raw_tutor_logs').select('*').eq('log_id',logId).single();
-  const { data: student } = await db.from('student_profiles').select('parent_email,parent_name').eq('student_id',studentId).single();
-  const safeTier = (tier && tier !== '—') ? tier : 'Starter';
-  const emailType = safeTier==='Premium'?'portal_link':'recap_in_body';
-  const actor = sanitize(currentUser?.user_metadata?.name || document.getElementById('user-name').textContent || 'Unknown');
+  const summary = document.getElementById('summary-'+logId);
+  if (!summary) return;
+  const summaryText = summary.value.trim();
+  if (!summaryText) { showToast('Add a polished summary before approving.','error'); return; }
+  
+  try {
+    const { data: logData } = await db.from('raw_tutor_logs').select('*').eq('log_id',logId).single();
+    const { data: student } = await db.from('student_profiles').select('parent_email,parent_name').eq('student_id',studentId).single();
+    const safeTier = (tier && tier !== '—') ? tier : 'Starter';
+    const emailType = safeTier==='Premium'?'portal_link':'recap_in_body';
+    const actor = sanitize(currentUser?.user_metadata?.name || document.getElementById('user-name').textContent || 'Unknown');
 
-  const { error } = await db.from('approved_parent_logs').insert({
-    source_log_id:logId, student_id:studentId, student_name:studentName,
-    student_tier:safeTier, session_date:logData.session_date, focus_area:logData.focus_area,
-    polished_summary:summary, student_performance:logData.student_performance,
-    flags_for_next_session:logData.flags_for_next_session,
-    approved_by:actor, approved_at:new Date().toISOString(),
-    email_sent:false, parent_email:student?.parent_email||null, email_type:emailType
-  });
+    const { error } = await db.from('approved_parent_logs').insert({
+      source_log_id:logId, student_id:studentId, student_name:studentName,
+      student_tier:safeTier, session_date:logData.session_date, focus_area:logData.focus_area,
+      polished_summary:summaryText, student_performance:logData.student_performance,
+      flags_for_next_session:logData.flags_for_next_session,
+      approved_by:actor, approved_at:new Date().toISOString(),
+      email_sent:false, parent_email:student?.parent_email||null, email_type:emailType
+    });
 
-  if (error) { showToast('Error saving. Try again.','error'); return; }
+    if (error) { showToast('Error saving. Try again.','error'); return; }
 
-  await db.from('raw_tutor_logs').update({ review_status:'Approved', reviewed_by:actor, reviewed_at:new Date().toISOString() }).eq('log_id',logId);
-  await db.from('audit_log').insert({ actor, action_type:'Approved', target_record_id:logId, target_table:'raw_tutor_logs', notes:`Approved session for ${studentName}. Email type: ${emailType}` });
+    await db.from('raw_tutor_logs').update({ review_status:'Approved', reviewed_by:actor, reviewed_at:new Date().toISOString() }).eq('log_id',logId);
+    await db.from('audit_log').insert({ actor, action_type:'Approved', target_record_id:logId, target_table:'raw_tutor_logs', notes:`Approved session for ${studentName}. Email type: ${emailType}` });
 
-  document.getElementById('card-'+logId)?.remove();
-  showToast(`Approved — ${studentName}'s log saved.`,'success');
-  const rem = document.querySelectorAll('#review-list .log-card').length;
-  document.getElementById('review-label').textContent=`Pending review — ${rem} log${rem!==1?'s':''}`;
-  document.getElementById('pending-badge').textContent=rem||'0';
-  if (!rem) document.getElementById('review-list').innerHTML='<div class="empty-state"><i class="ti ti-check"></i><p>All caught up.</p></div>';
+    const card = document.getElementById('card-'+logId);
+    if (card) card.remove();
+    showToast(`Approved — ${studentName}'s log saved.`,'success');
+    
+    const rem = document.querySelectorAll('#review-list .log-card').length;
+    const labelEl = document.getElementById('review-label');
+    const badge = document.getElementById('pending-badge');
+    if (labelEl) labelEl.textContent=`Pending review — ${rem} log${rem!==1?'s':''}`;
+    if (badge) badge.textContent = rem || '0';
+    if (!rem && labelEl) document.getElementById('review-list').innerHTML='<div class="empty-state"><i class="ti ti-check"></i><p>All caught up.</p></div>';
+  } catch (err) {
+    console.error('Error approving log:', err);
+    showToast('Error approving log','error');
+  }
 }
 
 async function rejectLog(logId, studentName) {
   const reason = prompt('Rejection reason (optional):') ?? null;
   if (reason === null) return;
   const actor = sanitize(currentUser?.user_metadata?.name || document.getElementById('user-name').textContent || 'Unknown');
-  await db.from('raw_tutor_logs').update({ review_status:'Rejected', reviewed_by:actor, reviewed_at:new Date().toISOString() }).eq('log_id',logId);
-  await db.from('audit_log').insert({ actor, action_type:'Rejected', target_record_id:logId, target_table:'raw_tutor_logs', notes:reason||'No reason given' });
-  document.getElementById('card-'+logId)?.remove();
-  showToast('Log rejected.','');
-  const rem = document.querySelectorAll('#review-list .log-card').length;
-  document.getElementById('pending-badge').textContent=rem||'0';
-  document.getElementById('review-label').textContent=`Pending review — ${rem} log${rem!==1?'s':''}`;
-}
-
-/* ── LEADS ── */
-async function loadLeads() {
-  const tbody=document.getElementById('leads-table');
-  // RLS is the enforcer — no client-side role check here
-  const { data, error } = await db.from('enrollment_leads').select('*').order('submission_timestamp',{ascending:false});
-  if (error) { tbody.innerHTML='<tr><td colspan="7"><div class="access-denied"><i class="ti ti-lock"></i><h3>Access Restricted</h3><p>Enrollment leads are managed by MD and Ops.</p></div></td></tr>'; return; }
-  if (!data?.length) { tbody.innerHTML='<tr><td colspan="7"><div class="empty-state"><i class="ti ti-inbox"></i><p>No leads yet.</p></div></td></tr>'; return; }
-  tbody.innerHTML=data.map(l=>`<tr><td><strong>${sanitize(l.student_name)}</strong><div style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;">${sanitize(l.grade_level)||'—'}</div></td><td>${sanitize(l.parent_name)}</td><td style="font-size:12px;color:var(--text-muted);">${sanitize(l.email)}</td><td>${tierBadge(l.preferred_tier)}</td><td style="font-size:12px;">${sanitize(l.subject_focus_areas)||'—'}</td><td>${pill(l.lead_status)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;">${sanitize(l.handled_by)||'—'}</td></tr>`).join('');
-}
-
-/* ── ACADEMICS ── */
-async function loadAcademics() {
-  const grid=document.getElementById('academics-grid');
-  const { data, error } = await db.from('student_profiles').select('*, tutor_profiles(tutor_name)').eq('status','Active').order('student_id');
-  if (error) { grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><i class="ti ti-alert-circle"></i><p>Failed to load students. Please refresh.</p></div>'; return; }
-  if (!data?.length) { grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><i class="ti ti-inbox"></i><p>No active students.</p></div>'; return; }
-  grid.innerHTML=data.map(s=>`<div class="student-card">
-    <div class="student-card-header"><div class="student-name-big">${sanitize(s.student_name)}</div>${tierBadge(s.tier)}</div>
-    <div style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;margin-bottom:8px;">${sanitize(s.tutor_profiles?.tutor_name)||'Unassigned'} · ${sanitize(s.grade_level)||'—'}</div>
-    <div class="plan-block"><div class="plan-label">Current plan</div><div class="plan-text">${sanitize(s.current_lesson_plan)||'Not set'}</div></div>
-    <div class="plan-block upcoming"><div class="plan-label">Upcoming</div><div class="plan-text">${sanitize(s.upcoming_lesson_plan)||'Not set'}</div></div>
-    ${s.specific_goals?`<div class="goal-tag">🎯 ${sanitize(s.specific_goals)}</div>`:''}
-  </div>`).join('');
-}
-
-/* ── LEDGER ── */
-async function loadLedger() {
-  // RLS is the enforcer — no client-side role check here
-  const { data:tutors, error:tutorError } = await db.from('tutor_profiles').select('*').order('tutor_id');
-  if (tutorError) { document.getElementById('ledger-wrap').innerHTML='<div class="access-denied"><i class="ti ti-lock"></i><h3>Access Restricted</h3><p>Revenue data is restricted to MD and Ops.</p></div>'; return; }
-  const { data:students } = await db.from('student_profiles').select('tier').eq('status','Active');
-  if (!tutors?.length) { document.getElementById('ledger-wrap').innerHTML='<div class="empty-state"><i class="ti ti-inbox"></i><p>No tutors found.</p></div>'; return; }
-  const totalPayout=tutors.reduce((s,t)=>s+parseFloat(t.payout_due_this_cycle||0),0);
-  document.getElementById('ledger-wrap').innerHTML=tutors.map(t=>`<div class="payout-row"><div><div class="payout-tutor">${t.tutor_name}</div><div class="payout-sub">${t.tutor_id} · ${t.sessions_logged_this_cycle||0} session${t.sessions_logged_this_cycle!==1?'s':''} this cycle</div></div><div style="text-align:right;"><div class="payout-amount">${peso(t.payout_due_this_cycle)}</div><div class="payout-rate">${peso(t.rate_per_session)}/session</div></div></div>`).join('')+`<div class="ledger-total"><div class="ledger-total-label">Total payout due</div><div class="ledger-total-amount">${peso(totalPayout)}</div></div>`;
-  const tc={Starter:0,Essential:0,Premium:0};
-  (students||[]).forEach(s=>{if(tc[s.tier]!==undefined)tc[s.tier]++;});
-  const tp={Starter:2999,Essential:5499,Premium:7999};
-  const totalRev=Object.entries(tc).reduce((s,[t,c])=>s+(tp[t]||0)*c,0);
-  document.getElementById('revenue-stats').innerHTML=Object.entries(tc).map(([t,c])=>`<div class="stat-card"><div class="stat-label">${t}</div><div class="stat-value" style="font-size:18px;">${c} × ${peso(tp[t])}</div><div class="stat-sub" style="font-family:'DM Mono',monospace;font-size:12px;margin-top:4px;font-weight:600;">${peso(tp[t]*c)}</div></div>`).join('')+`<div class="stat-card dark"><div class="stat-label">Total revenue</div><div class="stat-value">${peso(totalRev)}</div><div class="stat-sub">This month</div></div>`;
-}
-
-/* ── TUTORS ── */
-async function loadTutors() {
-  const tbody=document.getElementById('tutors-table');
-  let tutors, students;
+  
   try {
+    await db.from('raw_tutor_logs').update({ review_status:'Rejected', reviewed_by:actor, reviewed_at:new Date().toISOString() }).eq('log_id',logId);
+    await db.from('audit_log').insert({ actor, action_type:'Rejected', target_record_id:logId, target_table:'raw_tutor_logs', notes:reason||'No reason given' });
+    
+    const card = document.getElementById('card-'+logId);
+    if (card) card.remove();
+    showToast('Log rejected.','');
+    
+    const rem = document.querySelectorAll('#review-list .log-card').length;
+    const badge = document.getElementById('pending-badge');
+    const labelEl = document.getElementById('review-label');
+    if (badge) badge.textContent = rem || '0';
+    if (labelEl) labelEl.textContent=`Pending review — ${rem} log${rem!==1?'s':''}`;
+  } catch (err) {
+    console.error('Error rejecting log:', err);
+    showToast('Error rejecting log','error');
+  }
+}
+
+async function loadLeads() {
+  const tbody = document.getElementById('leads-table');
+  if (!tbody) return;
+  
+  try {
+    const { data, error } = await db.from('enrollment_leads').select('*').order('submission_timestamp',{ascending:false});
+    if (error) { tbody.innerHTML='<tr><td colspan="7"><div class="access-denied"><i class="ti ti-lock"></i><h3>Access Restricted</h3><p>Enrollment leads are managed by MD and Ops.</p></div></td></tr>'; return; }
+    if (!data?.length) { tbody.innerHTML='<tr><td colspan="7"><div class="empty-state"><i class="ti ti-inbox"></i><p>No leads yet.</p></div></td></tr>'; return; }
+    tbody.innerHTML=data.map(l=>`<tr><td><strong>${sanitize(l.student_name)}</strong><div style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;">${sanitize(l.grade_level)||'—'}</div></td><td>${sanitize(l.parent_name)}</td><td style="font-size:12px;color:var(--text-muted);">${sanitize(l.email)}</td><td>${tierBadge(l.preferred_tier)}</td><td style="font-size:12px;">${sanitize(l.subject_focus_areas)||'—'}</td><td>${pill(l.lead_status)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;">${sanitize(l.handled_by)||'—'}</td></tr>`).join('');
+  } catch (err) {
+    console.error('Error loading leads:', err);
+    tbody.innerHTML='<tr><td colspan="7"><div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading data</p></div></td></tr>';
+  }
+}
+
+async function loadAcademics() {
+  const grid = document.getElementById('academics-grid');
+  if (!grid) return;
+  
+  try {
+    const { data, error } = await db.from('student_profiles').select('*, tutor_profiles(tutor_name)').eq('status','Active').order('student_id');
+    if (error) { grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><i class="ti ti-alert-circle"></i><p>Failed to load students. Please refresh.</p></div>'; return; }
+    if (!data?.length) { grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><i class="ti ti-inbox"></i><p>No active students.</p></div>'; return; }
+    grid.innerHTML=data.map(s=>`<div class="student-card">
+      <div class="student-card-header"><div class="student-name-big">${sanitize(s.student_name)}</div>${tierBadge(s.tier)}</div>
+      <div style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;margin-bottom:8px;">${sanitize(s.tutor_profiles?.tutor_name)||'Unassigned'} · ${sanitize(s.grade_level)||'—'}</div>
+      <div class="plan-block"><div class="plan-label">Current plan</div><div class="plan-text">${sanitize(s.current_lesson_plan)||'Not set'}</div></div>
+      <div class="plan-block upcoming"><div class="plan-label">Upcoming</div><div class="plan-text">${sanitize(s.upcoming_lesson_plan)||'Not set'}</div></div>
+      ${s.specific_goals?`<div class="goal-tag">🎯 ${sanitize(s.specific_goals)}</div>`:''}
+    </div>`).join('');
+  } catch (err) {
+    console.error('Error loading academics:', err);
+    grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><i class="ti ti-alert-circle"></i><p>Error loading data</p></div>';
+  }
+}
+
+async function loadLedger() {
+  const ledgerWrap = document.getElementById('ledger-wrap');
+  const revenueStats = document.getElementById('revenue-stats');
+  if (!ledgerWrap || !revenueStats) return;
+  
+  try {
+    const { data:tutors, error:tutorError } = await db.from('tutor_profiles').select('*').order('tutor_id');
+    if (tutorError) { ledgerWrap.innerHTML='<div class="access-denied"><i class="ti ti-lock"></i><h3>Access Restricted</h3><p>Revenue data is restricted to MD and Ops.</p></div>'; return; }
+    const { data:students } = await db.from('student_profiles').select('tier').eq('status','Active');
+    if (!tutors?.length) { ledgerWrap.innerHTML='<div class="empty-state"><i class="ti ti-inbox"></i><p>No tutors found.</p></div>'; return; }
+    const totalPayout=tutors.reduce((s,t)=>s+parseFloat(t.payout_due_this_cycle||0),0);
+    ledgerWrap.innerHTML=tutors.map(t=>`<div class="payout-row"><div><div class="payout-tutor">${sanitize(t.tutor_name)}</div><div class="payout-sub">${sanitize(t.tutor_id)} · ${t.sessions_logged_this_cycle||0} session${t.sessions_logged_this_cycle!==1?'s':''} this cycle</div></div><div style="text-align:right;"><div class="payout-amount">${peso(t.payout_due_this_cycle)}</div><div class="payout-rate">${peso(t.rate_per_session)}/session</div></div></div>`).join('')+`<div class="ledger-total"><div class="ledger-total-label">Total payout due</div><div class="ledger-total-amount">${peso(totalPayout)}</div></div>`;
+    
+    const tc={Starter:0,Essential:0,Premium:0};
+    (students||[]).forEach(s=>{if(tc[s.tier]!==undefined)tc[s.tier]++;});
+    const tp={Starter:2999,Essential:5499,Premium:7999};
+    const totalRev=Object.entries(tc).reduce((s,[t,c])=>s+(tp[t]||0)*c,0);
+    revenueStats.innerHTML=Object.entries(tc).map(([t,c])=>`<div class="stat-card"><div class="stat-label">${t}</div><div class="stat-value" style="font-size:18px;">${c} × ${peso(tp[t])}</div><div class="stat-sub" style="font-family:'DM Mono',monospace;font-size:12px;margin-top:4px;font-weight:600;">${peso(tp[t]*c)}</div></div>`).join('')+`<div class="stat-card dark"><div class="stat-label">Total revenue</div><div class="stat-value">${peso(totalRev)}</div><div class="stat-sub">This month</div></div>`;
+  } catch (err) {
+    console.error('Error loading ledger:', err);
+    ledgerWrap.innerHTML='<div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading data</p></div>';
+  }
+}
+
+async function loadTutors() {
+  const tbody = document.getElementById('tutors-table');
+  if (!tbody) return;
+  
+  try {
+    let tutors, students;
     const [t, s] = await Promise.all([
       db.from('tutor_profiles').select('*').order('tutor_id'),
       db.from('student_profiles').select('student_name,assigned_tutor_id')
     ]);
     if (t.error) throw t.error;
     tutors = t.data; students = s.data;
-  } catch(e) {
-    tbody.innerHTML='<tr><td colspan="7"><div class="empty-state"><i class="ti ti-alert-circle"></i><p>Failed to load tutors. Please refresh.</p></div></td></tr>';
-    return;
+    
+    if (!tutors?.length) { tbody.innerHTML='<tr><td colspan="7"><div class="empty-state"><i class="ti ti-inbox"></i><p>No tutors yet.</p></div></td></tr>'; return; }
+    tbody.innerHTML=tutors.map((t,i)=>{
+      const assigned=(students||[]).filter(s=>s.assigned_tutor_id===t.tutor_id).map(s=>s.student_name).join(', ')||'<span style="color:var(--text-muted)">Unassigned</span>';
+      return `<tr><td><div style="display:flex;align-items:center;gap:8px;">${tutorDot(t.tutor_name,i)}<div><div style="font-weight:600;">${sanitize(t.tutor_name)}</div><div style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;">${sanitize(t.tutor_id)}</div></div></div></td><td style="font-size:12px;color:var(--text-muted);">${sanitize(t.email)}</td><td style="font-size:12px;">${assigned}</td><td style="font-family:'DM Mono',monospace;font-size:12px;">${peso(t.rate_per_session)}</td><td style="font-family:'DM Mono',monospace;font-size:13px;font-weight:600;">${t.sessions_logged_this_cycle||0}</td><td style="font-family:'Playfair Display',serif;font-size:18px;">${peso(t.payout_due_this_cycle)}</td><td>${pill(t.status)}</td></tr>`;
+    }).join('');
+  } catch (err) {
+    console.error('Error loading tutors:', err);
+    tbody.innerHTML='<tr><td colspan="7"><div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading data</p></div></td></tr>';
   }
-  if (!tutors?.length) { tbody.innerHTML='<tr><td colspan="7"><div class="empty-state"><i class="ti ti-inbox"></i><p>No tutors yet.</p></div></td></tr>'; return; }
-  tbody.innerHTML=tutors.map((t,i)=>{
-    const assigned=(students||[]).filter(s=>s.assigned_tutor_id===t.tutor_id).map(s=>s.student_name).join(', ')||'<span style="color:var(--text-muted)">Unassigned</span>';
-    return `<tr><td><div style="display:flex;align-items:center;gap:8px;">${tutorDot(t.tutor_name,i)}<div><div style="font-weight:600;">${sanitize(t.tutor_name)}</div><div style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;">${sanitize(t.tutor_id)}</div></div></div></td><td style="font-size:12px;color:var(--text-muted);">${sanitize(t.email)}</td><td style="font-size:12px;">${assigned}</td><td style="font-family:'DM Mono',monospace;font-size:12px;">${peso(t.rate_per_session)}</td><td style="font-family:'DM Mono',monospace;font-size:13px;font-weight:600;">${t.sessions_logged_this_cycle||0}</td><td style="font-family:'Playfair Display',serif;font-size:18px;">${peso(t.payout_due_this_cycle)}</td><td>${pill(t.status)}</td></tr>`;
-  }).join('');
 }
 
-/* ── AUDIT ── */
 async function loadAudit() {
-  const tbody=document.getElementById('audit-table');
-  const { data, error } = await db.from('audit_log').select('*').order('timestamp',{ascending:false}).limit(50);
-  if (error) { tbody.innerHTML='<tr><td colspan="6"><div class="empty-state"><i class="ti ti-alert-circle"></i><p>Failed to load audit log. Please refresh.</p></div></td></tr>'; return; }
-  if (!data?.length) { tbody.innerHTML='<tr><td colspan="6"><div class="empty-state"><i class="ti ti-inbox"></i><p>No audit entries yet.</p></div></td></tr>'; return; }
-  tbody.innerHTML=data.map(a=>`<tr><td style="font-family:'DM Mono',monospace;font-size:11px;white-space:nowrap;">${fmtDT(a.timestamp)}</td><td style="font-weight:600;">${sanitize(a.actor)}</td><td>${pill(a.action_type)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;">${sanitize(a.target_record_id)||'—'}</td><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);">${sanitize(a.target_table)||'—'}</td><td style="font-size:12px;color:var(--text-muted);">${sanitize(a.notes)||'—'}</td></tr>`).join('');
+  const tbody = document.getElementById('audit-table');
+  if (!tbody) return;
+  
+  try {
+    const { data, error } = await db.from('audit_log').select('*').order('timestamp',{ascending:false}).limit(50);
+    if (error) { tbody.innerHTML='<tr><td colspan="6"><div class="empty-state"><i class="ti ti-alert-circle"></i><p>Failed to load audit log. Please refresh.</p></div></td></tr>'; return; }
+    if (!data?.length) { tbody.innerHTML='<tr><td colspan="6"><div class="empty-state"><i class="ti ti-inbox"></i><p>No audit entries yet.</p></div></td></tr>'; return; }
+    tbody.innerHTML=data.map(a=>`<tr><td style="font-family:'DM Mono',monospace;font-size:11px;white-space:nowrap;">${fmtDT(a.timestamp)}</td><td style="font-weight:600;">${sanitize(a.actor)}</td><td>${pill(a.action_type)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;">${sanitize(a.target_record_id)||'—'}</td><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);">${sanitize(a.target_table)||'—'}</td><td style="font-size:12px;color:var(--text-muted);">${sanitize(a.notes)||'—'}</td></tr>`).join('');
+  } catch (err) {
+    console.error('Error loading audit:', err);
+    tbody.innerHTML='<tr><td colspan="6"><div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading data</p></div></td></tr>';
+  }
 }
+
+/* ── EVENT LISTENERS & INIT ── */
+document.addEventListener('DOMContentLoaded', () => {
+  // Check and restore session immediately
+  checkAndRestoreSession();
+  
+  // Attach event listeners
+  const loginBtn = document.getElementById('login-btn');
+  const logoutBtn = document.getElementById('logout-btn');
+  const refreshBtn = document.getElementById('refresh-btn');
+  
+  if (loginBtn) loginBtn.onclick = handleLogin;
+  if (logoutBtn) logoutBtn.onclick = handleLogout;
+  if (refreshBtn) refreshBtn.onclick = refreshAll;
+  
+  // Nav item clicks
+  document.getElementById('nav-overview')?.addEventListener('click', (e) => switchPanel('overview', e.currentTarget));
+  document.getElementById('nav-review')?.addEventListener('click', (e) => switchPanel('review', e.currentTarget));
+  document.getElementById('nav-leads')?.addEventListener('click', (e) => switchPanel('leads', e.currentTarget));
+  document.getElementById('nav-academics')?.addEventListener('click', (e) => switchPanel('academics', e.currentTarget));
+  document.getElementById('nav-ledger')?.addEventListener('click', (e) => switchPanel('ledger', e.currentTarget));
+  document.getElementById('nav-tutors')?.addEventListener('click', (e) => switchPanel('tutors', e.currentTarget));
+  document.getElementById('nav-audit')?.addEventListener('click', (e) => switchPanel('audit', e.currentTarget));
+  
+  // Enter key on login
+  const passwordInput = document.getElementById('login-password');
+  if (passwordInput) {
+    passwordInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') handleLogin();
+    });
+  }
+});
+
+// Make functions global for onclick handlers
+window.switchPanel = switchPanel;
+window.refreshAll = refreshAll;
+window.toggleLog = toggleLog;
+window.approveLog = approveLog;
+window.rejectLog = rejectLog;
+window.handleLogin = handleLogin;
+window.handleLogout = handleLogout;
 </script>
 </body>
 </html>
