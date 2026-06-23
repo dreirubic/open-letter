@@ -2,189 +2,1812 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+(function() {
+  try {
+    var t = localStorage.getItem('ol-theme');
+    if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  } catch (e) {}
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
 <title>Founders Hub — Learn With Open Letter</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 :root {
-  --ink: #1a1a2e; --ink-light: #2d2d45; --pink: #ffb0c9; --pink-soft: #fff0f5;
-  --mustard: #fcd97b; --mustard-soft: #fffbee; --cream: #fdf6ec; --cream-dark: #f5ede0;
-  --white: #ffffff; --text-main: #1a1a2e; --text-muted: #7a7a9a; --border: rgba(26,26,46,0.1);
-  --green: #1a6640; --green-soft: #d1f0e0; --red: #8b1a1a; --red-soft: #fde8e8;
-}
-html, body { height: 100%; overflow: hidden; }
-body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); color: var(--text-main); }
+  --ink: #1a1a2e;
+  --ink-light: #2d2d45;
+  --ink-glass: rgba(26, 26, 46, 0.85);
+  
+  /* Brand Colors - Pastel Pink Primary */
+  --pink: #ffb0c9;
+  --pink-light: #ffc8d9;
+  --pink-dark: #e896b0;
+  --pink-soft: #fff0f5;
+  --pink-glass: rgba(255, 176, 201, 0.12);
+  --pink-glow: rgba(255, 176, 201, 0.15);
+  --pink-strong-glow: rgba(255, 176, 201, 0.25);
+  
+  /* Mustard Secondary */
+  --mustard: #fcd97b;
+  --mustard-soft: #fffbee;
+  --mustard-glass: rgba(252, 217, 123, 0.12);
+  
+  --cream: #fdf6ec;
+  --cream-dark: #f5ede0;
+  --cream-pink: #fff8fa;
+  
+  --white: #ffffff;
+  --white-glass: rgba(255, 255, 255, 0.72);
+  --text-main: #1a1a2e;
+  --text-muted: #7a7a9a;
+  --border: rgba(26, 26, 46, 0.08);
+  --border-strong: rgba(26, 26, 46, 0.12);
+  
+  --green: #1a6640;
+  --green-soft: #d1f0e0;
+  --red: #8b1a1a;
+  --red-soft: #fde8e8;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
 
-/* LOGIN SCREEN */
+  /* Premium depth system */
+  --shadow-sm: 0 1px 2px rgba(26, 26, 46, 0.04), 0 1px 3px rgba(26, 26, 46, 0.02);
+  --shadow-md: 0 4px 12px rgba(26, 26, 46, 0.06), 0 2px 4px rgba(26, 26, 46, 0.03);
+  --shadow-lg: 0 12px 32px rgba(26, 26, 46, 0.08), 0 4px 8px rgba(26, 26, 46, 0.04);
+  --shadow-xl: 0 24px 48px rgba(26, 26, 46, 0.10), 0 8px 16px rgba(26, 26, 46, 0.05);
+  --shadow-pink-glow: 0 0 30px var(--pink-glow);
+  --shadow-pink-strong: 0 0 40px var(--pink-strong-glow);
+
+  /* Glass surfaces - Pink tinted */
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.40);
+  --glass-pink: rgba(255, 176, 201, 0.08);
+
+  /* Transitions */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  
+  /* Pills */
+  --pill-pending-bg: #fff3cd;
+  --pill-pending-text: #856404;
+  --tier-essential-bg: #e8f0ff;
+  --tier-essential-text: #2a4499;
+}
+
+[data-theme="dark"] {
+  --ink: #0f0f1a;
+  --ink-light: #1c1c30;
+  --ink-glass: rgba(15, 15, 26, 0.92);
+  
+  --pink-soft: #2a1a24;
+  --pink-glass: rgba(255, 176, 201, 0.08);
+  --pink-glow: rgba(255, 176, 201, 0.08);
+  --pink-strong-glow: rgba(255, 176, 201, 0.15);
+  
+  --mustard-soft: #2a2418;
+  --cream: #0e0e18;
+  --cream-dark: #181825;
+  --cream-pink: #1a1420;
+  
+  --white: #161622;
+  --white-glass: rgba(22, 22, 34, 0.85);
+  --text-main: #ece9f5;
+  --text-muted: #8a8aaa;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.10);
+  
+  --green-soft: #162a22;
+  --red-soft: #2a1818;
+  --pill-pending-bg: #2a2410;
+  --pill-pending-text: #f3c969;
+  --tier-essential-bg: #1c2940;
+  --tier-essential-text: #8fb3ff;
+  
+  --glass-bg: rgba(22, 22, 34, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --glass-pink: rgba(255, 176, 201, 0.04);
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] body {
+  background: var(--cream);
+}
+
+[data-theme="dark"] .login-box {
+  background: var(--white-glass);
+}
+
+[data-theme="dark"] .sidebar {
+  background: #0a0a12;
+}
+
+[data-theme="dark"] .stat-card,
+[data-theme="dark"] .log-card,
+[data-theme="dark"] .student-card,
+[data-theme="dark"] .table-wrap {
+  background: var(--white);
+}
+
+[data-theme="dark"] .data-table th {
+  background: var(--cream-dark);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--cream);
+  color: var(--text-main);
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== LOGIN SCREEN ===== */
 #login-screen {
-  position: fixed; inset: 0; background: var(--ink);
-  display: flex; align-items: center; justify-content: center; z-index: 1000;
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 80% 60% at 50% 0%, var(--pink-glow) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(255, 176, 201, 0.08) 0%, transparent 50%),
+    var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  overflow-y: auto;
 }
+
 .login-box {
-  background: var(--cream); border-radius: 16px; padding: 40px 36px;
-  width: 380px; text-align: center;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  border: 1px solid var(--glass-border);
+  border-radius: 28px;
+  padding: 40px 32px;
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+  margin: auto;
+  box-shadow: var(--shadow-xl), 0 0 0 1px rgba(255, 255, 255, 0.05) inset, var(--shadow-pink-glow);
+  transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-smooth);
 }
-.login-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--mustard); letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 8px; }
-.login-title { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--ink); margin-bottom: 6px; }
-.login-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 28px; }
+
+.login-box:hover {
+  box-shadow: var(--shadow-xl), var(--shadow-pink-strong), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+.login-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--pink);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  opacity: 0.9;
+}
+
+.login-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  color: var(--ink);
+  margin-bottom: 8px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--pink) 0%, var(--mustard) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme="dark"] .login-title {
+  background: linear-gradient(135deg, var(--pink-light) 0%, var(--mustard) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.login-sub {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
 .login-input {
-  width: 100%; border: 1px solid var(--border); border-radius: 8px;
-  padding: 11px 14px; font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif;
-  background: var(--white); color: var(--text-main); margin-bottom: 10px;
+  width: 100%;
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  padding: 16px;
+  font-size: 16px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--white);
+  color: var(--text-main);
+  margin-bottom: 14px;
+  -webkit-appearance: none;
+  transition: all 0.25s var(--ease-smooth);
+  box-shadow: var(--shadow-sm);
 }
-.login-input:focus { outline: none; border-color: var(--ink); }
+
+.login-input:focus {
+  outline: none;
+  border-color: var(--pink);
+  box-shadow: 0 0 0 3px var(--pink-glass), var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.login-input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
 .login-btn {
-  width: 100%; background: var(--ink); color: #fff; border: none;
-  border-radius: 8px; padding: 12px; font-size: 14px; font-weight: 600;
-  font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; margin-top: 6px;
-  transition: background 0.15s;
+  width: 100%;
+  background: linear-gradient(135deg, var(--pink) 0%, var(--pink-dark) 100%);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: all 0.3s var(--ease-smooth);
+  box-shadow: var(--shadow-md), 0 0 20px var(--pink-glow);
+  position: relative;
+  overflow: hidden;
 }
-.login-btn:hover { background: var(--ink-light); }
-.login-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-.login-error { font-size: 12px; color: var(--red); margin-top: 10px; min-height: 18px; }
-.login-note { font-size: 11px; color: var(--text-muted); margin-top: 16px; font-family: 'DM Mono', monospace; }
 
-/* APP */
-#app { display: none; height: 100vh; overflow: hidden; }
-.app-inner { display: flex; height: 100%; }
+.login-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
 
-/* SIDEBAR */
-.sidebar { width: 224px; min-width: 224px; background: var(--ink); display: flex; flex-direction: column; height: 100vh; }
-.sidebar-brand { padding: 24px 20px; border-bottom: 1px solid rgba(255,255,255,0.08); }
-.brand-eyebrow { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--mustard); letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 6px; }
-.brand-name { font-family: 'Playfair Display', serif; font-size: 17px; color: #fff; font-weight: 500; line-height: 1.35; }
-.sidebar-nav { flex: 1; overflow-y: auto; padding: 12px 0; }
-.nav-section { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; color: rgba(255,255,255,0.28); text-transform: uppercase; padding: 0 20px; margin: 16px 0 4px; }
-.nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 20px; cursor: pointer; color: rgba(255,255,255,0.5); font-size: 13px; font-weight: 500; border-left: 3px solid transparent; transition: all 0.15s; user-select: none; }
-.nav-item:hover { color: #fff; background: rgba(255,255,255,0.05); }
-.nav-item.active { color: #fff; border-left-color: var(--mustard); background: rgba(255,255,255,0.07); }
-.nav-item i { font-size: 16px; flex-shrink: 0; }
-.nav-item.hidden { display: none; }
-.nav-badge { margin-left: auto; background: var(--pink); color: var(--ink); font-size: 10px; font-weight: 600; font-family: 'DM Mono', monospace; padding: 2px 7px; border-radius: 20px; }
-.sidebar-footer { padding: 16px 20px; border-top: 1px solid rgba(255,255,255,0.08); }
-.founder-pill { display: flex; align-items: center; gap: 10px; }
-.founder-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--mustard); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--ink); font-family: 'DM Mono', monospace; flex-shrink: 0; }
-.founder-name { font-size: 13px; font-weight: 600; color: #fff; }
-.founder-role-label { font-size: 10px; color: rgba(255,255,255,0.4); font-family: 'DM Mono', monospace; }
-.logout-btn { margin-top: 10px; width: 100%; background: transparent; border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.5); border-radius: 6px; padding: 6px; font-size: 11px; font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; transition: all 0.15s; }
-.logout-btn:hover { border-color: rgba(255,255,255,0.4); color: #fff; }
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg), 0 0 30px var(--pink-strong-glow);
+}
 
-/* MAIN */
-.main { flex: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-.topbar { background: var(--white); border-bottom: 1px solid var(--border); padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
-.page-title { font-family: 'Playfair Display', serif; font-size: 21px; font-weight: 500; }
-.topbar-right { display: flex; align-items: center; gap: 10px; }
-.btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 7px; font-size: 12px; font-weight: 600; cursor: pointer; border: none; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.15s; }
-.btn-primary { background: var(--ink); color: #fff; }
-.btn-primary:hover { background: var(--ink-light); }
-.btn-outline { background: transparent; color: var(--ink); border: 1px solid var(--border); }
-.btn-outline:hover { background: var(--cream); }
-.btn-approve { background: var(--green); color: #fff; }
-.btn-approve:hover { background: #145235; }
-.btn-reject { background: transparent; color: var(--red); border: 1px solid #f0b8b8; }
-.btn-reject:hover { background: var(--red-soft); }
-.btn-sm { padding: 5px 10px; font-size: 11px; }
-.content { flex: 1; overflow-y: auto; padding: 26px 28px; }
+.login-btn:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: var(--shadow-sm);
+}
 
-.loading-state { display: flex; align-items: center; justify-content: center; padding: 60px 0; color: var(--text-muted); gap: 10px; font-family: 'DM Mono', monospace; font-size: 13px; }
-.spinner { width: 18px; height: 18px; border: 2px solid var(--border); border-top-color: var(--ink); border-radius: 50%; animation: spin 0.7s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.empty-state { text-align: center; padding: 60px 0; color: var(--text-muted); }
-.empty-state i { font-size: 36px; margin-bottom: 12px; display: block; opacity: 0.4; }
+.login-btn:disabled {
+  opacity: 0.6;
+  transform: none;
+  cursor: not-allowed;
+}
 
-.panel { display: none; }
-.panel.active { display: block; }
+.login-error {
+  font-size: 13px;
+  color: var(--red);
+  margin-top: 14px;
+  min-height: 20px;
+  font-weight: 500;
+  transition: opacity 0.2s var(--ease-smooth);
+}
 
-.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
-.stat-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
-.stat-card.dark { background: var(--ink); }
-.stat-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
-.stat-card.dark .stat-label { color: rgba(255,255,255,0.45); }
-.stat-value { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
-.stat-card.dark .stat-value { color: var(--mustard); }
-.stat-accent { width: 3px; height: 26px; border-radius: 2px; flex-shrink: 0; }
-.stat-sub { font-size: 11px; color: var(--text-muted); margin-top: 5px; }
-.stat-card.dark .stat-sub { color: rgba(255,255,255,0.35); }
+.login-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 20px;
+  font-family: 'DM Mono', monospace;
+  opacity: 0.7;
+}
 
-.section-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; }
+/* ===== APP CONTAINER ===== */
+#app {
+  display: none;
+  height: 100vh;
+  overflow: hidden;
+}
 
-.table-wrap { background: var(--white); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 24px; }
-.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.data-table th { background: var(--cream); font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
-.data-table td { padding: 11px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-.data-table tr:last-child td { border-bottom: none; }
-.data-table tbody tr:hover td { background: var(--cream); }
+.app-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 
-.pill { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 10px; border-radius: 20px; white-space: nowrap; display: inline-block; }
-.pill-pending { background: #fff3cd; color: #856404; }
-.pill-approved { background: var(--green-soft); color: var(--green); }
-.pill-rejected { background: var(--red-soft); color: var(--red); }
-.pill-new { background: var(--cream-dark); color: var(--ink); }
-.pill-contacted { background: #fff3cd; color: #856404; }
-.pill-enrolled { background: var(--green-soft); color: var(--green); }
-.pill-declined { background: var(--red-soft); color: var(--red); }
-.pill-active { background: var(--green-soft); color: var(--green); }
-.pill-inactive { background: var(--cream-dark); color: var(--text-muted); }
-.tier-badge { font-family: 'DM Mono', monospace; font-size: 10px; padding: 2px 8px; border-radius: 4px; display: inline-block; }
-.tier-starter { background: var(--cream-dark); color: var(--ink); }
-.tier-essential { background: #e8f0ff; color: #2a4499; }
-.tier-premium { background: var(--pink-soft); color: #8b1a55; }
+/* ===== SIDEBAR (Desktop) ===== */
+.sidebar {
+  display: none;
+  width: 280px;
+  min-width: 280px;
+  background: 
+    linear-gradient(180deg, var(--ink) 0%, rgba(26, 26, 46, 0.98) 100%);
+  height: 100vh;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
 
-.log-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
-.log-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; transition: background 0.1s; }
-.log-header:hover { background: var(--cream); }
-.log-student { font-weight: 600; font-size: 14px; }
-.log-meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; font-family: 'DM Mono', monospace; }
-.log-body { padding: 0 16px 16px; border-top: 1px solid var(--border); display: none; }
-.log-body.open { display: block; }
-.log-field { margin-top: 12px; }
-.field-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-.field-value { font-size: 13px; line-height: 1.6; }
-.field-textarea { width: 100%; border: 1px solid var(--border); border-radius: 6px; padding: 9px 11px; font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif; resize: vertical; min-height: 90px; background: var(--cream); color: var(--text-main); margin-top: 4px; line-height: 1.6; }
-.field-textarea:focus { outline: none; border-color: var(--ink); }
-.log-actions { display: flex; gap: 8px; margin-top: 14px; }
-.star-rating { color: var(--mustard); font-size: 14px; }
+.sidebar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, var(--pink-glow) 0%, transparent 70%);
+  pointer-events: none;
+}
 
-.student-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.student-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
-.student-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-.student-name-big { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 500; }
-.plan-block { background: var(--cream); border-radius: 6px; padding: 10px 12px; margin-top: 8px; }
-.plan-block.upcoming { background: var(--mustard-soft); }
-.plan-label { font-family: 'DM Mono', monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 4px; }
-.plan-text { font-size: 12px; line-height: 1.55; }
-.goal-tag { display: inline-block; background: var(--mustard-soft); border: 1px solid rgba(252,217,123,0.5); color: var(--ink); font-size: 11px; padding: 4px 10px; border-radius: 4px; margin-top: 10px; font-family: 'DM Mono', monospace; }
+.sidebar-brand {
+  padding: 28px 24px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+}
 
-.ledger-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-.cycle-badge { font-family: 'DM Mono', monospace; font-size: 11px; background: var(--mustard); color: var(--ink); padding: 4px 14px; border-radius: 20px; font-weight: 500; }
-.payout-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-bottom: 1px solid var(--border); }
-.payout-row:last-of-type { border-bottom: none; }
-.payout-tutor { font-weight: 600; font-size: 14px; }
-.payout-sub { font-size: 11px; color: var(--text-muted); font-family: 'DM Mono', monospace; margin-top: 2px; }
-.payout-amount { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 500; }
-.payout-rate { font-size: 11px; color: var(--text-muted); font-family: 'DM Mono', monospace; text-align: right; }
-.ledger-total { display: flex; justify-content: space-between; align-items: center; padding: 16px 18px; background: var(--ink); }
-.ledger-total-label { font-family: 'DM Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; }
-.ledger-total-amount { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--mustard); }
-.tutor-dot { width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 9px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; flex-shrink: 0; }
+.brand-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--pink);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  opacity: 0.85;
+}
 
-.toast { position: fixed; bottom: 24px; right: 24px; background: var(--ink); color: #fff; padding: 12px 18px; border-radius: 8px; font-size: 13px; font-weight: 500; display: none; align-items: center; gap: 8px; z-index: 9999; box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
-.toast.show { display: flex; }
-.toast.success { background: var(--green); }
-.toast.error { background: var(--red); }
+.brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: #fff;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
 
-.access-denied { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px; text-align: center; color: var(--text-muted); }
-.access-denied i { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
-.access-denied h3 { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--text-main); margin-bottom: 8px; }
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 0;
+  position: relative;
+}
+
+.nav-section {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.22);
+  text-transform: uppercase;
+  padding: 0 24px;
+  margin: 20px 0 6px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 24px;
+  margin: 2px 12px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 12px;
+  border-left: none;
+  transition: all 0.25s var(--ease-smooth);
+  position: relative;
+}
+
+.nav-item:hover {
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.nav-item.active {
+  color: #fff;
+  background: var(--pink-glass);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 20px var(--pink-glow);
+}
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 20px;
+  background: var(--pink);
+  border-radius: 0 3px 3px 0;
+  opacity: 0.9;
+  box-shadow: 0 0 12px var(--pink-glow);
+}
+
+.nav-item i {
+  font-size: 18px;
+  flex-shrink: 0;
+  transition: transform 0.2s var(--ease-spring);
+}
+
+.nav-item:hover i {
+  transform: scale(1.1);
+}
+
+.nav-item.hidden {
+  display: none;
+}
+
+.nav-badge {
+  margin-left: auto;
+  background: linear-gradient(135deg, var(--pink) 0%, var(--pink-dark) 100%);
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 600;
+  font-family: 'DM Mono', monospace;
+  padding: 3px 8px;
+  border-radius: 20px;
+  box-shadow: 0 1px 3px var(--pink-glow);
+  transition: transform 0.2s var(--ease-spring);
+}
+
+.nav-item:hover .nav-badge {
+  transform: scale(1.05);
+}
+
+.sidebar-footer {
+  padding: 20px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+}
+
+.founder-pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.founder-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--pink) 0%, var(--mustard) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  font-family: 'DM Mono', monospace;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px var(--pink-glow);
+  transition: transform 0.2s var(--ease-spring), box-shadow 0.2s var(--ease-smooth);
+}
+
+.founder-pill:hover .founder-avatar {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px var(--pink-strong-glow);
+}
+
+.founder-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.founder-role-label {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.35);
+  font-family: 'DM Mono', monospace;
+}
+
+.logout-btn {
+  margin-top: 14px;
+  width: 100%;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.45);
+  border-radius: 10px;
+  padding: 8px;
+  font-size: 12px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.25s var(--ease-smooth);
+}
+
+.logout-btn:hover {
+  border-color: var(--pink);
+  color: var(--pink);
+  background: var(--pink-glass);
+}
+
+.logout-btn:active {
+  transform: scale(0.97);
+}
+
+/* ===== MAIN CONTENT ===== */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--cream);
+}
+
+.topbar {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px) saturate(1.1);
+  -webkit-backdrop-filter: blur(16px) saturate(1.1);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: var(--shadow-sm);
+}
+
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: all 0.25s var(--ease-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--pink) 0%, var(--pink-dark) 100%);
+  color: #fff;
+  box-shadow: var(--shadow-sm), 0 0 20px var(--pink-glow);
+}
+
+.btn-primary:hover {
+  box-shadow: var(--shadow-md), 0 0 30px var(--pink-strong-glow);
+}
+
+.btn-outline {
+  background: var(--white);
+  color: var(--ink);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-outline:hover {
+  background: var(--cream-pink);
+  border-color: var(--pink);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-approve {
+  background: var(--green);
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(26, 102, 64, 0.2);
+}
+
+.btn-approve:hover {
+  background: #1d7548;
+  box-shadow: 0 2px 8px rgba(26, 102, 64, 0.25);
+}
+
+.btn-reject {
+  background: transparent;
+  color: var(--red);
+  border: 1px solid rgba(139, 26, 26, 0.2);
+}
+
+.btn-reject:hover {
+  background: var(--red-soft);
+  border-color: rgba(139, 26, 26, 0.35);
+}
+
+.btn-sm {
+  padding: 8px 14px;
+  font-size: 12px;
+}
+
+/* Theme toggle */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-main);
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.25s var(--ease-smooth);
+}
+
+.theme-toggle:hover {
+  border-color: var(--pink);
+  background: var(--pink-glass);
+  box-shadow: 0 0 20px var(--pink-glow);
+}
+
+.theme-toggle:active {
+  transform: scale(0.93);
+}
+
+.theme-toggle .ti-sun {
+  display: none;
+}
+
+[data-theme="dark"] .theme-toggle .ti-moon {
+  display: none;
+}
+
+[data-theme="dark"] .theme-toggle .ti-sun {
+  display: inline;
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ===== STATS GRID ===== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px;
+  transition: all 0.35s var(--ease-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--pink) 0%, var(--mustard) 100%);
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-smooth);
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--pink);
+}
+
+.stat-card:hover::before {
+  opacity: 0.7;
+}
+
+.stat-card.dark {
+  background: 
+    linear-gradient(135deg, var(--ink) 0%, rgba(45, 45, 69, 0.95) 100%);
+  border: none;
+  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255,255,255,0.05) inset, var(--shadow-pink-glow);
+}
+
+.stat-card.dark::before {
+  background: linear-gradient(90deg, var(--pink) 0%, var(--mustard) 100%);
+  opacity: 0.4;
+}
+
+.stat-card.dark:hover {
+  box-shadow: var(--shadow-xl), 0 0 0 1px rgba(255,255,255,0.08) inset, var(--shadow-pink-strong);
+  transform: translateY(-3px);
+}
+
+.stat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-bottom: 10px;
+}
+
+.stat-card.dark .stat-label {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.stat-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  letter-spacing: -0.02em;
+  transition: transform 0.2s var(--ease-spring);
+}
+
+.stat-card:hover .stat-value {
+  transform: scale(1.02);
+}
+
+.stat-card.dark .stat-value {
+  color: var(--pink);
+  text-shadow: 0 0 30px var(--pink-glow);
+}
+
+.stat-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 6px;
+  letter-spacing: 0.01em;
+}
+
+/* ===== TABLES ===== */
+.table-wrap {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.3s var(--ease-smooth);
+}
+
+.table-wrap:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+  min-width: 500px;
+}
+
+.data-table th {
+  background: var(--cream);
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-muted);
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.data-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+  transition: background 0.15s var(--ease-smooth);
+}
+
+.data-table tr:hover td {
+  background: var(--cream-pink);
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ===== CARDS ===== */
+.log-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: all 0.35s var(--ease-smooth);
+  box-shadow: var(--shadow-sm);
+}
+
+.log-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--pink);
+  transform: translateY(-2px);
+}
+
+.log-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px;
+  cursor: pointer;
+  flex-wrap: wrap;
+  transition: background 0.2s var(--ease-smooth);
+  position: relative;
+}
+
+.log-header:hover {
+  background: var(--cream-pink);
+}
+
+.log-header-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.log-checkbox {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--pink);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.log-student {
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+
+.log-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.02em;
+}
+
+.log-body {
+  padding: 0 18px 18px;
+  border-top: 1px solid var(--border);
+  display: none;
+  animation: fadeInBody 0.3s var(--ease-out);
+}
+
+.log-body.open {
+  display: block;
+}
+
+@keyframes fadeInBody {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.log-field {
+  margin-top: 18px;
+}
+
+.field-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.field-value {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-main);
+}
+
+.field-textarea {
+  width: 100%;
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  padding: 14px;
+  font-size: 14px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  resize: vertical;
+  min-height: 100px;
+  background: var(--cream);
+  transition: all 0.25s var(--ease-smooth);
+  box-shadow: inset 0 1px 3px rgba(26, 26, 46, 0.03);
+}
+
+.field-textarea:focus {
+  outline: none;
+  border-color: var(--pink);
+  box-shadow: 0 0 0 3px var(--pink-glass), inset 0 1px 3px rgba(26, 26, 46, 0.03);
+  background: var(--white);
+}
+
+.log-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+/* Reject panel */
+.reject-panel {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  display: none;
+}
+
+.reject-panel.open {
+  display: block;
+}
+
+.reject-textarea {
+  width: 100%;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 13px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  resize: vertical;
+  min-height: 70px;
+  background: var(--cream);
+  color: var(--text-main);
+}
+
+.reject-textarea:focus {
+  outline: none;
+  border-color: var(--pink);
+  box-shadow: 0 0 0 3px var(--pink-glass);
+}
+
+/* Rejection reason display */
+.rejection-reason {
+  background: var(--red-soft);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--text-main);
+  margin-top: 12px;
+  border-left: 3px solid var(--red);
+}
+
+.rejection-reason .field-label {
+  color: var(--red);
+}
+
+/* Review tabs */
+.review-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.review-tab {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.25s var(--ease-smooth);
+}
+
+.review-tab:hover {
+  border-color: var(--pink);
+  color: var(--text-main);
+}
+
+.review-tab.active {
+  background: linear-gradient(135deg, var(--pink) 0%, var(--pink-dark) 100%);
+  color: #fff;
+  border-color: var(--pink);
+  box-shadow: 0 2px 12px var(--pink-glow);
+}
+
+/* Bulk action bar */
+.bulk-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.bulk-select-all {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: 'DM Mono', monospace;
+  cursor: pointer;
+  user-select: none;
+}
+
+.bulk-select-all input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--pink);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ===== STUDENT GRID ===== */
+.student-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.student-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px;
+  transition: all 0.35s var(--ease-smooth);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.student-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--pink) 0%, var(--mustard) 100%);
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-smooth);
+}
+
+.student-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--pink);
+}
+
+.student-card:hover::before {
+  opacity: 0.6;
+}
+
+.student-name-big {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.plan-block {
+  background: var(--cream);
+  border-radius: 12px;
+  padding: 14px;
+  margin-top: 12px;
+  transition: background 0.2s var(--ease-smooth);
+  border: 1px solid transparent;
+}
+
+.plan-block:hover {
+  background: var(--cream-pink);
+  border-color: var(--pink);
+}
+
+.plan-block.upcoming {
+  background: var(--mustard-soft);
+  border: 1px solid rgba(252, 217, 123, 0.3);
+}
+
+.plan-block.upcoming:hover {
+  background: rgba(252, 217, 123, 0.15);
+  border-color: rgba(252, 217, 123, 0.4);
+}
+
+/* ===== PILLS & BADGES ===== */
+.pill {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 20px;
+  display: inline-block;
+  white-space: nowrap;
+  transition: all 0.2s var(--ease-smooth);
+  letter-spacing: 0.02em;
+}
+
+.pill-pending {
+  background: linear-gradient(135deg, #fff8e6 0%, #fff3cd 100%);
+  color: #856404;
+  border: 1px solid rgba(133, 100, 4, 0.08);
+}
+
+.pill-approved {
+  background: linear-gradient(135deg, var(--green-soft) 0%, #e8f5ee 100%);
+  color: var(--green);
+  border: 1px solid rgba(26, 102, 64, 0.08);
+}
+
+.pill-rejected {
+  background: linear-gradient(135deg, var(--red-soft) 0%, #fff0f0 100%);
+  color: var(--red);
+  border: 1px solid rgba(139, 26, 26, 0.08);
+}
+
+.pill-new {
+  background: linear-gradient(135deg, var(--cream-dark) 0%, var(--cream) 100%);
+  color: var(--ink);
+  border: 1px solid var(--border);
+}
+
+.tier-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 8px;
+  display: inline-block;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: all 0.2s var(--ease-smooth);
+}
+
+.tier-starter {
+  background: linear-gradient(135deg, var(--cream-dark) 0%, var(--cream) 100%);
+  color: var(--ink);
+  border: 1px solid var(--border);
+}
+
+.tier-essential {
+  background: linear-gradient(135deg, #e8f0ff 0%, #f0f5ff 100%);
+  color: #2a4499;
+  border: 1px solid rgba(42, 68, 153, 0.08);
+}
+
+.tier-premium {
+  background: linear-gradient(135deg, var(--pink-soft) 0%, #fff5f9 100%);
+  color: #8b1a55;
+  border: 1px solid rgba(139, 26, 85, 0.08);
+}
+
+/* ===== LOADING & EMPTY STATES ===== */
+.loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 0;
+  color: var(--text-muted);
+  gap: 12px;
+  font-size: 14px;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid var(--border);
+  border-top-color: var(--pink);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 0;
+  color: var(--text-muted);
+}
+
+.empty-state i {
+  font-size: 36px;
+  margin-bottom: 14px;
+  display: block;
+  opacity: 0.35;
+  transition: opacity 0.3s var(--ease-smooth);
+}
+
+.empty-state:hover i {
+  opacity: 0.5;
+}
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed;
+  bottom: 80px;
+  left: 20px;
+  right: 20px;
+  background: var(--ink-glass);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: 16px;
+  font-size: 14px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  z-index: 1000;
+  text-align: center;
+  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255,255,255,0.08) inset;
+  border: 1px solid rgba(255,255,255,0.06);
+  animation: toastIn 0.4s var(--ease-out);
+}
+
+.toast.show {
+  display: flex;
+}
+
+.toast.success {
+  background: rgba(26, 102, 64, 0.9);
+  border-color: rgba(255,255,255,0.1);
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ===== MOBILE BOTTOM NAVIGATION ===== */
+.mobile-nav-bar {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--ink-glass);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  padding: 10px 14px calc(10px + var(--safe-bottom));
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  z-index: 200;
+  justify-content: space-around;
+  gap: 6px;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.15);
+}
+
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 10px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-smooth);
+  flex: 1;
+  text-align: center;
+  position: relative;
+}
+
+.mobile-nav-item i {
+  font-size: 22px;
+  transition: transform 0.2s var(--ease-spring);
+}
+
+.mobile-nav-item:hover {
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.mobile-nav-item:hover i {
+  transform: scale(1.1);
+}
+
+.mobile-nav-item.active {
+  color: var(--pink);
+  background: var(--pink-glass);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 20px var(--pink-glow);
+}
+
+.mobile-nav-item.active i {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px var(--pink-glow));
+}
+
+.mobile-nav-item:active {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(0.95);
+}
+
+/* ===== PAYOUT ROW ===== */
+.payout-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s var(--ease-smooth);
+}
+
+.payout-row:hover {
+  background: var(--cream-pink);
+}
+
+.payout-row:last-child {
+  border-bottom: none;
+}
+
+.payout-tutor {
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+
+.payout-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: 'DM Mono', monospace;
+  margin-top: 4px;
+  letter-spacing: 0.02em;
+}
+
+.payout-amount {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  transition: transform 0.2s var(--ease-spring);
+  color: var(--pink);
+}
+
+.payout-row:hover .payout-amount {
+  transform: scale(1.03);
+}
+
+.payout-rate {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: 'DM Mono', monospace;
+  text-align: right;
+  letter-spacing: 0.02em;
+}
+
+.ledger-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  background: 
+    linear-gradient(135deg, var(--ink) 0%, rgba(45, 45, 69, 0.95) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.ledger-total::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--pink) 0%, var(--mustard) 100%);
+  opacity: 0.6;
+}
+
+.ledger-total-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+.ledger-total-amount {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  color: var(--pink);
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 30px var(--pink-glow);
+}
+
+.ledger-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cycle-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  background: linear-gradient(135deg, var(--mustard) 0%, #ffe8a0 100%);
+  color: var(--ink);
+  padding: 6px 16px;
+  border-radius: 24px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(252, 217, 123, 0.25);
+  transition: all 0.2s var(--ease-smooth);
+}
+
+.cycle-badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(252, 217, 123, 0.35);
+}
+
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 18px;
+  font-weight: 500;
+}
+
+.star-rating {
+  color: var(--mustard);
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+
+.goal-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--mustard-soft) 0%, #fff8e6 100%);
+  border: 1px solid rgba(252, 217, 123, 0.4);
+  color: var(--ink);
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  margin-top: 12px;
+  font-family: 'DM Mono', monospace;
+  font-weight: 500;
+  transition: all 0.2s var(--ease-smooth);
+}
+
+.goal-tag:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(252, 217, 123, 0.2);
+  border-color: rgba(252, 217, 123, 0.6);
+}
+
+.tutor-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--pink) 0%, var(--pink-dark) 100%);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Mono', monospace;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px var(--pink-glow);
+  transition: all 0.2s var(--ease-spring);
+}
+
+.tutor-dot:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px var(--pink-strong-glow);
+}
+
+.panel {
+  display: none;
+  animation: panelIn 0.3s var(--ease-out);
+}
+
+.panel.active {
+  display: block;
+}
+
+@keyframes panelIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== SCROLLBAR STYLING ===== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--pink);
+}
+
+.sidebar-nav::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+  background: var(--pink);
+}
+
+/* ===== DESKTOP STYLES ===== */
+@media (min-width: 768px) {
+  .mobile-nav-bar {
+    display: none;
+  }
+
+  .sidebar {
+    display: flex;
+  }
+
+  .app-inner {
+    flex-direction: row;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .student-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .content {
+    padding: 28px 32px;
+  }
+
+  .topbar {
+    padding: 16px 32px;
+  }
+
+  .page-title {
+    font-size: 24px;
+  }
+
+  .data-table {
+    min-width: auto;
+  }
+
+  .table-wrap {
+    border-radius: 20px;
+  }
+
+  .stat-card {
+    padding: 24px;
+  }
+
+  .stat-value {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 767px) {
+  .content {
+    padding-bottom: 90px;
+  }
+
+  .toast {
+    bottom: 90px;
+    left: 16px;
+    right: 16px;
+  }
+
+  .login-box {
+    padding: 32px 24px;
+  }
+
+  .login-title {
+    font-size: 24px;
+  }
+}
+
+/* ===== FOCUS STATES ===== */
+*:focus-visible {
+  outline: 2px solid var(--pink);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+button:focus-visible,
+.nav-item:focus-visible {
+  outline: 2px solid var(--pink);
+  outline-offset: 2px;
+}
+
+/* ===== ASSIGNED CHIPS ===== */
+.assigned-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.assigned-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--cream-dark);
+  color: var(--ink);
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.assigned-chip button {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+  padding: 0;
+  display: flex;
+}
+
+.assigned-chip button:hover {
+  color: var(--red);
+}
+
+.assign-select {
+  font-size: 11px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--text-main);
+  max-width: 180px;
+}
+
+/* ===== CONVERT MODAL ===== */
+#convert-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+#convert-modal .modal-content {
+  background: var(--white);
+  border-radius: 24px;
+  padding: 32px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: var(--shadow-xl);
+  animation: modalIn 0.3s var(--ease-out);
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+#convert-modal .modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--text-main);
+}
+
+#convert-modal .modal-sub {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+#convert-modal .field-group {
+  margin-bottom: 16px;
+}
+
+#convert-modal .field-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
 <div id="login-screen">
   <div class="login-box">
     <div class="login-eyebrow">Founders Hub</div>
@@ -198,7 +1821,6 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); c
   </div>
 </div>
 
-<!-- APP -->
 <div id="app">
   <div class="app-inner">
     <div class="sidebar">
@@ -208,31 +1830,16 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); c
       </div>
       <nav class="sidebar-nav">
         <div class="nav-section">Overview</div>
-        <div class="nav-item active" id="nav-overview">
-          <i class="ti ti-layout-dashboard"></i> Dashboard
-        </div>
+        <div class="nav-item active" id="nav-overview"><i class="ti ti-layout-dashboard"></i> Dashboard</div>
         <div class="nav-section">Operations</div>
-        <div class="nav-item" id="nav-review">
-          <i class="ti ti-clipboard-check"></i> Review Console
-          <span class="nav-badge" id="pending-badge">0</span>
-        </div>
-        <div class="nav-item" id="nav-leads">
-          <i class="ti ti-user-plus"></i> Enrollment Leads
-        </div>
-        <div class="nav-item" id="nav-academics">
-          <i class="ti ti-book"></i> Academic Board
-        </div>
-        <div class="nav-section" id="finance-section">Finance</div>
-        <div class="nav-item" id="nav-ledger">
-          <i class="ti ti-receipt"></i> Revenue Ledger
-        </div>
-        <div class="nav-item" id="nav-tutors">
-          <i class="ti ti-users"></i> Tutor Registry
-        </div>
+        <div class="nav-item" id="nav-review"><i class="ti ti-clipboard-check"></i> Review Console <span class="nav-badge" id="pending-badge">0</span></div>
+        <div class="nav-item" id="nav-leads"><i class="ti ti-user-plus"></i> Enrollment Leads</div>
+        <div class="nav-item" id="nav-academics"><i class="ti ti-book"></i> Academic Board</div>
+        <div class="nav-section">Finance</div>
+        <div class="nav-item" id="nav-ledger"><i class="ti ti-receipt"></i> Revenue Ledger</div>
+        <div class="nav-item" id="nav-tutors"><i class="ti ti-users"></i> Tutor Registry</div>
         <div class="nav-section">Records</div>
-        <div class="nav-item" id="nav-audit">
-          <i class="ti ti-history"></i> Audit Log
-        </div>
+        <div class="nav-item" id="nav-audit"><i class="ti ti-history"></i> Audit Log</div>
       </nav>
       <div class="sidebar-footer">
         <div class="founder-pill">
@@ -250,82 +1857,103 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); c
       <div class="topbar">
         <div class="page-title" id="page-title">Dashboard</div>
         <div class="topbar-right">
+          <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode"><i class="ti ti-moon"></i><i class="ti ti-sun"></i></button>
           <button class="btn btn-outline btn-sm" id="refresh-btn"><i class="ti ti-refresh"></i> Refresh</button>
         </div>
       </div>
       <div class="content">
-
-        <!-- OVERVIEW -->
         <div class="panel active" id="panel-overview">
-          <div class="stats-grid" id="overview-stats"><div class="loading-state" style="grid-column:1/-1"><div class="spinner"></div> Loading...</div></div>
+          <div class="stats-grid" id="overview-stats"><div class="loading-state"><div class="spinner"></div> Loading...</div></div>
           <div class="section-label">Recent session activity</div>
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>Student</th><th>Tutor</th><th>Date · Focus</th><th>Status</th><th>Actioned by</th></tr></thead>
-              <tbody id="overview-table"><tr><td colspan="5"><div class="loading-state"><div class="spinner"></div></div></td></tr></tbody>
-            </table>
-          </div>
+          <div class="table-wrap"><table class="data-table"><thead><tr><th>Student</th><th>Tutor</th><th>Date · Focus</th><th>Status</th><th>Actioned by</th></tr></thead><tbody id="overview-table"><tr><td colspan="5"><div class="loading-state"><div class="spinner"></div></div></td></tr></tbody></table></div>
         </div>
-
-        <!-- REVIEW CONSOLE -->
         <div class="panel" id="panel-review">
+          <div class="review-tabs">
+            <button class="review-tab active" id="tab-pending" onclick="switchReviewTab('pending')">Pending Review</button>
+            <button class="review-tab" id="tab-rejected" onclick="switchReviewTab('rejected')">Rejected</button>
+          </div>
+          <div class="bulk-bar" id="review-bulk-bar" style="display:none;">
+            <label class="bulk-select-all"><input type="checkbox" id="select-all-logs" onchange="toggleSelectAllLogs(this)"> Select all</label>
+            <button class="btn btn-approve btn-sm" id="bulk-approve-btn" onclick="bulkApprove()" style="display:none;"><i class="ti ti-checks"></i> Approve selected (<span id="bulk-count">0</span>)</button>
+          </div>
           <div class="section-label" id="review-label">Loading...</div>
           <div id="review-list"><div class="loading-state"><div class="spinner"></div> Loading...</div></div>
         </div>
-
-        <!-- ENROLLMENT LEADS -->
         <div class="panel" id="panel-leads">
           <div class="section-label">All enrollment leads</div>
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>Student</th><th>Parent</th><th>Email</th><th>Tier</th><th>Subjects</th><th>Status</th><th>Handled by</th></tr></thead>
-              <tbody id="leads-table"><tr><td colspan="7"><div class="loading-state"><div class="spinner"></div></div></td></tr></tbody>
-            </table>
-          </div>
+          <div class="table-wrap"><table class="data-table"><thead><tr><th>Student</th><th>Parent</th><th>Email</th><th>Tier</th><th>Subjects</th><th>Status</th><th>Handled by</th><th>Action</th></tr></thead><tbody id="leads-table"><tr><td colspan="8"><div class="loading-state"><div class="spinner"></div></div></td></tr></tbody></table></div>
         </div>
-
-        <!-- ACADEMIC BOARD -->
         <div class="panel" id="panel-academics">
           <div class="section-label">Student lesson plans</div>
-          <div class="student-grid" id="academics-grid"><div class="loading-state" style="grid-column:1/-1"><div class="spinner"></div></div></div>
+          <div class="student-grid" id="academics-grid"><div class="loading-state"><div class="spinner"></div></div></div>
         </div>
-
-        <!-- REVENUE LEDGER -->
         <div class="panel" id="panel-ledger">
-          <div class="ledger-header">
-            <div class="section-label" style="margin:0;">Paycut cycle · 1st &amp; 16th</div>
-            <span class="cycle-badge">Active cycle</span>
-          </div>
+          <div class="ledger-header"><div class="section-label" style="margin:0;">Paycut cycle · 1st &amp; 16th</div><span class="cycle-badge">Active cycle</span></div>
           <div class="table-wrap" id="ledger-wrap"><div class="loading-state"><div class="spinner"></div></div></div>
-          <div style="margin-top:22px;">
-            <div class="section-label">Monthly revenue by tier</div>
-            <div class="stats-grid" id="revenue-stats"><div class="loading-state" style="grid-column:1/-1"><div class="spinner"></div></div></div>
-          </div>
+          <div style="margin-top:22px;"><div class="section-label">Monthly revenue by tier</div><div class="stats-grid" id="revenue-stats"><div class="loading-state"><div class="spinner"></div></div></div></div>
         </div>
-
-        <!-- TUTOR REGISTRY -->
         <div class="panel" id="panel-tutors">
           <div class="section-label">Tutor registry</div>
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>Tutor</th><th>Email</th><th>Assigned students</th><th>Rate/session</th><th>Sessions (cycle)</th><th>Payout due</th><th>Status</th></tr></thead>
-              <tbody id="tutors-table"><tr><td colspan="7"><div class="loading-state"><div class="spinner"></div></div></td></tr></tbody>
-            </table>
-          </div>
+          <div class="table-wrap"><table class="data-table"><thead><tr><th>Tutor</th><th>Email</th><th>Assigned students</th><th>Rate</th><th>Sessions</th><th>Payout due</th><th>Status</th></tr></thead><tbody id="tutors-table"><tr><td colspan="7"><div class="loading-state"><div class="spinner"></div></div></td></tr></tbody></table></div>
         </div>
-
-        <!-- AUDIT LOG -->
         <div class="panel" id="panel-audit">
           <div class="section-label">Audit log — last 50 actions</div>
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>Time</th><th>Actor</th><th>Action</th><th>Record</th><th>Table</th><th>Notes</th></tr></thead>
-              <tbody id="audit-table"><tr><td colspan="6"><div class="loading-state"><div class="spinner"></div></div></td></tr></tbody>
-            </table>
-          </div>
+          <div class="table-wrap"><table class="data-table"><thead><tr><th>Time</th><th>Actor</th><th>Action</th><th>Record</th><th>Table</th><th>Notes</th></tr></thead><tbody id="audit-table"><tr><td colspan="6"><div class="loading-state"><div class="spinner"></div></div></td></tr></tbody></table></div>
         </div>
-
       </div>
+    </div>
+  </div>
+
+  <div class="mobile-nav-bar" id="mobile-nav-bar">
+    <button class="mobile-nav-item active" data-panel="overview"><i class="ti ti-layout-dashboard"></i><span>Home</span></button>
+    <button class="mobile-nav-item" data-panel="review"><i class="ti ti-clipboard-check"></i><span>Review</span></button>
+    <button class="mobile-nav-item" data-panel="leads"><i class="ti ti-user-plus"></i><span>Leads</span></button>
+    <button class="mobile-nav-item" data-panel="academics"><i class="ti ti-book"></i><span>Academics</span></button>
+    <button class="mobile-nav-item" data-panel="ledger"><i class="ti ti-receipt"></i><span>Ledger</span></button>
+    <button class="mobile-nav-item" id="mobile-logout-btn"><i class="ti ti-logout"></i><span>Exit</span></button>
+  </div>
+</div>
+
+<!-- Convert Modal -->
+<div id="convert-modal">
+  <div class="modal-content">
+    <div class="modal-title">✨ Convert to Student</div>
+    <div class="modal-sub">Convert this lead to an active student profile. The lead will be marked as "Enrolled".</div>
+    
+    <div class="field-group">
+      <label class="field-label">Student Name</label>
+      <input class="field-input" id="convert-student-name" disabled>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Parent Email</label>
+      <input class="field-input" id="convert-parent-email" disabled>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Tier *</label>
+      <select class="field-select" id="convert-tier">
+        <option value="Starter">Starter</option>
+        <option value="Essential" selected>Essential</option>
+        <option value="Premium">Premium</option>
+      </select>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Grade Level *</label>
+      <input class="field-input" id="convert-grade" placeholder="e.g. Grade 5">
+    </div>
+    <div class="field-group">
+      <label class="field-label">Assigned Tutor</label>
+      <select class="field-select" id="convert-tutor">
+        <option value="">— Unassigned —</option>
+      </select>
+    </div>
+    
+    <div style="display:flex; gap:12px; margin-top:20px;">
+      <button class="btn btn-primary" onclick="confirmConvert()" style="flex:1;">
+        <i class="ti ti-check"></i> Convert
+      </button>
+      <button class="btn btn-outline" onclick="closeConvertModal()" style="flex:1;">
+        Cancel
+      </button>
     </div>
   </div>
 </div>
@@ -339,83 +1967,147 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const ROLE_LABELS = { md: 'Managing Director', academics: 'Head of Academics', ops: 'Head of Ops' };
-const PANEL_TITLES = { overview:'Dashboard', review:'Review Console', leads:'Enrollment Leads', academics:'Academic Board', ledger:'Revenue Ledger', tutors:'Tutor Registry', audit:'Audit Log' };
+const PANEL_TITLES = { overview: 'Dashboard', review: 'Review Console', leads: 'Enrollment Leads', academics: 'Academic Board', ledger: 'Revenue Ledger', tutors: 'Tutor Registry', audit: 'Audit Log' };
+
+// Central config — service tier pricing
+const TIER_PRICES = { Starter: 2999, Essential: 5499, Premium: 7999 };
 
 let currentUser = null;
 let currentRole = null;
 let currentPanel = 'overview';
 
-/* ── HELPER FUNCTIONS ── */
-function sanitize(str) {
-  if (str === null || str === undefined) return '';
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+// Review console state
+let reviewTab = 'pending';
+let reviewDataMap = {};
+
+// Convert modal state
+let convertLeadId = null;
+
+// Login rate limiting
+const LOGIN_ATTEMPTS_KEY = 'ol_login_attempts';
+const MAX_LOGIN_ATTEMPTS = 5;
+const LOGIN_WINDOW_MS = 300000; // 5 minutes
+
+function getLoginAttempts() {
+  try {
+    const data = JSON.parse(localStorage.getItem(LOGIN_ATTEMPTS_KEY) || '[]');
+    return data.filter(t => Date.now() - t < LOGIN_WINDOW_MS);
+  } catch {
+    return [];
+  }
 }
 
-function showToast(msg, type='') {
+function recordLoginAttempt() {
+  const attempts = getLoginAttempts();
+  attempts.push(Date.now());
+  localStorage.setItem(LOGIN_ATTEMPTS_KEY, JSON.stringify(attempts));
+}
+
+function isLoginRateLimited() {
+  return getLoginAttempts().length >= MAX_LOGIN_ATTEMPTS;
+}
+
+function sanitize(s) {
+  if (!s) return '';
+  const map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+    '/': '&#x2F;'
+  };
+  return String(s).replace(/[&<>"'/]/g, function(m) {
+    return map[m];
+  });
+}
+
+function toggleTheme() {
+  const root = document.documentElement;
+  const isDark = root.getAttribute('data-theme') === 'dark';
+  if (isDark) {
+    root.removeAttribute('data-theme');
+    try { localStorage.setItem('ol-theme', 'light'); } catch (e) {}
+  } else {
+    root.setAttribute('data-theme', 'dark');
+    try { localStorage.setItem('ol-theme', 'dark'); } catch (e) {}
+  }
+}
+
+function showToast(msg, type = '') {
   const t = document.getElementById('toast');
-  if (!t) return;
-  t.textContent = msg; 
-  t.className = 'toast show' + (type ? ' ' + type : '');
-  setTimeout(() => t.className = 'toast', 2800);
-}
-
-function tierBadge(tier) {
-  const cls = { Starter:'tier-starter', Essential:'tier-essential', Premium:'tier-premium' };
-  return tier ? `<span class="tier-badge ${cls[tier]||''}">${sanitize(tier)}</span>` : '—';
+  if (t) {
+    t.textContent = msg;
+    t.className = 'toast show' + (type ? ' ' + type : '');
+    setTimeout(() => t.className = 'toast', 2800);
+  }
 }
 
 function pill(status) {
-  const map = { 'Pending Review':'pill-pending','Approved':'pill-approved','Rejected':'pill-rejected','New':'pill-new','Contacted':'pill-contacted','Enrolled':'pill-enrolled','Declined':'pill-declined','Active':'pill-active','Inactive':'pill-inactive','On leave':'pill-inactive','On hold':'pill-inactive' };
-  return status ? `<span class="pill ${map[status]||'pill-new'}">${sanitize(status)}</span>` : '—';
+  const map = { 
+    'Pending Review': 'pill-pending', 
+    'Approved': 'pill-approved', 
+    'Rejected': 'pill-rejected', 
+    'New': 'pill-new', 
+    'Contacted': 'pill-pending', 
+    'Enrolled': 'pill-approved', 
+    'Active': 'pill-approved' 
+  };
+  return status ? `<span class="pill ${map[status] || 'pill-new'}">${sanitize(status)}</span>` : '—';
 }
 
-function stars(n) { const x=parseInt(n)||0; return `<span class="star-rating">${'★'.repeat(x)}<span style="opacity:.2">${'★'.repeat(5-x)}</span></span>`; }
-function fmtDate(d) { return d ? new Date(d).toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'}) : '—'; }
-function fmtDT(d) { return d ? new Date(d).toLocaleString('en-PH',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '—'; }
-function peso(n) { return '₱'+(parseFloat(n)||0).toLocaleString('en-PH',{minimumFractionDigits:0,maximumFractionDigits:0}); }
-function inits(name) { return (name||'').split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase(); }
-const dotColors = ['var(--ink)','#c06b2d','#2a4499','#1a6640','#8b1a55'];
-function tutorDot(name,i) { return `<div class="tutor-dot" style="background:${dotColors[i%dotColors.length]}">${inits(name)}</div>`; }
+function fmtDate(d) {
+  if (!d) return '—';
+  return new Date(d).toLocaleDateString('en-PH', { month: 'short', day: 'numeric', year: 'numeric' });
+}
 
-/* ── AUTH FIXED ── */
+function fmtDateTime(d) {
+  if (!d) return '—';
+  return new Date(d).toLocaleString('en-PH', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+}
+
+function peso(n) {
+  return '₱' + (parseFloat(n) || 0).toLocaleString('en-PH', { minimumFractionDigits: 0 });
+}
+
+function tierBadge(tier) {
+  const cls = { Starter: 'tier-starter', Essential: 'tier-essential', Premium: 'tier-premium' };
+  return tier ? `<span class="tier-badge ${cls[tier] || ''}">${sanitize(tier)}</span>` : '—';
+}
+
+function stars(n) {
+  const x = parseInt(n) || 0;
+  return '<span class="star-rating">' + '★'.repeat(x) + '<span style="opacity:.2">' + '★'.repeat(5 - x) + '</span></span>';
+}
+
 async function bootApp(user) {
-  console.log('bootApp called for:', user.email);
-  
-  // Reset login button state FIRST
   const loginBtn = document.getElementById('login-btn');
   if (loginBtn) {
     loginBtn.disabled = false;
     loginBtn.textContent = 'Sign In';
   }
-  
+
   currentUser = user;
-  
+
   const { data: roleData, error: roleError } = await db
     .from('founder_roles')
     .select('role, name')
     .eq('email', user.email)
     .maybeSingle();
-  
+
   if (roleError || !roleData) {
-    console.error('Role check failed:', roleError);
     await db.auth.signOut();
     document.getElementById('login-error').textContent = 'Access denied. Not a registered founder.';
     return;
   }
-  
+
   currentRole = roleData.role;
   const name = roleData.name;
-  
+
   document.getElementById('user-name').textContent = name;
   document.getElementById('user-role').textContent = ROLE_LABELS[currentRole] || currentRole;
-  document.getElementById('user-avatar').textContent = name.substring(0,2).toUpperCase();
-  
-  // Apply role restrictions
+  document.getElementById('user-avatar').textContent = name.substring(0, 2).toUpperCase();
+
   const leadsNav = document.getElementById('nav-leads');
   const ledgerNav = document.getElementById('nav-ledger');
   if (leadsNav && ledgerNav) {
@@ -426,12 +2118,10 @@ async function bootApp(user) {
       ledgerNav.classList.add('hidden');
     }
   }
-  
-  // Show app, hide login
+
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-  
-  // Load data
+
   loadOverview();
 }
 
@@ -440,34 +2130,43 @@ async function handleLogin() {
   const password = document.getElementById('login-password').value;
   const errEl = document.getElementById('login-error');
   const btn = document.getElementById('login-btn');
-  
+
   errEl.textContent = '';
-  
-  // CRITICAL: Check if already logged in FIRST
+
+  // Rate limiting check
+  if (isLoginRateLimited()) {
+    errEl.textContent = 'Too many login attempts. Please wait 5 minutes.';
+    return;
+  }
+
   const { data: { session } } = await db.auth.getSession();
   if (session?.user) {
-    console.log('Already logged in, restoring session...');
     await bootApp(session.user);
     return;
   }
-  
-  if (!email || !password) { 
-    errEl.textContent = 'Please enter your email and password.'; 
-    return; 
+
+  if (!email || !password) {
+    errEl.textContent = 'Please enter your email and password.';
+    return;
   }
 
-  btn.disabled = true; 
+  btn.disabled = true;
   btn.textContent = 'Signing in...';
-  
+
   const { data, error } = await db.auth.signInWithPassword({ email, password });
-  
+
+  // Record the login attempt
+  recordLoginAttempt();
+
   if (error) {
     errEl.textContent = error.message || 'Sign in failed.';
-    btn.disabled = false; 
+    btn.disabled = false;
     btn.textContent = 'Sign In';
     return;
   }
-  
+
+  // Clear attempts on successful login
+  localStorage.removeItem(LOGIN_ATTEMPTS_KEY);
   await bootApp(data.user);
 }
 
@@ -480,245 +2179,796 @@ async function handleLogout() {
   document.getElementById('login-email').value = '';
   document.getElementById('login-password').value = '';
   document.getElementById('login-error').textContent = '';
-  
-  // Reset login button
-  const loginBtn = document.getElementById('login-btn');
-  if (loginBtn) {
-    loginBtn.disabled = false;
-    loginBtn.textContent = 'Sign In';
-  }
 }
 
-// Session restore on page refresh - RUNS IMMEDIATELY
 async function checkAndRestoreSession() {
-  console.log('Checking for existing session...');
-  
-  const { data: { session }, error } = await db.auth.getSession();
-  
-  if (error) {
-    console.error('Session check error:', error);
-    return;
-  }
-  
+  const { data: { session } } = await db.auth.getSession();
   if (session?.user) {
-    console.log('Found existing session for:', session.user.email);
     await bootApp(session.user);
   } else {
-    console.log('No existing session found');
     document.getElementById('login-screen').style.display = 'flex';
     document.getElementById('app').style.display = 'none';
-    const loginBtn = document.getElementById('login-btn');
-    if (loginBtn) {
-      loginBtn.disabled = false;
-      loginBtn.textContent = 'Sign In';
-    }
   }
 }
 
-/* ── NAVIGATION ── */
 function switchPanel(name, el) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.mobile-nav-item').forEach(n => n.classList.remove('active'));
+
   const panel = document.getElementById('panel-' + name);
   if (panel) panel.classList.add('active');
-  if (el) el.classList.add('active');
+  if (el && el.classList) el.classList.add('active');
+  else {
+    const mob = document.querySelector(`.mobile-nav-item[data-panel="${name}"]`);
+    if (mob) mob.classList.add('active');
+  }
+
   document.getElementById('page-title').textContent = PANEL_TITLES[name];
   currentPanel = name;
-  loadPanel(name);
+
+  const loadMap = {
+    overview: loadOverview,
+    review: loadReview,
+    leads: loadLeads,
+    academics: loadAcademics,
+    ledger: loadLedger,
+    tutors: loadTutors,
+    audit: loadAudit
+  };
+  if (loadMap[name]) loadMap[name]();
 }
 
-function loadPanel(name) {
-  const map = { overview:loadOverview, review:loadReview, leads:loadLeads, academics:loadAcademics, ledger:loadLedger, tutors:loadTutors, audit:loadAudit };
-  if (map[name]) map[name]();
+function refreshAll() {
+  if (currentPanel) {
+    const loadMap = {
+      overview: loadOverview,
+      review: loadReview,
+      leads: loadLeads,
+      academics: loadAcademics,
+      ledger: loadLedger,
+      tutors: loadTutors,
+      audit: loadAudit
+    };
+    if (loadMap[currentPanel]) loadMap[currentPanel]();
+  }
+  showToast('Refreshed', 'success');
 }
 
-function refreshAll() { loadPanel(currentPanel); showToast('Refreshed', 'success'); }
-function toggleLog(id) { document.getElementById(id).classList.toggle('open'); }
-
-/* ── DATA LOADING FUNCTIONS ── */
 async function loadOverview() {
   const statsEl = document.getElementById('overview-stats');
   const tableEl = document.getElementById('overview-table');
   if (!statsEl || !tableEl) return;
-  
+
   statsEl.innerHTML = '<div class="loading-state" style="grid-column:1/-1"><div class="spinner"></div></div>';
-  
+
   try {
     const [students, pending, logs, approved, payouts] = await Promise.all([
-      db.from('student_profiles').select('*',{count:'exact',head:true}).eq('status','Active'),
-      db.from('raw_tutor_logs').select('*',{count:'exact',head:true}).eq('review_status','Pending Review'),
-      db.from('raw_tutor_logs').select('*',{count:'exact',head:true}),
-      db.from('approved_parent_logs').select('*',{count:'exact',head:true}),
+      db.from('student_profiles').select('*', { count: 'exact', head: true }).eq('status', 'Active'),
+      db.from('raw_tutor_logs').select('*', { count: 'exact', head: true }).eq('review_status', 'Pending Review'),
+      db.from('raw_tutor_logs').select('*', { count: 'exact', head: true }),
+      db.from('approved_parent_logs').select('*', { count: 'exact', head: true }),
       db.from('tutor_profiles').select('payout_due_this_cycle')
     ]);
-    
-    const totalPayout = (payouts.data||[]).reduce((s,t)=>s+parseFloat(t.payout_due_this_cycle||0),0);
-    const pendingCount = pending.count||0;
-    
+
+    const totalPayout = (payouts.data || []).reduce((s, t) => s + parseFloat(t.payout_due_this_cycle || 0), 0);
+    const pendingCount = pending.count || 0;
+
     const badge = document.getElementById('pending-badge');
     if (badge) badge.textContent = pendingCount;
-    
+
     statsEl.innerHTML = `
-      <div class="stat-card"><div class="stat-label">Active Students</div><div class="stat-value"><span class="stat-accent" style="background:var(--mustard)"></span>${students.count||0}</div><div class="stat-sub">Currently enrolled</div></div>
-      <div class="stat-card"><div class="stat-label">Pending Review</div><div class="stat-value"><span class="stat-accent" style="background:var(--pink)"></span>${pendingCount}</div><div class="stat-sub">Awaiting approval</div></div>
-      <div class="stat-card"><div class="stat-label">Sessions This Cycle</div><div class="stat-value"><span class="stat-accent" style="background:#9fd4b8"></span>${logs.count||0}</div><div class="stat-sub">${approved.count||0} approved · ${pendingCount} pending</div></div>
+      <div class="stat-card"><div class="stat-label">Active Students</div><div class="stat-value">${students.count || 0}</div><div class="stat-sub">Currently enrolled</div></div>
+      <div class="stat-card"><div class="stat-label">Pending Review</div><div class="stat-value">${pendingCount}</div><div class="stat-sub">Awaiting approval</div></div>
+      <div class="stat-card"><div class="stat-label">Sessions This Cycle</div><div class="stat-value">${logs.count || 0}</div><div class="stat-sub">${approved.count || 0} approved</div></div>
       <div class="stat-card dark"><div class="stat-label">Payout Due</div><div class="stat-value">${peso(totalPayout)}</div><div class="stat-sub">1st &amp; 16th cycle</div></div>`;
-    
-    const { data: recent } = await db.from('raw_tutor_logs').select('log_id,student_name,tutor_name,session_date,focus_area,review_status,reviewed_by').order('form_submission_timestamp',{ascending:false}).limit(8);
-    if (!recent?.length) { 
-      tableEl.innerHTML='<tr><td colspan="5"><div class="empty-state"><i class="ti ti-inbox"></i><p>No session logs yet.</p></div></tr>'; 
-      return; 
+
+    const { data: recent } = await db
+      .from('raw_tutor_logs')
+      .select('log_id,student_name,tutor_name,session_date,focus_area,review_status,reviewed_by')
+      .order('form_submission_timestamp', { ascending: false })
+      .limit(8);
+
+    if (!recent?.length) {
+      tableEl.innerHTML = '<tr><td colspan="5"><div class="empty-state"><i class="ti ti-inbox"></i><p>No session logs yet.</p></div></td></tr>';
+      return;
     }
-    tableEl.innerHTML = recent.map(r=>`<tr><td><strong>${sanitize(r.student_name)}</strong></td><td>${sanitize(r.tutor_name)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;">${fmtDate(r.session_date)} · ${sanitize(r.focus_area)||'—'}</td><td>${pill(r.review_status)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;">${sanitize(r.reviewed_by)||'—'}</td></tr>`).join('');
+
+    tableEl.innerHTML = recent.map(r => `
+      <tr>
+        <td><strong>${sanitize(r.student_name)}</strong></td>
+        <td>${sanitize(r.tutor_name)}</td>
+        <td style="font-size:11px;">${fmtDate(r.session_date)}<br>${sanitize(r.focus_area) || '—'}</td>
+        <td>${pill(r.review_status)}</td>
+        <td style="font-size:11px;">${sanitize(r.reviewed_by) || '—'}</td>
+      </tr>
+    `).join('');
   } catch (err) {
     console.error('Error loading overview:', err);
     statsEl.innerHTML = '<div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading data</p></div>';
+    showToast('Failed to load dashboard data. Please refresh.', 'error');
   }
 }
 
 async function loadReview() {
   const listEl = document.getElementById('review-list');
   const labelEl = document.getElementById('review-label');
+  const bulkBar = document.getElementById('review-bulk-bar');
   if (!listEl || !labelEl) return;
-  
+
+  // Clear review data map to prevent memory leaks
+  reviewDataMap = {};
   listEl.innerHTML = '<div class="loading-state"><div class="spinner"></div> Loading...</div>';
-  
+  const selectAll = document.getElementById('select-all-logs');
+  if (selectAll) selectAll.checked = false;
+  updateBulkBar();
+
   try {
-    const { data, error } = await db.from('raw_tutor_logs').select('*, student_profiles(tier)').eq('review_status','Pending Review').order('form_submission_timestamp',{ascending:true});
-    if (error || !data) { listEl.innerHTML='<div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading logs.</p></div>'; return; }
-    if (!data.length) { labelEl.textContent='Pending review — 0 logs'; listEl.innerHTML='<div class="empty-state"><i class="ti ti-check"></i><p>All caught up — no pending logs.</p></div>'; return; }
-    labelEl.textContent=`Pending review — ${data.length} log${data.length>1?'s':''}`;
-    const badge = document.getElementById('pending-badge');
-    if (badge) badge.textContent = data.length;
-    
-    listEl.innerHTML = data.map(r=>{
-      const tier=r.student_profiles?.tier||'—';
-      const tierCls={Starter:'tier-starter',Essential:'tier-essential',Premium:'tier-premium'}[tier]||'';
-      const draft=`${r.student_name} had a session focused on ${r.focus_area||'the assigned topic'}. ${r.topics_covered||''} ${r.flags_for_next_session?'Note for next session: '+r.flags_for_next_session:''}`.trim();
-      return `<div class="log-card" id="card-${r.log_id}">
-        <div class="log-header" onclick="toggleLog('body-${r.log_id}')">
-          <div><div class="log-student">${sanitize(r.student_name)}</div><div class="log-meta">${sanitize(r.tutor_name)} · ${fmtDate(r.session_date)} · ${sanitize(r.focus_area)||'—'}</div></div>
-          <span class="pill pill-pending" style="margin-left:auto;margin-right:10px;">Pending</span>
-          <span class="tier-badge ${tierCls}">${sanitize(tier)}</span>
-        </div>
-        <div class="log-body" id="body-${r.log_id}">
-          <div class="log-field"><div class="field-label">Performance</div><div class="field-value">${stars(r.student_performance)} (${r.student_performance}/5)</div></div>
-          <div class="log-field"><div class="field-label">Topics covered (raw)</div><div class="field-value">${sanitize(r.topics_covered)||'—'}</div></div>
-          <div class="log-field"><div class="field-label">Flags for next session</div><div class="field-value">${sanitize(r.flags_for_next_session)||'None'}</div></div>
-          <div class="log-field"><div class="field-label">Polished summary — edit before approving</div><textarea class="field-textarea" id="summary-${r.log_id}">${draft}</textarea></div>
-          <div class="log-actions">
-            <button class="btn btn-approve" onclick="approveLog('${r.log_id}','${r.student_name}','${r.student_id}','${tier}')"><i class="ti ti-check"></i> Approve &amp; Send</button>
-            <button class="btn btn-reject" onclick="rejectLog('${r.log_id}','${r.student_name}')"><i class="ti ti-x"></i> Reject</button>
+    if (reviewTab === 'pending') {
+      const { data, error } = await db
+        .from('raw_tutor_logs')
+        .select('*, student_profiles(tier, parent_email)')
+        .eq('review_status', 'Pending Review')
+        .order('form_submission_timestamp', { ascending: true });
+
+      if (error || !data) {
+        listEl.innerHTML = '<div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading logs.</p></div>';
+        showToast('Failed to load review data. Please refresh.', 'error');
+        return;
+      }
+
+      const badge = document.getElementById('pending-badge');
+      if (badge) badge.textContent = data.length;
+
+      if (!data.length) {
+        labelEl.textContent = 'Pending review — 0 logs';
+        listEl.innerHTML = '<div class="empty-state"><i class="ti ti-check"></i><p>All caught up — no pending logs.</p></div>';
+        if (bulkBar) bulkBar.style.display = 'none';
+        return;
+      }
+
+      labelEl.textContent = `Pending review — ${data.length} log${data.length > 1 ? 's' : ''}`;
+      if (bulkBar) bulkBar.style.display = 'flex';
+
+      listEl.innerHTML = data.map(r => {
+        reviewDataMap[r.log_id] = r;
+        const draft = `${r.student_name} had a session focused on ${r.focus_area || 'the assigned topic'}. ${r.topics_covered || ''}`;
+        return `<div class="log-card" id="card-${r.log_id}">
+          <div class="log-header" onclick="toggleLog('body-${r.log_id}')">
+            <div class="log-header-left">
+              <input type="checkbox" class="log-checkbox" id="check-${r.log_id}" onclick="event.stopPropagation()" onchange="updateBulkBar()">
+              <div>
+                <div class="log-student">${sanitize(r.student_name)}</div>
+                <div class="log-meta">${sanitize(r.tutor_name)} · ${fmtDate(r.session_date)} · ${sanitize(r.focus_area) || '—'}</div>
+              </div>
+            </div>
+            <span class="pill pill-pending" style="margin-left:auto;">Pending</span>
           </div>
-        </div>
-      </div>`;
-    }).join('');
+          <div class="log-body" id="body-${r.log_id}">
+            <div class="log-field"><div class="field-label">Performance</div><div class="field-value">${stars(r.student_performance)} (${r.student_performance}/5)</div></div>
+            <div class="log-field"><div class="field-label">Topics covered</div><div class="field-value">${sanitize(r.topics_covered) || '—'}</div></div>
+            <div class="log-field"><div class="field-label">Flags for next session</div><div class="field-value">${sanitize(r.flags_for_next_session) || 'None'}</div></div>
+            <div class="log-field"><div class="field-label">Polished summary</div><textarea class="field-textarea" id="summary-${r.log_id}" data-original="${sanitize(draft)}">${sanitize(draft)}</textarea></div>
+            <div class="log-actions">
+              <button class="btn btn-approve" onclick="approveLog('${r.log_id}')"><i class="ti ti-check"></i> Approve</button>
+              <button class="btn btn-reject" onclick="toggleRejectPanel('${r.log_id}')"><i class="ti ti-x"></i> Reject</button>
+            </div>
+            <div class="reject-panel" id="reject-panel-${r.log_id}">
+              <div class="field-label" style="margin-bottom:6px;">Rejection reason (sent to the tutor)</div>
+              <textarea class="reject-textarea" id="reject-reason-${r.log_id}" placeholder="e.g. Topics covered needs more detail — please resubmit."></textarea>
+              <div class="log-actions">
+                <button class="btn btn-reject" onclick="confirmReject('${r.log_id}')"><i class="ti ti-x"></i> Confirm reject</button>
+                <button class="btn btn-outline" onclick="toggleRejectPanel('${r.log_id}')">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+    } else {
+      if (bulkBar) bulkBar.style.display = 'none';
+
+      const { data, error } = await db
+        .from('raw_tutor_logs')
+        .select('*, student_profiles(tier, parent_email)')
+        .eq('review_status', 'Rejected')
+        .order('reviewed_at', { ascending: false });
+
+      if (error || !data) {
+        listEl.innerHTML = '<div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading logs.</p></div>';
+        showToast('Failed to load rejected logs. Please refresh.', 'error');
+        return;
+      }
+
+      if (!data.length) {
+        labelEl.textContent = 'Rejected — 0 logs';
+        listEl.innerHTML = '<div class="empty-state"><i class="ti ti-check"></i><p>No rejected logs.</p></div>';
+        return;
+      }
+
+      labelEl.textContent = `Rejected — ${data.length} log${data.length > 1 ? 's' : ''}`;
+
+      // Pull rejection reasons from audit trail
+      const logIds = data.map(r => r.log_id);
+      const { data: auditData } = await db
+        .from('audit_log')
+        .select('target_record_id, notes, timestamp')
+        .eq('target_table', 'raw_tutor_logs')
+        .eq('action_type', 'Rejected')
+        .in('target_record_id', logIds)
+        .order('timestamp', { ascending: false });
+
+      const reasonMap = {};
+      (auditData || []).forEach(a => {
+        if (!(a.target_record_id in reasonMap)) reasonMap[a.target_record_id] = a.notes;
+      });
+
+      listEl.innerHTML = data.map(r => {
+        reviewDataMap[r.log_id] = r;
+        const draft = `${r.student_name} had a session focused on ${r.focus_area || 'the assigned topic'}. ${r.topics_covered || ''}`;
+        return `<div class="log-card" id="card-${r.log_id}">
+          <div class="log-header" onclick="toggleLog('body-${r.log_id}')">
+            <div>
+              <div class="log-student">${sanitize(r.student_name)}</div>
+              <div class="log-meta">${sanitize(r.tutor_name)} · ${fmtDate(r.session_date)} · ${sanitize(r.focus_area) || '—'} · rejected by ${sanitize(r.reviewed_by) || '—'}</div>
+            </div>
+            <span class="pill pill-rejected" style="margin-left:auto;">Rejected</span>
+          </div>
+          <div class="log-body" id="body-${r.log_id}">
+            <div class="log-field"><div class="field-label">Performance</div><div class="field-value">${stars(r.student_performance)} (${r.student_performance}/5)</div></div>
+            <div class="log-field"><div class="field-label">Topics covered</div><div class="field-value">${sanitize(r.topics_covered) || '—'}</div></div>
+            <div class="log-field"><div class="field-label">Flags for next session</div><div class="field-value">${sanitize(r.flags_for_next_session) || 'None'}</div></div>
+            <div class="rejection-reason"><div class="field-label">Rejection reason</div>${sanitize(reasonMap[r.log_id]) || 'No reason given'}</div>
+            <div class="log-field"><div class="field-label">Polished summary</div><textarea class="field-textarea" id="summary-${r.log_id}" data-original="${sanitize(draft)}">${sanitize(draft)}</textarea></div>
+            <div class="log-actions">
+              <button class="btn btn-approve" onclick="resubmitLog('${r.log_id}')"><i class="ti ti-rotate-clockwise-2"></i> Resubmit for review</button>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+    }
   } catch (err) {
     console.error('Error loading review:', err);
-    listEl.innerHTML = '<div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading data</p></div>';
+    listEl.innerHTML = '<div class="empty-state"><i class="ti ti-alert-circle"></i><p>Failed to load review data. Please refresh.</p></div>';
+    showToast('Failed to load review data. Please refresh.', 'error');
   }
 }
 
-async function approveLog(logId, studentName, studentId, tier) {
-  const summary = document.getElementById('summary-'+logId);
-  if (!summary) return;
-  const summaryText = summary.value.trim();
-  if (!summaryText) { showToast('Add a polished summary before approving.','error'); return; }
-  
-  try {
-    const { data: logData } = await db.from('raw_tutor_logs').select('*').eq('log_id',logId).single();
-    const { data: student } = await db.from('student_profiles').select('parent_email,parent_name').eq('student_id',studentId).single();
-    const safeTier = (tier && tier !== '—') ? tier : 'Starter';
-    const emailType = safeTier==='Premium'?'portal_link':'recap_in_body';
-    const actor = sanitize(currentUser?.user_metadata?.name || document.getElementById('user-name').textContent || 'Unknown');
+window.switchReviewTab = function(tab) {
+  if (reviewTab === tab) return;
+  reviewTab = tab;
+  document.getElementById('tab-pending')?.classList.toggle('active', tab === 'pending');
+  document.getElementById('tab-rejected')?.classList.toggle('active', tab === 'rejected');
+  // Show loading state immediately
+  const listEl = document.getElementById('review-list');
+  if (listEl) {
+    listEl.innerHTML = '<div class="loading-state"><div class="spinner"></div> Loading...</div>';
+  }
+  loadReview();
+};
 
-    const { error } = await db.from('approved_parent_logs').insert({
-      source_log_id:logId, student_id:studentId, student_name:studentName,
-      student_tier:safeTier, session_date:logData.session_date, focus_area:logData.focus_area,
-      polished_summary:summaryText, student_performance:logData.student_performance,
-      flags_for_next_session:logData.flags_for_next_session,
-      approved_by:actor, approved_at:new Date().toISOString(),
-      email_sent:false, parent_email:student?.parent_email||null, email_type:emailType
+window.toggleSelectAllLogs = function(checkbox) {
+  document.querySelectorAll('#review-list .log-checkbox').forEach(c => c.checked = checkbox.checked);
+  updateBulkBar();
+};
+
+window.updateBulkBar = function() {
+  const checked = document.querySelectorAll('#review-list .log-checkbox:checked').length;
+  const btn = document.getElementById('bulk-approve-btn');
+  const countEl = document.getElementById('bulk-count');
+  if (countEl) countEl.textContent = checked;
+  if (btn) btn.style.display = checked ? 'inline-flex' : 'none';
+};
+
+window.toggleLog = function(id) {
+  document.getElementById(id).classList.toggle('open');
+};
+
+window.toggleRejectPanel = function(logId) {
+  const panel = document.getElementById('reject-panel-' + logId);
+  if (panel) panel.classList.toggle('open');
+};
+
+window.confirmReject = async function(logId) {
+  const reasonEl = document.getElementById('reject-reason-' + logId);
+  const reason = reasonEl?.value?.trim() || 'No reason given';
+  const row = reviewDataMap[logId];
+  if (!row) {
+    showToast('Error: Log data not found.', 'error');
+    return;
+  }
+
+  const actor = sanitize(document.getElementById('user-name').textContent || 'Unknown');
+
+  try {
+    await db.from('raw_tutor_logs').update({
+      review_status: 'Rejected',
+      reviewed_by: actor,
+      reviewed_at: new Date().toISOString()
+    }).eq('log_id', logId);
+
+    await db.from('audit_log').insert({
+      actor,
+      action_type: 'Rejected',
+      target_record_id: logId,
+      target_table: 'raw_tutor_logs',
+      notes: reason
     });
 
-    if (error) { showToast('Error saving. Try again.','error'); return; }
-
-    await db.from('raw_tutor_logs').update({ review_status:'Approved', reviewed_by:actor, reviewed_at:new Date().toISOString() }).eq('log_id',logId);
-    await db.from('audit_log').insert({ actor, action_type:'Approved', target_record_id:logId, target_table:'raw_tutor_logs', notes:`Approved session for ${studentName}. Email type: ${emailType}` });
-
-    const card = document.getElementById('card-'+logId);
+    const card = document.getElementById('card-' + logId);
     if (card) card.remove();
-    showToast(`Approved — ${studentName}'s log saved.`,'success');
-    
-    const rem = document.querySelectorAll('#review-list .log-card').length;
-    const labelEl = document.getElementById('review-label');
-    const badge = document.getElementById('pending-badge');
-    if (labelEl) labelEl.textContent=`Pending review — ${rem} log${rem!==1?'s':''}`;
-    if (badge) badge.textContent = rem || '0';
-    if (!rem && labelEl) document.getElementById('review-list').innerHTML='<div class="empty-state"><i class="ti ti-check"></i><p>All caught up.</p></div>';
-  } catch (err) {
-    console.error('Error approving log:', err);
-    showToast('Error approving log','error');
-  }
-}
 
-async function rejectLog(logId, studentName) {
-  const reason = prompt('Rejection reason (optional):') ?? null;
-  if (reason === null) return;
-  const actor = sanitize(currentUser?.user_metadata?.name || document.getElementById('user-name').textContent || 'Unknown');
-  
-  try {
-    await db.from('raw_tutor_logs').update({ review_status:'Rejected', reviewed_by:actor, reviewed_at:new Date().toISOString() }).eq('log_id',logId);
-    await db.from('audit_log').insert({ actor, action_type:'Rejected', target_record_id:logId, target_table:'raw_tutor_logs', notes:reason||'No reason given' });
-    
-    const card = document.getElementById('card-'+logId);
-    if (card) card.remove();
-    showToast('Log rejected.','');
-    
+    showToast('Log rejected.', '');
+
     const rem = document.querySelectorAll('#review-list .log-card').length;
     const badge = document.getElementById('pending-badge');
-    const labelEl = document.getElementById('review-label');
     if (badge) badge.textContent = rem || '0';
-    if (labelEl) labelEl.textContent=`Pending review — ${rem} log${rem!==1?'s':''}`;
+
+    if (!rem) {
+      document.getElementById('review-list').innerHTML = '<div class="empty-state"><i class="ti ti-check"></i><p>All caught up — no pending logs.</p></div>';
+      document.getElementById('review-label').textContent = 'Pending review — 0 logs';
+      document.getElementById('review-bulk-bar').style.display = 'none';
+    }
+    // Clear from map to prevent memory leaks
+    delete reviewDataMap[logId];
   } catch (err) {
     console.error('Error rejecting log:', err);
-    showToast('Error rejecting log','error');
+    showToast('Error rejecting log', 'error');
   }
-}
+};
+
+window.approveLog = async function(logId) {
+  const summary = document.getElementById('summary-' + logId);
+  if (!summary || !summary.value.trim()) {
+    showToast('Add a polished summary before approving.', 'error');
+    return;
+  }
+
+  const row = reviewDataMap[logId];
+  if (!row) {
+    showToast('Error: Log data not found.', 'error');
+    return;
+  }
+
+  const actor = sanitize(document.getElementById('user-name').textContent || 'Unknown');
+  const studentName = row.student_name;
+
+  try {
+    // Step 1: Update raw log status
+    await db.from('raw_tutor_logs').update({
+      review_status: 'Approved',
+      reviewed_by: actor,
+      reviewed_at: new Date().toISOString()
+    }).eq('log_id', logId);
+
+    // Step 2: Write to approved_parent_logs (feeds Parent Tracker + email)
+    const polishedSummary = document.getElementById('summary-' + logId)?.value?.trim() || '';
+    const tier = row.student_profiles?.tier || 'Starter';
+    const safeTier = ['Starter','Essential','Premium'].includes(tier) ? tier : 'Starter';
+    const emailType = safeTier === 'Premium' ? 'portal_link' : 'recap_in_body';
+    await db.from('approved_parent_logs').insert({
+      source_log_id: logId,
+      student_id: row.student_id || null,
+      student_name: row.student_name,
+      student_tier: safeTier,
+      session_date: row.session_date,
+      focus_area: row.focus_area,
+      polished_summary: polishedSummary,
+      student_performance: String(row.student_performance || ''),
+      flags_for_next_session: row.flags_for_next_session || null,
+      approved_by: actor,
+      approved_at: new Date().toISOString(),
+      email_sent: false,
+      parent_email: row.student_profiles?.parent_email || null,
+      email_type: emailType
+    });
+
+    // Step 3: Update tutor's session count and payout
+    const { data: tutorData, error: tutorError } = await db
+      .from('tutor_profiles')
+      .select('sessions_logged_this_cycle, payout_due_this_cycle, rate_per_session')
+      .eq('tutor_name', row.tutor_name)
+      .single();
+
+    if (!tutorError && tutorData) {
+      await db.from('tutor_profiles').update({
+        sessions_logged_this_cycle: (tutorData.sessions_logged_this_cycle || 0) + 1,
+        payout_due_this_cycle: (tutorData.payout_due_this_cycle || 0) + (tutorData.rate_per_session || 0)
+      }).eq('tutor_name', row.tutor_name);
+    }
+
+    await db.from('audit_log').insert({
+      actor,
+      action_type: 'Approved',
+      target_record_id: logId,
+      target_table: 'raw_tutor_logs',
+      notes: `Approved session for ${studentName}. Email type: ${emailType}`
+    });
+
+    const card = document.getElementById('card-' + logId);
+    if (card) card.remove();
+
+    showToast(`Approved — ${studentName}'s log saved.`, 'success');
+
+    const rem = document.querySelectorAll('#review-list .log-card').length;
+    const badge = document.getElementById('pending-badge');
+    if (badge) badge.textContent = rem || '0';
+
+    if (!rem) {
+      document.getElementById('review-list').innerHTML = '<div class="empty-state"><i class="ti ti-check"></i><p>All caught up — no pending logs.</p></div>';
+      document.getElementById('review-label').textContent = 'Pending review — 0 logs';
+      document.getElementById('review-bulk-bar').style.display = 'none';
+    }
+    // Clear from map to prevent memory leaks
+    delete reviewDataMap[logId];
+  } catch (err) {
+    console.error('Error approving log:', err);
+    showToast('Error approving log', 'error');
+  }
+};
+
+window.bulkApprove = async function() {
+  const checkedBoxes = document.querySelectorAll('#review-list .log-checkbox:checked');
+  if (!checkedBoxes.length) return;
+
+  // Fix: Validate each log's summary individually
+  const logIds = Array.from(checkedBoxes).map(cb => cb.id.replace('check-', ''));
+  const missingSummary = logIds.some(id => {
+    const s = document.getElementById('summary-' + id);
+    return !s || !s.value.trim();
+  });
+
+  if (missingSummary) {
+    showToast('All selected logs must have a polished summary.', 'error');
+    return;
+  }
+
+  const actor = sanitize(document.getElementById('user-name').textContent || 'Unknown');
+  const count = logIds.length;
+
+  if (!confirm(`Approve ${count} log${count > 1 ? 's' : ''}?`)) return;
+
+  // Track errors for rollback
+  const errors = [];
+  const successfulIds = [];
+
+  try {
+    // Process each log individually with rollback capability
+    for (const id of logIds) {
+      try {
+        const row = reviewDataMap[id];
+        if (!row) {
+          errors.push(id);
+          continue;
+        }
+
+        // Step 1: Update log status
+        await db.from('raw_tutor_logs').update({
+          review_status: 'Approved',
+          reviewed_by: actor,
+          reviewed_at: new Date().toISOString()
+        }).eq('log_id', id);
+
+        // Step 2: Write to approved_parent_logs
+        const polishedSummary = document.getElementById('summary-' + id)?.value?.trim() || '';
+        const tier = row.student_profiles?.tier || 'Starter';
+        const safeTier = ['Starter','Essential','Premium'].includes(tier) ? tier : 'Starter';
+        const emailType = safeTier === 'Premium' ? 'portal_link' : 'recap_in_body';
+        await db.from('approved_parent_logs').insert({
+          source_log_id: id,
+          student_id: row.student_id || null,
+          student_name: row.student_name,
+          student_tier: safeTier,
+          session_date: row.session_date,
+          focus_area: row.focus_area,
+          polished_summary: polishedSummary,
+          student_performance: String(row.student_performance || ''),
+          flags_for_next_session: row.flags_for_next_session || null,
+          approved_by: actor,
+          approved_at: new Date().toISOString(),
+          email_sent: false,
+          parent_email: row.student_profiles?.parent_email || null,
+          email_type: emailType
+        });
+
+        // Step 3: Update tutor's session count and payout
+        const { data: tutorData } = await db
+          .from('tutor_profiles')
+          .select('sessions_logged_this_cycle, payout_due_this_cycle, rate_per_session')
+          .eq('tutor_name', row.tutor_name)
+          .single();
+
+        if (tutorData) {
+          await db.from('tutor_profiles').update({
+            sessions_logged_this_cycle: (tutorData.sessions_logged_this_cycle || 0) + 1,
+            payout_due_this_cycle: (tutorData.payout_due_this_cycle || 0) + (tutorData.rate_per_session || 0)
+          }).eq('tutor_name', row.tutor_name);
+        }
+
+        await db.from('audit_log').insert({
+          actor,
+          action_type: 'Approved',
+          target_record_id: id,
+          target_table: 'raw_tutor_logs',
+          notes: `Bulk approved session for ${row?.student_name || 'student'}. Email type: ${emailType}`
+        });
+
+        successfulIds.push(id);
+        // Remove card from UI
+        const card = document.getElementById('card-' + id);
+        if (card) card.remove();
+        delete reviewDataMap[id];
+
+      } catch (err) {
+        console.error(`Error approving log ${id}:`, err);
+        errors.push(id);
+      }
+    }
+
+    if (errors.length === 0) {
+      showToast(`Approved ${count} log${count > 1 ? 's' : ''} successfully.`, 'success');
+    } else {
+      showToast(`Approved ${successfulIds.length} logs. Failed: ${errors.length}`, 'error');
+    }
+
+    const rem = document.querySelectorAll('#review-list .log-card').length;
+    const badge = document.getElementById('pending-badge');
+    if (badge) badge.textContent = rem || '0';
+
+    if (!rem) {
+      document.getElementById('review-list').innerHTML = '<div class="empty-state"><i class="ti ti-check"></i><p>All caught up — no pending logs.</p></div>';
+      document.getElementById('review-label').textContent = 'Pending review — 0 logs';
+      document.getElementById('review-bulk-bar').style.display = 'none';
+    }
+  } catch (err) {
+    console.error('Error in bulk approve:', err);
+    showToast('Error in bulk approval. Some logs may not have been approved.', 'error');
+  }
+};
+
+window.resubmitLog = async function(logId) {
+  const summary = document.getElementById('summary-' + logId);
+  if (!summary || !summary.value.trim()) {
+    showToast('Please update the summary before resubmitting.', 'error');
+    return;
+  }
+
+  // Check if summary was actually modified
+  const original = summary.getAttribute('data-original') || '';
+  if (summary.value.trim() === original.trim()) {
+    showToast('Please update the summary before resubmitting. Make meaningful changes.', 'error');
+    return;
+  }
+
+  const actor = sanitize(document.getElementById('user-name').textContent || 'Unknown');
+
+  try {
+    await db.from('raw_tutor_logs').update({
+      review_status: 'Pending Review',
+      reviewed_by: null,
+      reviewed_at: null
+    }).eq('log_id', logId);
+
+    await db.from('audit_log').insert({
+      actor,
+      action_type: 'Resubmitted',
+      target_record_id: logId,
+      target_table: 'raw_tutor_logs',
+      notes: 'Resubmitted for review after rejection'
+    });
+
+    const card = document.getElementById('card-' + logId);
+    if (card) card.remove();
+
+    showToast('Log resubmitted for review.', 'success');
+    delete reviewDataMap[logId];
+  } catch (err) {
+    console.error('Error resubmitting log:', err);
+    showToast('Error resubmitting log', 'error');
+  }
+};
 
 async function loadLeads() {
   const tbody = document.getElementById('leads-table');
   if (!tbody) return;
-  
+
   try {
-    const { data, error } = await db.from('enrollment_leads').select('*').order('submission_timestamp',{ascending:false});
-    if (error) { tbody.innerHTML='<tr><td colspan="7"><div class="access-denied"><i class="ti ti-lock"></i><h3>Access Restricted</h3><p>Enrollment leads are managed by MD and Ops.</p></div></td></tr>'; return; }
-    if (!data?.length) { tbody.innerHTML='<tr><td colspan="7"><div class="empty-state"><i class="ti ti-inbox"></i><p>No leads yet.</p></div></td></tr>'; return; }
-    tbody.innerHTML=data.map(l=>`<tr><td><strong>${sanitize(l.student_name)}</strong><div style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;">${sanitize(l.grade_level)||'—'}</div></td><td>${sanitize(l.parent_name)}</td><td style="font-size:12px;color:var(--text-muted);">${sanitize(l.email)}</td><td>${tierBadge(l.preferred_tier)}</td><td style="font-size:12px;">${sanitize(l.subject_focus_areas)||'—'}</td><td>${pill(l.lead_status)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;">${sanitize(l.handled_by)||'—'}</td></tr>`).join('');
+    const { data, error } = await db.from('enrollment_leads').select('*').order('submission_timestamp', { ascending: false });
+
+    if (error) {
+      tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><i class="ti ti-lock"></i><p>Access Restricted</p></div></td></tr>';
+      return;
+    }
+
+    if (!data?.length) {
+      tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><i class="ti ti-inbox"></i><p>No leads yet.</p></div></td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = data.map(l => {
+      const isEnrolled = l.lead_status === 'Enrolled';
+      return `
+      <tr>
+        <td><strong>${sanitize(l.student_name)}</strong><div style="font-size:10px; color:var(--text-muted);">${sanitize(l.grade_level) || '—'}</div></td>
+        <td>${sanitize(l.parent_name)}</td>
+        <td style="font-size:12px;">${sanitize(l.email)}</td>
+        <td>${tierBadge(l.preferred_tier)}</td>
+        <td style="font-size:12px;">${sanitize(l.subject_focus_areas) || '—'}</td>
+        <td>${pill(l.lead_status)}</td>
+        <td style="font-size:11px;">${sanitize(l.handled_by) || '—'}</td>
+        <td>
+          ${!isEnrolled ? `<button class="btn btn-primary btn-sm" onclick="openConvertModal('${l.lead_id}')">
+            <i class="ti ti-user-plus"></i> Convert
+          </button>` : `<span style="color:var(--text-muted); font-size:11px;">✓ Converted</span>`}
+        </td>
+      </tr>
+    `}).join('');
   } catch (err) {
     console.error('Error loading leads:', err);
-    tbody.innerHTML='<tr><td colspan="7"><div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading data</p></div></td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading data</p></div></td></tr>';
+    showToast('Failed to load leads. Please refresh.', 'error');
+  }
+}
+
+// ===== CONVERT LEAD TO STUDENT =====
+async function openConvertModal(leadId) {
+  try {
+    const { data: lead, error } = await db
+      .from('enrollment_leads')
+      .select('*')
+      .eq('lead_id', leadId)
+      .single();
+
+    if (error || !lead) {
+      showToast('Lead not found.', 'error');
+      return;
+    }
+
+    convertLeadId = leadId;
+    document.getElementById('convert-student-name').value = lead.student_name || '';
+    document.getElementById('convert-parent-email').value = lead.email || '';
+    document.getElementById('convert-grade').value = lead.grade_level || '';
+    
+    // Set tier if available
+    if (lead.preferred_tier) {
+      document.getElementById('convert-tier').value = lead.preferred_tier;
+    }
+
+    // Load active tutors
+    const { data: tutors } = await db
+      .from('tutor_profiles')
+      .select('tutor_id, tutor_name')
+      .eq('status', 'Active')
+      .order('tutor_name');
+
+    const tutorSelect = document.getElementById('convert-tutor');
+    tutorSelect.innerHTML = '<option value="">— Unassigned —</option>';
+    (tutors || []).forEach(t => {
+      const opt = document.createElement('option');
+      opt.value = t.tutor_id;
+      opt.textContent = t.tutor_name;
+      tutorSelect.appendChild(opt);
+    });
+
+    document.getElementById('convert-modal').style.display = 'flex';
+  } catch (err) {
+    console.error('Error opening convert modal:', err);
+    showToast('Error loading lead data.', 'error');
+  }
+}
+
+function closeConvertModal() {
+  document.getElementById('convert-modal').style.display = 'none';
+  convertLeadId = null;
+  document.getElementById('convert-grade').value = '';
+  document.getElementById('convert-tier').value = 'Essential';
+  document.getElementById('convert-tutor').value = '';
+}
+
+async function confirmConvert() {
+  const tier = document.getElementById('convert-tier').value;
+  const grade = document.getElementById('convert-grade').value.trim();
+  const tutorId = document.getElementById('convert-tutor').value;
+  const studentName = document.getElementById('convert-student-name').value;
+  const parentEmail = document.getElementById('convert-parent-email').value;
+
+  if (!grade) {
+    showToast('Please enter a grade level.', 'error');
+    return;
+  }
+
+  if (!convertLeadId) {
+    showToast('Error: No lead selected.', 'error');
+    return;
+  }
+
+  const actor = sanitize(document.getElementById('user-name').textContent || 'Unknown');
+
+  try {
+    // 1. Create student profile
+    const { data: student, error: studentError } = await db
+      .from('student_profiles')
+      .insert({
+        student_name: studentName,
+        tier: tier,
+        grade_level: grade,
+        assigned_tutor_id: tutorId || null,
+        parent_email: parentEmail || null,
+        status: 'Active',
+        source_lead_id: convertLeadId,
+        current_lesson_plan: null,
+        upcoming_lesson_plan: null,
+        specific_goals: null
+      })
+      .select()
+      .single();
+
+    if (studentError) {
+      console.error('Student creation error:', studentError);
+      showToast('Error creating student profile. Please try again.', 'error');
+      return;
+    }
+
+    // 2. Update lead status
+    await db
+      .from('enrollment_leads')
+      .update({
+        lead_status: 'Enrolled',
+        handled_by: actor
+      })
+      .eq('lead_id', convertLeadId);
+
+    // 3. Audit log
+    await db.from('audit_log').insert({
+      actor: actor,
+      action_type: 'Converted Lead',
+      target_record_id: convertLeadId,
+      target_table: 'enrollment_leads',
+      notes: `Converted lead "${studentName}" to active student (${tier})`
+    });
+
+    showToast(`✅ ${studentName} is now an active student!`, 'success');
+    closeConvertModal();
+    loadLeads(); // Refresh the table
+    
+  } catch (err) {
+    console.error('Error converting lead:', err);
+    showToast('Error converting lead. Please try again.', 'error');
   }
 }
 
 async function loadAcademics() {
   const grid = document.getElementById('academics-grid');
   if (!grid) return;
-  
+
   try {
-    const { data, error } = await db.from('student_profiles').select('*, tutor_profiles(tutor_name)').eq('status','Active').order('student_id');
-    if (error) { grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><i class="ti ti-alert-circle"></i><p>Failed to load students. Please refresh.</p></div>'; return; }
-    if (!data?.length) { grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><i class="ti ti-inbox"></i><p>No active students.</p></div>'; return; }
-    grid.innerHTML=data.map(s=>`<div class="student-card">
-      <div class="student-card-header"><div class="student-name-big">${sanitize(s.student_name)}</div>${tierBadge(s.tier)}</div>
-      <div style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;margin-bottom:8px;">${sanitize(s.tutor_profiles?.tutor_name)||'Unassigned'} · ${sanitize(s.grade_level)||'—'}</div>
-      <div class="plan-block"><div class="plan-label">Current plan</div><div class="plan-text">${sanitize(s.current_lesson_plan)||'Not set'}</div></div>
-      <div class="plan-block upcoming"><div class="plan-label">Upcoming</div><div class="plan-text">${sanitize(s.upcoming_lesson_plan)||'Not set'}</div></div>
-      ${s.specific_goals?`<div class="goal-tag">🎯 ${sanitize(s.specific_goals)}</div>`:''}
-    </div>`).join('');
+    const { data, error } = await db.from('student_profiles').select('*, tutor_profiles(tutor_name)').eq('status', 'Active').order('student_id');
+
+    if (error) {
+      grid.innerHTML = '<div class="empty-state"><i class="ti ti-alert-circle"></i><p>Failed to load students.</p></div>';
+      return;
+    }
+
+    if (!data?.length) {
+      grid.innerHTML = '<div class="empty-state"><i class="ti ti-inbox"></i><p>No active students.</p></div>';
+      return;
+    }
+
+    grid.innerHTML = data.map(s => `
+      <div class="student-card">
+        <div class="student-card-header" style="display:flex; justify-content:space-between; margin-bottom:10px;">
+          <div class="student-name-big">${sanitize(s.student_name)}</div>
+          ${tierBadge(s.tier)}
+        </div>
+        <div style="font-size:11px; color:var(--text-muted); margin-bottom:8px;">${sanitize(s.tutor_profiles?.tutor_name) || 'Unassigned'} · ${sanitize(s.grade_level) || '—'}</div>
+        <div class="plan-block"><div class="field-label" style="margin-bottom:2px;">Current plan</div><div class="plan-text">${sanitize(s.current_lesson_plan) || 'Not set'}</div></div>
+        <div class="plan-block upcoming"><div class="field-label" style="margin-bottom:2px;">Upcoming</div><div class="plan-text">${sanitize(s.upcoming_lesson_plan) || 'Not set'}</div></div>
+        ${s.specific_goals ? `<div class="goal-tag">🎯 ${sanitize(s.specific_goals)}</div>` : ''}
+      </div>
+    `).join('');
   } catch (err) {
     console.error('Error loading academics:', err);
-    grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><i class="ti ti-alert-circle"></i><p>Error loading data</p></div>';
+    grid.innerHTML = '<div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading data</p></div>';
+    showToast('Failed to load academics data. Please refresh.', 'error');
   }
 }
 
@@ -726,105 +2976,180 @@ async function loadLedger() {
   const ledgerWrap = document.getElementById('ledger-wrap');
   const revenueStats = document.getElementById('revenue-stats');
   if (!ledgerWrap || !revenueStats) return;
-  
+
   try {
-    const { data:tutors, error:tutorError } = await db.from('tutor_profiles').select('*').order('tutor_id');
-    if (tutorError) { ledgerWrap.innerHTML='<div class="access-denied"><i class="ti ti-lock"></i><h3>Access Restricted</h3><p>Revenue data is restricted to MD and Ops.</p></div>'; return; }
-    const { data:students } = await db.from('student_profiles').select('tier').eq('status','Active');
-    if (!tutors?.length) { ledgerWrap.innerHTML='<div class="empty-state"><i class="ti ti-inbox"></i><p>No tutors found.</p></div>'; return; }
-    const totalPayout=tutors.reduce((s,t)=>s+parseFloat(t.payout_due_this_cycle||0),0);
-    ledgerWrap.innerHTML=tutors.map(t=>`<div class="payout-row"><div><div class="payout-tutor">${sanitize(t.tutor_name)}</div><div class="payout-sub">${sanitize(t.tutor_id)} · ${t.sessions_logged_this_cycle||0} session${t.sessions_logged_this_cycle!==1?'s':''} this cycle</div></div><div style="text-align:right;"><div class="payout-amount">${peso(t.payout_due_this_cycle)}</div><div class="payout-rate">${peso(t.rate_per_session)}/session</div></div></div>`).join('')+`<div class="ledger-total"><div class="ledger-total-label">Total payout due</div><div class="ledger-total-amount">${peso(totalPayout)}</div></div>`;
-    
-    const tc={Starter:0,Essential:0,Premium:0};
-    (students||[]).forEach(s=>{if(tc[s.tier]!==undefined)tc[s.tier]++;});
-    const tp={Starter:2999,Essential:5499,Premium:7999};
-    const totalRev=Object.entries(tc).reduce((s,[t,c])=>s+(tp[t]||0)*c,0);
-    revenueStats.innerHTML=Object.entries(tc).map(([t,c])=>`<div class="stat-card"><div class="stat-label">${t}</div><div class="stat-value" style="font-size:18px;">${c} × ${peso(tp[t])}</div><div class="stat-sub" style="font-family:'DM Mono',monospace;font-size:12px;margin-top:4px;font-weight:600;">${peso(tp[t]*c)}</div></div>`).join('')+`<div class="stat-card dark"><div class="stat-label">Total revenue</div><div class="stat-value">${peso(totalRev)}</div><div class="stat-sub">This month</div></div>`;
+    const { data: tutors, error: tutorError } = await db.from('tutor_profiles').select('*').order('tutor_id');
+    if (tutorError) {
+      ledgerWrap.innerHTML = '<div class="empty-state"><i class="ti ti-lock"></i><p>Access Restricted</p></div>';
+      return;
+    }
+
+    const { data: students } = await db.from('student_profiles').select('tier').eq('status', 'Active');
+
+    if (!tutors?.length) {
+      ledgerWrap.innerHTML = '<div class="empty-state"><i class="ti ti-inbox"></i><p>No tutors found.</p></div>';
+      return;
+    }
+
+    const totalPayout = tutors.reduce((s, t) => s + parseFloat(t.payout_due_this_cycle || 0), 0);
+
+    ledgerWrap.innerHTML = tutors.map(t => `
+      <div class="payout-row">
+        <div>
+          <div class="payout-tutor">${sanitize(t.tutor_name)}</div>
+          <div class="payout-sub">${sanitize(t.tutor_id)} · ${t.sessions_logged_this_cycle || 0} session${t.sessions_logged_this_cycle !== 1 ? 's' : ''} this cycle</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="payout-amount">${peso(t.payout_due_this_cycle)}</div>
+          <div class="payout-rate">${peso(t.rate_per_session)}/session</div>
+        </div>
+      </div>
+    `).join('') + `
+      <div class="ledger-total">
+        <div class="ledger-total-label">Total payout due</div>
+        <div class="ledger-total-amount">${peso(totalPayout)}</div>
+      </div>`;
+
+    const tierCounts = { Starter: 0, Essential: 0, Premium: 0 };
+    (students || []).forEach(s => { if (tierCounts[s.tier] !== undefined) tierCounts[s.tier]++; });
+    const totalRev = Object.entries(tierCounts).reduce((s, [t, c]) => s + (TIER_PRICES[t] || 0) * c, 0);
+
+    revenueStats.innerHTML = Object.entries(tierCounts).map(([t, c]) => `
+      <div class="stat-card">
+        <div class="stat-label">${t}</div>
+        <div class="stat-value" style="font-size:18px;">${c} × ${peso(TIER_PRICES[t])}</div>
+        <div class="stat-sub">${peso(TIER_PRICES[t] * c)}</div>
+      </div>
+    `).join('') + `
+      <div class="stat-card dark">
+        <div class="stat-label">Total revenue</div>
+        <div class="stat-value">${peso(totalRev)}</div>
+        <div class="stat-sub">This month</div>
+      </div>`;
   } catch (err) {
     console.error('Error loading ledger:', err);
-    ledgerWrap.innerHTML='<div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading data</p></div>';
+    ledgerWrap.innerHTML = '<div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading data</p></div>';
+    showToast('Failed to load ledger data. Please refresh.', 'error');
   }
 }
 
 async function loadTutors() {
   const tbody = document.getElementById('tutors-table');
   if (!tbody) return;
-  
+
   try {
-    let tutors, students;
     const [t, s] = await Promise.all([
       db.from('tutor_profiles').select('*').order('tutor_id'),
-      db.from('student_profiles').select('student_name,assigned_tutor_id')
+      db.from('student_profiles').select('student_name, assigned_tutor_id')
     ]);
+
     if (t.error) throw t.error;
-    tutors = t.data; students = s.data;
-    
-    if (!tutors?.length) { tbody.innerHTML='<tr><td colspan="7"><div class="empty-state"><i class="ti ti-inbox"></i><p>No tutors yet.</p></div></td></tr>'; return; }
-    tbody.innerHTML=tutors.map((t,i)=>{
-      const assigned=(students||[]).filter(s=>s.assigned_tutor_id===t.tutor_id).map(s=>s.student_name).join(', ')||'<span style="color:var(--text-muted)">Unassigned</span>';
-      return `<tr><td><div style="display:flex;align-items:center;gap:8px;">${tutorDot(t.tutor_name,i)}<div><div style="font-weight:600;">${sanitize(t.tutor_name)}</div><div style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;">${sanitize(t.tutor_id)}</div></div></div></td><td style="font-size:12px;color:var(--text-muted);">${sanitize(t.email)}</td><td style="font-size:12px;">${assigned}</td><td style="font-family:'DM Mono',monospace;font-size:12px;">${peso(t.rate_per_session)}</td><td style="font-family:'DM Mono',monospace;font-size:13px;font-weight:600;">${t.sessions_logged_this_cycle||0}</td><td style="font-family:'Playfair Display',serif;font-size:18px;">${peso(t.payout_due_this_cycle)}</td><td>${pill(t.status)}</td></tr>`;
+
+    const tutors = t.data || [];
+    const students = s.data || [];
+
+    if (!tutors.length) {
+      tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><i class="ti ti-inbox"></i><p>No tutors yet.</p></div></td></tr>';
+      return;
+    }
+
+    const dotColors = ['var(--pink)', '#c06b2d', '#2a4499', '#1a6640', '#8b1a55'];
+
+    tbody.innerHTML = tutors.map((tutor, i) => {
+      const assigned = (students || []).filter(s => s.assigned_tutor_id === tutor.tutor_id).map(s => s.student_name).join(', ') || '<span style="color:var(--text-muted)">Unassigned</span>';
+      return `
+        <tr>
+          <td>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div class="tutor-dot" style="background:${dotColors[i % dotColors.length]}">${(tutor.tutor_name || 'T').substring(0, 2).toUpperCase()}</div>
+              <div>
+                <div style="font-weight:600;">${sanitize(tutor.tutor_name)}</div>
+                <div style="font-size:10px; color:var(--text-muted);">${sanitize(tutor.tutor_id)}</div>
+              </div>
+            </div>
+          </td>
+          <td style="font-size:12px;">${sanitize(tutor.email)}</td>
+          <td style="font-size:11px;">${assigned}</td>
+          <td>${peso(tutor.rate_per_session)}</td>
+          <td style="font-weight:600;">${tutor.sessions_logged_this_cycle || 0}</td>
+          <td style="font-size:16px; font-weight:500;">${peso(tutor.payout_due_this_cycle)}</td>
+          <td>${pill(tutor.status)}</td>
+        </tr>
+      `;
     }).join('');
   } catch (err) {
     console.error('Error loading tutors:', err);
-    tbody.innerHTML='<tr><td colspan="7"><div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading data</p></div></td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading data</p></div></td></tr>';
+    showToast('Failed to load tutors. Please refresh.', 'error');
   }
 }
 
 async function loadAudit() {
   const tbody = document.getElementById('audit-table');
   if (!tbody) return;
-  
+
   try {
-    const { data, error } = await db.from('audit_log').select('*').order('timestamp',{ascending:false}).limit(50);
-    if (error) { tbody.innerHTML='<tr><td colspan="6"><div class="empty-state"><i class="ti ti-alert-circle"></i><p>Failed to load audit log. Please refresh.</p></div></td></tr>'; return; }
-    if (!data?.length) { tbody.innerHTML='<tr><td colspan="6"><div class="empty-state"><i class="ti ti-inbox"></i><p>No audit entries yet.</p></div></td></tr>'; return; }
-    tbody.innerHTML=data.map(a=>`<tr><td style="font-family:'DM Mono',monospace;font-size:11px;white-space:nowrap;">${fmtDT(a.timestamp)}</td><td style="font-weight:600;">${sanitize(a.actor)}</td><td>${pill(a.action_type)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;">${sanitize(a.target_record_id)||'—'}</td><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);">${sanitize(a.target_table)||'—'}</td><td style="font-size:12px;color:var(--text-muted);">${sanitize(a.notes)||'—'}</td></tr>`).join('');
+    const { data, error } = await db.from('audit_log').select('*').order('timestamp', { ascending: false }).limit(50);
+
+    if (error) {
+      tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><i class="ti ti-alert-circle"></i><p>Failed to load audit log.</p></div></td></tr>';
+      return;
+    }
+
+    if (!data?.length) {
+      tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><i class="ti ti-inbox"></i><p>No audit entries yet.</p></div></td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = data.map(a => `
+      <tr>
+        <td style="white-space:nowrap; font-size:11px;">${fmtDateTime(a.timestamp)}</td>
+        <td style="font-weight:600;">${sanitize(a.actor)}</td>
+        <td>${pill(a.action_type)}</td>
+        <td style="font-size:11px;">${sanitize(a.target_record_id) || '—'}</td>
+        <td style="font-size:11px;">${sanitize(a.target_table) || '—'}</td>
+        <td style="font-size:11px; color:var(--text-muted);">${sanitize(a.notes) || '—'}</td>
+      </tr>
+    `).join('');
   } catch (err) {
     console.error('Error loading audit:', err);
-    tbody.innerHTML='<tr><td colspan="6"><div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading data</p></div></td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><i class="ti ti-alert-circle"></i><p>Error loading data</p></div></td></tr>';
+    showToast('Failed to load audit log. Please refresh.', 'error');
   }
 }
 
-/* ── EVENT LISTENERS & INIT ── */
 document.addEventListener('DOMContentLoaded', () => {
-  // Check and restore session immediately
   checkAndRestoreSession();
-  
-  // Attach event listeners
-  const loginBtn = document.getElementById('login-btn');
-  const logoutBtn = document.getElementById('logout-btn');
-  const refreshBtn = document.getElementById('refresh-btn');
-  
-  if (loginBtn) loginBtn.onclick = handleLogin;
-  if (logoutBtn) logoutBtn.onclick = handleLogout;
-  if (refreshBtn) refreshBtn.onclick = refreshAll;
-  
-  // Nav item clicks
-  document.getElementById('nav-overview')?.addEventListener('click', (e) => switchPanel('overview', e.currentTarget));
-  document.getElementById('nav-review')?.addEventListener('click', (e) => switchPanel('review', e.currentTarget));
-  document.getElementById('nav-leads')?.addEventListener('click', (e) => switchPanel('leads', e.currentTarget));
-  document.getElementById('nav-academics')?.addEventListener('click', (e) => switchPanel('academics', e.currentTarget));
-  document.getElementById('nav-ledger')?.addEventListener('click', (e) => switchPanel('ledger', e.currentTarget));
-  document.getElementById('nav-tutors')?.addEventListener('click', (e) => switchPanel('tutors', e.currentTarget));
-  document.getElementById('nav-audit')?.addEventListener('click', (e) => switchPanel('audit', e.currentTarget));
-  
-  // Enter key on login
-  const passwordInput = document.getElementById('login-password');
-  if (passwordInput) {
-    passwordInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') handleLogin();
-    });
-  }
-});
 
-// Make functions global for onclick handlers
-window.switchPanel = switchPanel;
-window.refreshAll = refreshAll;
-window.toggleLog = toggleLog;
-window.approveLog = approveLog;
-window.rejectLog = rejectLog;
-window.handleLogin = handleLogin;
-window.handleLogout = handleLogout;
+  document.getElementById('login-btn')?.addEventListener('click', handleLogin);
+  document.getElementById('logout-btn')?.addEventListener('click', handleLogout);
+  document.getElementById('mobile-logout-btn')?.addEventListener('click', handleLogout);
+  document.getElementById('refresh-btn')?.addEventListener('click', refreshAll);
+  document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
+
+  const navItems = ['overview', 'review', 'leads', 'academics', 'ledger', 'tutors', 'audit'];
+  navItems.forEach(p => {
+    const el = document.getElementById('nav-' + p);
+    if (el) {
+      el.addEventListener('click', (e) => switchPanel(p, e.currentTarget));
+    }
+  });
+
+  document.querySelectorAll('.mobile-nav-item').forEach(btn => {
+    if (btn.id !== 'mobile-logout-btn') {
+      btn.addEventListener('click', () => switchPanel(btn.dataset.panel, btn));
+    }
+  });
+
+  document.getElementById('login-password')?.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') handleLogin();
+  });
+  
+  // Close modal on overlay click
+  document.getElementById('convert-modal')?.addEventListener('click', function(e) {
+    if (e.target === this) closeConvertModal();
+  });
+});
 </script>
 </body>
 </html>
