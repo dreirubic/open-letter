@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Parent Tracker — Learn With Open Letter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --ink: #1a1a2e;
+  --ink-light: #2d2d45;
+  --pink: #ffb0c9;
+  --pink-soft: #fff0f5;
+  --mustard: #fcd97b;
+  --mustard-soft: #fffbee;
+  --cream: #fdf6ec;
+  --cream-dark: #f5ede0;
+  --white: #ffffff;
+  --text-main: #1a1a2e;
+  --text-muted: #7a7a9a;
+  --border: rgba(26, 26, 46, 0.1);
+  --green: #1a6640;
+  --green-soft: #d1f0e0;
+  --red: #8b1a1a;
+  --red-soft: #fde8e8;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--cream);
+  min-height: 100vh;
+  color: var(--text-main);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Header */
+.site-header {
+  background: var(--ink);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--mustard);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.brand-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 2px;
+}
+
+.brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.header-tagline {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Main */
+.main {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 20px 16px calc(40px + var(--safe-bottom));
+}
+
+/* Lookup Card */
+.lookup-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 28px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+}
+
+.lookup-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.lookup-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.field-group {
+  margin-bottom: 16px;
+}
+
+.field-label {
+  display: block;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.field-input {
+  width: 100%;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 16px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--text-main);
+  transition: all 0.15s;
+  -webkit-appearance: none;
+}
+
+.field-input:focus {
+  outline: none;
+  border-color: var(--ink);
+  background: var(--white);
+}
+
+.field-input.error {
+  border-color: var(--red);
+  background: var(--red-soft);
+}
+
+.lookup-btn {
+  width: 100%;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+  transition: all 0.15s;
+}
+
+.lookup-btn:active {
+  transform: scale(0.98);
+  background: var(--ink-light);
+}
+
+.lookup-btn:disabled {
+  opacity: 0.6;
+  transform: none;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: none;
+}
+
+.spinner.show {
+  display: block;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.lookup-error {
+  background: var(--red-soft);
+  border: 1px solid #f0b8b8;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--red);
+  margin-top: 14px;
+  display: none;
+}
+
+.lookup-error.show {
+  display: block;
+}
+
+/* Upgrade Card */
+.upgrade-card {
+  background: linear-gradient(135deg, var(--white) 0%, var(--mustard-soft) 100%);
+  border: 1px solid var(--mustard);
+  border-radius: 24px;
+  padding: 28px 20px;
+  text-align: center;
+  margin-bottom: 20px;
+  display: none;
+}
+
+.upgrade-card.show {
+  display: block;
+  animation: fadeInUp 0.4s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.upgrade-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.upgrade-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.upgrade-plan-badge {
+  display: inline-block;
+  background: var(--pink-soft);
+  border-radius: 40px;
+  padding: 5px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  color: #8b1a55;
+}
+
+.upgrade-message {
+  font-size: 14px;
+  line-height: 1.55;
+  margin-bottom: 14px;
+}
+
+.upgrade-note {
+  background: var(--cream-dark);
+  border-radius: 14px;
+  padding: 14px;
+  margin: 18px 0;
+  font-size: 12px;
+  text-align: left;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.upgrade-note strong {
+  color: var(--ink);
+}
+
+.upgrade-btn {
+  background: transparent;
+  border: 2px solid var(--ink);
+  border-radius: 40px;
+  padding: 12px 24px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.upgrade-btn:active {
+  background: var(--ink);
+  color: white;
+}
+
+/* Student Bar */
+.student-bar {
+  background: var(--ink);
+  border-radius: 18px;
+  padding: 16px 20px;
+  display: none;
+  margin-bottom: 20px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.student-bar.show {
+  display: flex;
+}
+
+.student-bar-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 4px;
+}
+
+.student-bar-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.student-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tier-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.tier-starter {
+  background: var(--cream-dark);
+  color: var(--ink);
+}
+
+.tier-essential {
+  background: #e8f0ff;
+  color: #2a4499;
+}
+
+.tier-premium {
+  background: var(--pink-soft);
+  color: #8b1a55;
+}
+
+.clear-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+}
+
+.clear-btn:active {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+}
+
+/* Stats Row */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+  display: none;
+}
+
+.stats-row.show {
+  display: grid;
+}
+
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.stat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.stat-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Sessions */
+.sessions-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  display: none;
+}
+
+.sessions-header.show {
+  display: flex;
+}
+
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+}
+
+.session-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.session-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.session-card-header {
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.session-card-header:active {
+  background: var(--cream);
+}
+
+.session-date-block {
+  flex-shrink: 0;
+  text-align: center;
+  min-width: 52px;
+}
+
+.session-month {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.session-day {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.session-divider {
+  width: 1px;
+  height: 32px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+.session-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.session-focus {
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.session-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--text-muted);
+}
+
+.session-rating {
+  flex-shrink: 0;
+}
+
+.stars {
+  color: var(--mustard);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.stars .empty {
+  opacity: 0.2;
+}
+
+.session-chevron {
+  font-size: 16px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.session-chevron.open {
+  transform: rotate(180deg);
+}
+
+.session-body {
+  border-top: 1px solid var(--border);
+  padding: 0 16px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.session-body.open {
+  max-height: 800px;
+  padding: 16px;
+}
+
+.report-field {
+  margin-bottom: 16px;
+}
+
+.report-field:last-child {
+  margin-bottom: 0;
+}
+
+.report-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.report-text {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--text-main);
+}
+
+.flags-block {
+  background: var(--mustard-soft);
+  border-left: 3px solid var(--mustard);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 12px;
+}
+
+.flags-text {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-main);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-muted);
+}
+
+.empty-icon {
+  font-size: 36px;
+  margin-bottom: 12px;
+  opacity: 0.4;
+}
+
+.empty-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.empty-sub {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Footer */
+.site-footer {
+  background: var(--ink);
+  padding: 20px 16px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.footer-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.3);
+  line-height: 1.4;
+}
+
+/* Desktop */
+@media (min-width: 600px) {
+  .site-header {
+    padding: 20px 28px;
+  }
+
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .brand-name {
+    font-size: 15px;
+  }
+
+  .main {
+    padding: 40px 20px 80px;
+  }
+
+  .lookup-card {
+    padding: 32px;
+  }
+
+  .stats-row {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .student-bar {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .session-card-header {
+    padding: 16px 20px;
+    gap: 14px;
+  }
+
+  .session-day {
+    font-size: 24px;
+  }
+
+  .session-focus {
+    font-size: 14px;
+    white-space: normal;
+  }
+}
+
+/* Mobile small */
+@media (max-width: 480px) {
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-tagline {
+    text-align: left;
+  }
+
+  .session-card-header {
+    flex-wrap: wrap;
+  }
+
+  .session-divider {
+    display: none;
+  }
+
+  .session-date-block {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    width: 100%;
+    margin-bottom: 6px;
+  }
+
+  .session-month {
+    font-size: 10px;
+  }
+
+  .session-day {
+    font-size: 18px;
+  }
+
+  .session-info {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .student-bar {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .student-bar-right {
+    justify-content: center;
+  }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-brand">
+    <div class="brand-mark">OL</div>
+    <div class="brand-text">
+      <div class="brand-eyebrow">Parent Tracker</div>
+      <div class="brand-name">Learn With Open Letter</div>
+    </div>
+  </div>
+  <div class="header-tagline">Session reports · Reviewed by founders</div>
+</header>
+
+<div class="main">
+  <div class="lookup-card" id="lookup-card">
+    <div class="lookup-title">View your child's progress</div>
+    <div class="lookup-sub">Enter your child's name and the access code provided by your Open Letter coordinator to view their session history.</div>
+    <div class="field-group">
+      <label class="field-label" for="student-name">Child's full name</label>
+      <input class="field-input" type="text" id="student-name" placeholder="e.g. Liam Santos" autocomplete="off">
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="access-code">Access code</label>
+      <input class="field-input" type="text" id="access-code" placeholder="e.g. OL-A572" autocomplete="off" maxlength="7" style="text-transform:uppercase; font-family:'DM Mono',monospace; letter-spacing:2px;" oninput="this.value=this.value.toUpperCase()">
+    </div>
+    <button class="lookup-btn" id="lookup-btn" onclick="lookupStudent()">
+      <div class="spinner" id="lookup-spinner"></div>
+      <span id="lookup-label">View Reports</span>
+    </button>
+    <div class="lookup-error" id="lookup-error">We couldn't find a student with that name and access code. Please check your details and try again.</div>
+  </div>
+
+  <div class="upgrade-card" id="upgrade-card">
+    <div class="upgrade-icon">🔒✨</div>
+    <div class="upgrade-title">Parent Portal Access</div>
+    <div class="upgrade-plan-badge" id="upgrade-tier-badge">Starter Plan</div>
+    <div class="upgrade-message" id="upgrade-message-text">The Parent Tracker portal is available exclusively for <strong>Premium plan</strong> families.</div>
+    <div class="upgrade-note"><strong>📧 How you receive session reports:</strong><br>• Starter & Essential families receive detailed session recaps directly via email after each session.<br>• Premium families get email notifications <strong>plus</strong> full portal access to view historical reports anytime.</div>
+    <button class="upgrade-btn" id="upgrade-contact-btn">Contact our team →</button>
+  </div>
+
+  <div class="student-bar" id="student-bar">
+    <div class="student-bar-left">
+      <div class="student-bar-label">Viewing reports for</div>
+      <div class="student-bar-name" id="bar-student-name">—</div>
+    </div>
+    <div class="student-bar-right">
+      <span class="tier-badge" id="bar-tier">—</span>
+      <button class="clear-btn" onclick="clearResults()">← Search again</button>
+    </div>
+  </div>
+
+  <div class="stats-row" id="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">Total sessions</div>
+      <div class="stat-value" id="stat-total">—</div>
+      <div class="stat-sub">Approved reports</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Latest session</div>
+      <div class="stat-value" id="stat-latest" style="font-size:16px; margin-top:4px;">—</div>
+      <div class="stat-sub" id="stat-latest-sub">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Avg. performance</div>
+      <div class="stat-value" id="stat-avg">—</div>
+      <div class="stat-sub">Out of 5</div>
+    </div>
+  </div>
+
+  <div class="sessions-header" id="sessions-header">
+    <div class="section-label">Session history</div>
+    <div class="session-count" id="session-count">—</div>
+  </div>
+  <div id="sessions-list"></div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-brand">Learn With Open Letter</div>
+  <div class="footer-sub">All session reports are reviewed and approved by Open Letter founders before publication.</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+const SUPABASE_URL = 'https://gnsnsjoxguiolbkpbwag.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imduc25zam94Z3Vpb2xia3Bid2FnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5NzA3ODMsImV4cCI6MjA5NjU0Njc4M30.mgzMlO8t9DXBXzUShgZzWHq_7sNDp7o6v01Xi0oKz0M';
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+function sanitize(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function fmtDate(d) {
+  if (!d) return { month: '—', day: '—', full: '—' };
+  const dt = new Date(d + 'T00:00:00');
+  return {
+    month: dt.toLocaleDateString('en-PH', { month: 'short' }).toUpperCase(),
+    day: dt.toLocaleDateString('en-PH', { day: 'numeric' }),
+    full: dt.toLocaleDateString('en-PH', { month: 'long', day: 'numeric', year: 'numeric' })
+  };
+}
+
+function renderStars(n) {
+  const num = parseInt(n) || 0;
+  return '★'.repeat(num) + '<span class="empty">' + '★'.repeat(5 - num) + '</span>';
+}
+
+function tierClass(tier) {
+  const classes = { Starter: 'tier-starter', Essential: 'tier-essential', Premium: 'tier-premium' };
+  return classes[tier] || 'tier-starter';
+}
+
+function showUpgradeScreen(student) {
+  document.getElementById('lookup-card').style.display = 'none';
+  document.getElementById('student-bar').classList.remove('show');
+  document.getElementById('stats-row').classList.remove('show');
+  document.getElementById('sessions-header').classList.remove('show');
+  document.getElementById('sessions-list').innerHTML = '';
+
+  const upgradeCard = document.getElementById('upgrade-card');
+  const tier = student.tier || 'Starter';
+  document.getElementById('upgrade-tier-badge').textContent = tier + ' Plan';
+
+  let message = '';
+  if (tier === 'Starter') {
+    message = `Your ${tier} plan includes email session recaps delivered right to your inbox. To unlock the full Parent Tracker portal with historical reports, analytics, and session notes, consider upgrading to Premium.`;
+  } else if (tier === 'Essential') {
+    message = `Your ${tier} plan includes detailed email recaps after each session. The Parent Tracker portal is a Premium-only feature. Upgrade to get 24/7 access to your child's complete learning journey.`;
+  } else {
+    message = `The Parent Tracker portal is available exclusively for Premium plan families. Upgrade today to access detailed session history and performance insights anytime.`;
+  }
+  document.getElementById('upgrade-message-text').innerHTML = message;
+  upgradeCard.classList.add('show');
+}
+
+async function lookupStudent() {
+  const nameEl = document.getElementById('student-name');
+  const codeEl = document.getElementById('access-code');
+  const errorEl = document.getElementById('lookup-error');
+  const btn = document.getElementById('lookup-btn');
+  const spinner = document.getElementById('lookup-spinner');
+  const label = document.getElementById('lookup-label');
+
+  const name = nameEl.value.trim();
+  const code = codeEl.value.trim().toUpperCase();
+
+  errorEl.classList.remove('show');
+  document.getElementById('upgrade-card').classList.remove('show');
+  nameEl.classList.remove('error');
+  codeEl.classList.remove('error');
+
+  if (!name) {
+    nameEl.classList.add('error');
+    nameEl.focus();
+    return;
+  }
+  if (!code) {
+    codeEl.classList.add('error');
+    codeEl.focus();
+    return;
+  }
+
+  btn.disabled = true;
+  spinner.classList.add('show');
+  label.textContent = 'Looking up...';
+
+  try {
+    const { data: studentData, error: studentErr } = await db.rpc('validate_student_access', {
+      p_student_name: name,
+      p_access_code: code
+    });
+
+    if (studentErr || !studentData || !studentData.length) {
+      errorEl.classList.add('show');
+      nameEl.classList.add('error');
+      codeEl.classList.add('error');
+      btn.disabled = false;
+      spinner.classList.remove('show');
+      label.textContent = 'View Reports';
+      return;
+    }
+
+    const student = studentData[0];
+
+    if (student.tier !== 'Premium') {
+      showUpgradeScreen(student);
+      btn.disabled = false;
+      spinner.classList.remove('show');
+      label.textContent = 'View Reports';
+      return;
+    }
+
+    const { data: reports, error: reportsErr } = await db.rpc('get_parent_reports', {
+      p_student_name: name,
+      p_access_code: code
+    });
+
+    if (reportsErr) throw reportsErr;
+
+    renderPremiumDashboard(student, reports || []);
+
+  } catch (e) {
+    console.error(e);
+    errorEl.textContent = 'Something went wrong. Please try again.';
+    errorEl.classList.add('show');
+  } finally {
+    btn.disabled = false;
+    spinner.classList.remove('show');
+    label.textContent = 'View Reports';
+  }
+}
+
+function renderPremiumDashboard(student, reports) {
+  document.getElementById('lookup-card').style.display = 'none';
+  document.getElementById('upgrade-card').classList.remove('show');
+
+  const bar = document.getElementById('student-bar');
+  document.getElementById('bar-student-name').textContent = sanitize(student.student_name);
+  const tierEl = document.getElementById('bar-tier');
+  tierEl.textContent = student.tier;
+  tierEl.className = 'tier-badge ' + tierClass(student.tier);
+  bar.classList.add('show');
+
+  const total = reports.length;
+  const avgPerf = total ? (reports.reduce((s, r) => s + (parseInt(r.student_performance) || 0), 0) / total).toFixed(1) : '—';
+  const latest = total ? fmtDate(reports[0].session_date) : null;
+
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-latest').textContent = latest ? latest.month + ' ' + latest.day : '—';
+  document.getElementById('stat-latest-sub').textContent = latest ? latest.full : 'No sessions yet';
+  document.getElementById('stat-avg').textContent = avgPerf;
+  document.getElementById('stats-row').classList.add('show');
+
+  const header = document.getElementById('sessions-header');
+  header.classList.add('show');
+  document.getElementById('session-count').textContent = total + ' report' + (total !== 1 ? 's' : '');
+
+  const listEl = document.getElementById('sessions-list');
+  if (!total) {
+    listEl.innerHTML = '<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No reports yet</div><div class="empty-sub">Session reports will appear here once your Open Letter founders have reviewed and approved them.</div></div>';
+    return;
+  }
+
+  listEl.innerHTML = reports.map((r, i) => {
+    const d = fmtDate(r.session_date);
+    const hasFlags = r.flags_for_next_session && r.flags_for_next_session.trim();
+    return `<div class="session-card">
+      <div class="session-card-header" onclick="toggleSession('body-${i}', 'chev-${i}')">
+        <div class="session-date-block">
+          <div class="session-month">${sanitize(d.month)}</div>
+          <div class="session-day">${sanitize(d.day)}</div>
+        </div>
+        <div class="session-divider"></div>
+        <div class="session-info">
+          <div class="session-focus">${sanitize(r.focus_area) || 'Session'}</div>
+          <div class="session-meta">${sanitize(d.full)}</div>
+        </div>
+        <div class="session-rating">
+          <div class="stars">${renderStars(r.student_performance)}</div>
+        </div>
+        <div class="session-chevron" id="chev-${i}">▾</div>
+      </div>
+      <div class="session-body" id="body-${i}">
+        <div class="report-field">
+          <div class="report-label">Session summary</div>
+          <div class="report-text">${sanitize(r.polished_summary) || '—'}</div>
+        </div>
+        ${hasFlags ? `<div class="report-field">
+          <div class="report-label">Notes for next session</div>
+          <div class="flags-block">
+            <div class="flags-text">${sanitize(r.flags_for_next_session)}</div>
+          </div>
+        </div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleSession(bodyId, chevId) {
+  const body = document.getElementById(bodyId);
+  const chev = document.getElementById(chevId);
+  if (body && chev) {
+    body.classList.toggle('open');
+    chev.classList.toggle('open');
+  }
+}
+
+function clearResults() {
+  document.getElementById('lookup-card').style.display = 'block';
+  document.getElementById('upgrade-card').classList.remove('show');
+  document.getElementById('student-bar').classList.remove('show');
+  document.getElementById('stats-row').classList.remove('show');
+  document.getElementById('sessions-header').classList.remove('show');
+  document.getElementById('sessions-list').innerHTML = '';
+  document.getElementById('lookup-error').classList.remove('show');
+  document.getElementById('student-name').classList.remove('error');
+  document.getElementById('access-code').classList.remove('error');
+  document.getElementById('student-name').value = '';
+  document.getElementById('access-code').value = '';
+  document.getElementById('student-name').focus();
+}
+
+document.getElementById('upgrade-contact-btn')?.addEventListener('click', function() {
+  window.location.href = 'mailto:hello@learnwithopenletter.com?subject=Parent%20Tracker%20Upgrade%20Inquiry';
+});
+
+// Enter key support
+document.getElementById('student-name')?.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') lookupStudent();
+});
+document.getElementById('access-code')?.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') lookupStudent();
+});
+</script>
+</body>
+</html>
